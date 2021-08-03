@@ -1,0 +1,8 @@
+{
+  "name": "aba_data_solutions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/TreyHammy/aba_data_solutions.git",
+  "author": "TreyHammy <treyhammy13@gmail.com>",
+  "license": "MIT"
+}
