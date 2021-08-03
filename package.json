@@ -1,8 +1,21 @@
 {
-  "name": "aba_data_solutions",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/TreyHammy/aba_data_solutions.git",
-  "author": "TreyHammy <treyhammy13@gmail.com>",
-  "license": "MIT"
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+],
+  "scripts": {
+    "build": "lerna run build --stream",
+    "lint": "lerna run lint --stream --parallel",
+    "webdev": "cd packages/playground && yarn start",
+    "build": "yarn build:packages && yarn build playground && yarn build:docs",
+    "build:packages": "lerna run build --scope '@linusborg/*'",
+    "build:playground": "lerna run build --scope 'playground'"
+},
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "jest": "^27.0.6",
+    "lerna": "^4.0.0",
+    "typescript": "^4.3.5"
+  }
 }
