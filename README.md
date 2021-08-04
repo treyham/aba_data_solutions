@@ -24,15 +24,15 @@ yarn start:server     // starts backend dev server
 ```
 
 ##### This template is in huge parts inspired or directly copied from:
-* LinusBorg's "vue-lib-monorepo-template <https://github.com/LinusBorg/vue-lib-monorepo-template>"
+* LinusBorg's [vue-lib-monorepo-template](https://github.com/LinusBorg/vue-lib-monorepo-template)
 * Ben Awad's 
-    * "Fullstack Tut <https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=0s>
-    * "And much much "more... <https://www.youtube.com/channel/UC-8QAzbLcRglXeN_MY9blyw>"
+    * [Fullstack Tut](https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=0s)
+    * And much much [more...](https://www.youtube.com/channel/UC-8QAzbLcRglXeN_MY9blyw)
 * bytefish's 
-    * "Writeup <https://javascript.plainenglish.io/set-up-vue3-enterprise-level-development-environments-with-vite-step-by-step-guide-32964d1df60e>"
-    * "github <https://github.com/BytefishMedium/vite-vue3-starter>"
+    * [Writeup](https://javascript.plainenglish.io/set-up-vue3-enterprise-level-development-environments-with-vite-step-by-step-guide-32964d1df60e)
+    * [github](https://github.com/BytefishMedium/vite-vue3-starter)
 * Tomasz Waraksa's
-    * "Writeup <https://letsdebug.it/post/12-monorepo-with-vue-vite-lerna/>"
+    * [Writeup](https://letsdebug.it/post/12-monorepo-with-vue-vite-lerna/)
 
 During web dev, no bundling has to be done as all of the library package's code is compiled JIT by Vite.
 
