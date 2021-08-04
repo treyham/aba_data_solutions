@@ -23,7 +23,9 @@ yarn preview    // start vite preview server
 yarn start:server     // starts backend dev server
 ```
 
-This template is in huge parts inspired or directly copied from LinusBorg's "vue-lib-monorepo-template <https://github.com/LinusBorg/vue-lib-monorepo-template>"
+##### This template is in huge parts inspired or directly copied from:
+* LinusBorg's "vue-lib-monorepo-template <https://github.com/LinusBorg/vue-lib-monorepo-template>"
+* Ben Awads "Fullstack Tut <https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=0s>
 
-During play, no bundling has to be done as all of the library package's code is compiled JIT by Vite.
+During web dev, no bundling has to be done as all of the library package's code is compiled JIT by Vite.
 
