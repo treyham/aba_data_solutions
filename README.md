@@ -1,26 +1,29 @@
-This template is in huge parts inspired or directly copied from LinusBorg's "vue-lib-monorepo-template <https://github.com/LinusBorg/vue-lib-monorepo-template>"
+# ABA Data Solutions MonoRepo
 
+## Packages
+* common
+* server
+* vueApp
 
+## Commands
 All commands can be run directly from the project root like:
 
-yarn start:web
-starts the vite dev server
+### dev
 
+#### Web
+```
+yarn start:web      // start vite dev server 
+```
+```
+yarn preview    // start vite preview server
+```
 
-yarn preview
-starts the vite preview build server
+#### Server
+```
+yarn start:server     // starts backend dev server
+```
 
-
-yarn start:server
-starts the backkend dev server
-
-
-
-build
-Build everything: library packages, docs and playground app
-
-play
-starts the Vite dev server for the playground app for testing playing around with your libraries manually.
+This template is in huge parts inspired or directly copied from LinusBorg's "vue-lib-monorepo-template <https://github.com/LinusBorg/vue-lib-monorepo-template>"
 
 During play, no bundling has to be done as all of the library package's code is compiled JIT by Vite.
 
