@@ -11,7 +11,7 @@ All commands can be run directly from the project root like:
 ### dev
 
 #### Web
-During web dev, no bundling has to be done as all of the library package's code is compiled JIT by Vite.
+##### During web dev, no bundling has to be done as all of the library package's code is compiled JIT by Vite.
 ```
 yarn start:web      // start vite dev server 
 ```
