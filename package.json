@@ -8,8 +8,8 @@
     "start": "yarn start:web && yarn start:server",
     "start:web": "vite packages/vueApp",
     "preview": "vite serve packages/vueApp",
-    "watch:server": "cd packages/server/ && yarn watch",
-    "start:server": "node packages/server/dist/src/index.js",
+    "server:dev": "nodemon packages/dist/src/index.js",
+    "server:watch": "nodemon --watch packages/server/dist/src/ index.js",
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "build:common": "cat 'Building common!",
     "build:vueApp": "vite build packages/vueApp"
