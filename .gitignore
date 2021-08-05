@@ -4,3 +4,4 @@ dist
 dist-ssr
 *.local
 packages/server/types
+.notes.txt
