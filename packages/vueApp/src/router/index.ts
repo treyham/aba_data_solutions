@@ -3,8 +3,8 @@ import {
     createWebHashHistory,
     RouteRecordRaw,
   } from "vue-router";
-  import Home from "../views/Home.vue";
-  import Vuex from "../views/Vuex.vue";
+  import Home from "@/views/Home.vue";
+  import Vuex from "@/views/Vuex.vue";
   const routes: Array<RouteRecordRaw> = [
     {
       path: "/",
@@ -19,7 +19,7 @@ import {
     {
       path: "/axios",
       name: "Axios",
-      component: () => import("../views/Axios.vue"), // lazy-load
+      component: () => import("@/views/Axios.vue"), // lazy-load
     },
   ];
   const router = createRouter({

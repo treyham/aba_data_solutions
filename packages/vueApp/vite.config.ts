@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      "@": resolve(__dirname, "/vueApp/src"), // Set '@' to point to the 'src' directory
+      "@": resolve(__dirname, "src"), // Set '@' to point to the 'src' directory
     },
   },
   base: "./", // Set the packing path
