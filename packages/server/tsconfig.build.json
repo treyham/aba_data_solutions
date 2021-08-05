@@ -1,7 +1,7 @@
 {
     "extends": "../../tsconfig.json",
     "include": ["./src/**/*.ts"],
-    "exclude": ["**/vueApp/**/*.*", "**/*.vue"],        // probably dont need this
+    "exclude": ["**/vueApp/**/*.ts", "**/*.vue"],        // probably dont need this
     "compilerOptions": {
         "rootDir": ".",
         "outDir": "./dist",
