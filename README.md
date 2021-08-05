@@ -64,6 +64,7 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 
 ##### This template is in huge parts inspired or directly copied from:
 * LinusBorg's [vue-lib-monorepo-template](https://github.com/LinusBorg/vue-lib-monorepo-template)
+* Prisma's [example](https://github.com/prisma/prisma-examples/tree/latest/typescript/graphql-fastify-sdl-first)
 * Ben Awad's 
     * [Fullstack Tut](https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=0s)
     * And much much [more...](https://www.youtube.com/channel/UC-8QAzbLcRglXeN_MY9blyw)
