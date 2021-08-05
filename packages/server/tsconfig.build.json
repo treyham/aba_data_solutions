@@ -1,11 +1,13 @@
 {
     "extends": "../../tsconfig.json",
     "include": ["./src/**/*.ts"],
-    "exclude": ["**/vueApp/**/*.*"],        // probably dont need this
+    "exclude": ["**/vueApp/**/*.*", "**/*.vue"],        // probably dont need this
     "compilerOptions": {
         "rootDir": ".",
         "outDir": "./dist",
         "declaration": true,
-        "declarationDir": "types"
+        "declarationDir": "./types"
   }
+    
 }
+
