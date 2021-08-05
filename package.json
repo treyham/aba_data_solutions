@@ -8,10 +8,10 @@
     "start": "yarn start:web && yarn start:server",
     "start:web": "vite packages/vueApp",
     "preview": "vite serve packages/vueApp",
-    "start:server": "tsc -p packages/server/tsconfig.build.json",
+    "watch:server": "cd packages/server/ && yarn watch",
+    "start:server": "node packages/server/dist/src/index.js",
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "build:common": "cat 'Building common!",
-    "build:server": "cat 'Building Server!",
     "build:vueApp": "vite build packages/vueApp"
 },
   "devDependencies": {
