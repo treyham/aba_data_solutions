@@ -23,6 +23,12 @@ yarn start:web      // start vite dev server
 ```
 yarn preview        // start vite preview server
 ```
+## Recommended IDE Setup
+
+* [VSCode](https://code.visualstudio.com/) 
+    * [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
+    * [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
+
 
 # SQL GraphQL Server w/ fastify-graphql (SDL-first) & SQL
 [I made it up](https://github.com/prisma/prisma-examples/tree/latest/typescript/graphql-fastify-sdl-first)
@@ -41,10 +47,6 @@ yarn build:vueApp      // build vueApp with vite
 # Vue 3 + Typescript + Vite
 
 This template should help get you started developing with Vue 3 and Typescript in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
 
 ## Type Support For `.vue` Imports in TS
 
