@@ -10,7 +10,7 @@
       // "isolatedModules": true,
       // "importsNotUsedAsValues": "error",
       //
-  
+
       "declaration": true,
       "declarationMap": true,
       "sourceMap": true,   
@@ -23,9 +23,9 @@
       "jsx": "preserve",
       "esModuleInterop": true,
       "types": ["vite/client"],
-      "paths": {
-        "@/vueapp": ["packages/vueApp/src/main.ts"]
-      }
+      // "paths": {
+      //   "@/vueapp": ["packages/vueApp/src/main.ts"]
+      // }
     },
     "include": [
       "/config/*.ts",
