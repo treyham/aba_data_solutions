@@ -24,10 +24,10 @@ yarn start:web      // start vite dev server
 yarn preview        // start vite preview server
 ```
 
-### Server
-
 # SQL GraphQL Server w/ fastify-graphql (SDL-first) & SQL
 [template](https://github.com/prisma/prisma-examples/tree/latest/typescript/graphql-fastify-sdl-first)
+
+### Server
 
 ```
 yarn start:server     // starts backend dev server
