@@ -12,9 +12,10 @@
     "jsx": "preserve",                              /* Specify JSX code generation: 'preserve', 'react-native', 'react', 'react-jsx' or 'react-jsxdev'. */
     "declaration": true,                            /* Generates corresponding '.d.ts' file. */
     "declarationMap": true,                         /* Generates a sourcemap for each corresponding '.d.ts' file. */
+    "declarationDir": "./packages/server/types",
     "sourceMap": true,                              /* Generates corresponding '.map' file. */
     // "outFile": "./",                             /* Concatenate and emit output to single file. */
-    // "outDir": "./",                              /* Redirect output structure to the directory. */
+    "outDir": "./packages/server/dist/src",         /* Redirect output structure to the directory. */
     // "rootDir": "./",                             /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                           /* Enable project compilation */
     // "tsBuildInfoFile": "./",                     /* Specify file to store incremental compilation information */
@@ -69,11 +70,15 @@
     "skipLibCheck": true,                           /* Skip type checking of declaration files. */
     "forceConsistentCasingInFileNames": true        /* Disallow inconsistently-cased references to the same file. */
   },
+  // "watchOptions": {
+  //   "watchDirectory": "/home/tham/aba_data_solutions/packages/server/src"
+  // },
   "include": [
-    "/config/*.ts",
-    "/**/src/**/*.ts",
-    "/**/src/**/*.js",
-    "/**/src/**/*.vue",
+    // "/config/*.ts",
+    "packages/server/src/**/*.ts"
+    // "/**/src/**/*.ts",
+    // "/**/src/**/*.js",
+    // "/**/src/**/*.vue",
     // necessary for un-breaking jest types broken by cypress' chai dependency
     // https://github.com/cypress-io/cypress/issues/1087#issuecomment-353370449
     //"./node_modules/jest", 

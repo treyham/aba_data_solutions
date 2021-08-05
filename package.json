@@ -5,11 +5,11 @@
     "packages/*"
 ],
   "scripts": {
-    "start": "yarn start:web && yarn start:server",
+    "dev": "yarn start:web && yarn start:server",
     "start:web": "vite packages/vueApp",
     "preview": "vite serve packages/vueApp",
-    "dev:server": "nodemon packages/dist/src/index.js",
-    "watch:server": "",
+    "start:server": "nodemon packages/server/dist/src/index.js",
+    "watch:server": "cd packages/server && yarn watch",
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "build:common": "cat 'Building common!",
     "build:vueApp": "vite build packages/vueApp"

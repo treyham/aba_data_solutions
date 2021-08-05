@@ -1,13 +1,14 @@
 {
-    "extends": "../../tsconfig.json",
-    "include": ["./src/**/*.ts"],
-    "exclude": ["**/vueApp/**/*.ts", "**/*.vue"],        // probably dont need this
-    "compilerOptions": {
-        "rootDir": ".",
-        "outDir": "./dist",
-        "declaration": true,
-        "declarationDir": "./types"
+  "extends": "../../tsconfig.json",
+  "include": ["./src/**/*.ts"],
+  "exclude": ["**/vueApp/**/*.ts", "**/*.vue"],        // probably dont need this
+  "compilerOptions": {
+    "rootDir": "./",
+    "outDir": "./dist/src",
+    "declaration": true,
+    "declarationDir": "./types"
+  },
+  "watchOptions": {
+    "watchDirectory": "/home/tham/aba_data_solutions/packages/server/src"
   }
-    
 }
-
