@@ -15,7 +15,7 @@
 yarn start      // start vite dev server and backend dev server 
 ```
 
-#### Web
+### Web
 *During web dev, no bundling has to be done as all of the library package's code is compiled JIT by Vite.*
 ```
 yarn start:web      // start vite dev server 
@@ -24,7 +24,11 @@ yarn start:web      // start vite dev server
 yarn preview        // start vite preview server
 ```
 
-#### Server
+### Server
+
+# SQL GraphQL Server w/ fastify-graphql (SDL-first) & SQL
+(template)[https://github.com/prisma/prisma-examples/tree/latest/typescript/graphql-fastify-sdl-first]
+
 ```
 yarn start:server     // starts backend dev server
 ```
