@@ -5,12 +5,14 @@
     "packages/*"
 ],
   "scripts": {
+    "start": "yarn start:web && yarn start:server",
     "start:web": "vite packages/vueApp",
     "preview": "vite serve packages/vueApp",
     "start:server": "cat 'server started!",
-    "build": "yarn build:packages && yarn build:vueApp",
-    "build:packages": "lerna run build --scope '@polomaapp/*'",
-    "build:vueApp": "lerna run build --scope 'vueApp'"
+    "build": "yarn build:server && yarn build:vueApp && yarn build:common",
+    "build:common": "cat 'Building common!",
+    "build:server": "cat 'Building Server!",
+    "build:vueApp": "vite build packages/vueApp"
 },
   "devDependencies": {
     "eslint": "^7.32.0",

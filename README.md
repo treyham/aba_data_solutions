@@ -8,7 +8,11 @@
 ## Commands
 *All commands can be run directly from the project root like:*
 
-### dev
+### **dev**
+
+```
+yarn start      // start vite dev server and backend dev server 
+```
 
 #### Web
 *During web dev, no bundling has to be done as all of the library package's code is compiled JIT by Vite.*
@@ -22,6 +26,11 @@ yarn preview        // start vite preview server
 #### Server
 ```
 yarn start:server     // starts backend dev server
+```
+
+### **Build**
+```
+yarn build:vueApp      // build vueApp with vite
 ```
 
 ##### This template is in huge parts inspired or directly copied from:
