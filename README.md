@@ -25,7 +25,7 @@ yarn preview        // start vite preview server
 ```
 
 # SQL GraphQL Server w/ fastify-graphql (SDL-first) & SQL
-[sauce](https://github.com/prisma/prisma-examples/tree/latest/typescript/graphql-fastify-sdl-first)
+[I made it up](https://github.com/prisma/prisma-examples/tree/latest/typescript/graphql-fastify-sdl-first)
 
 ### Server
 
