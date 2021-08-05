@@ -22,6 +22,7 @@
       "moduleResolution": "node",
       "jsx": "preserve",
       "esModuleInterop": true,
+      "removeComments": true,
       "types": ["vite/client"],
       // "paths": {
       //   "@/vueapp": ["packages/vueApp/src/main.ts"]
