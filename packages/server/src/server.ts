@@ -4,26 +4,26 @@ import mercurius, {
   IResolvers,
   MercuriusContext,
 } from 'mercurius'
-import { schema } from './shema'
-import { context } from './context'
+const schema = require('./shema')
+// import { context } from './context'
 
 declare module 'mercurius' { }
-const app = fastify()
+const server = fastify()
 
-app.register(mercurius, {
+server.register(mercurius, {
   schema,
   graphiql: true,
-  context: () => context
+  // context: () => context
 })
 
 
-app.listen(3000, (err) => {
+server.listen(3000, (err) => {
   if (err) {
     console.error(err)
     process.exit(1)
   }
   console.log(`\
-  🚀 Server ready at: http://localhost:4000/graphiql
+  🚀 Server ready at: http://localhost:3000/graphiql
   ⭐️ See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api
   `)
 })
