@@ -5,6 +5,7 @@
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./dist/src",
+    // "module": "CommonJS",
     "declaration": true,
     "declarationDir": "./types"
   },
