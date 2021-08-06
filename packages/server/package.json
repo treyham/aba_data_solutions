@@ -2,7 +2,7 @@
   "name": "server",
   "type":"module",
   "version": "1.0.0",
-  "main": "src/index.ts",
+  "main": "src/server.ts",
   "license": "MIT",
   "scripts": {
     "watch": "tsc -w"
