@@ -4,7 +4,7 @@ import mercurius, {
   IResolvers,
   MercuriusContext,
 } from 'mercurius'
-const schema = require('./shema')
+import { schema } from './shema.js'
 // import { context } from './context'
 
 declare module 'mercurius' { }

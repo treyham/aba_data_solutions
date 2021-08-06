@@ -4,7 +4,7 @@
   "exclude": ["**/vueApp/**/*.ts", "**/*.vue"],        // probably dont need this
   "compilerOptions": {
     "rootDir": "./",
-    "outDir": "./dist/src",
+    "outDir": "./dist/",
     // "module": "CommonJS",
     "declaration": true,
     "declarationDir": "./types"
