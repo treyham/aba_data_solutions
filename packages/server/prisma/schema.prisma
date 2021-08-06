@@ -1,11 +1,41 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// // npx prisma migrate dev --name init
+
 datasource db {
-  provider = "sqlserver"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
 }
+
+model Employee {
+  @@map(name: "employee")
+  id         Int    @id @default(autoincrement())
+  fullName String? @db.VarChar(255) @unique
+  displayName String? @db.VarChar(255) 
+  email String? @db.VarChar(255) @unique
+  birthdate String @db.VarChar(8)
+  salary String @db.VarChar(25)
+  rate String @db.VarChar(25)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  updated_by Int
+  login Login @relation(fields: [login_id], references: [id])
+  login_id Int
+}
+
+model Login {
+  @@map(name: "login")
+  id Int @unique
+  username String? @db.VarChar(255) @unique
+  password String? @db.VarChar(255) @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  updated_by Int
+  employee Employee?
+}
+
