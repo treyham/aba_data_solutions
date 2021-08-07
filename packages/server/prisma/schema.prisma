@@ -16,9 +16,9 @@ model Employee {
   @@map(name: "employee")
   id         Int    @id @default(autoincrement())
   fullName String @db.VarChar(255)
-  displayName String? @db.VarChar(255) @unique
+  displayName String @db.VarChar(255) @unique
   email String @db.VarChar(255) @unique
-  password String? @db.VarChar(255)
+  password String @db.VarChar(255)
   birthdate String @db.VarChar(8)
   salary String? @db.VarChar(25)
   rate String? @db.VarChar(25)
@@ -28,7 +28,7 @@ model Employee {
 }
 
 model Client {
-  @@map(name: "login")
+  @@map(name: "client")
   id Int @id @default(autoincrement())
   fullName String @db.VarChar(255) @unique
   displayName String @db.VarChar(255) @unique
@@ -53,10 +53,11 @@ model Provider {
 model Program {
   @@map(name: "program")
   id Int @id @default(autoincrement())
-  Title String @db.VarChar(50)
-  description String @db.VarChar(510)
-  
+  title String @db.VarChar(50)
+  description String? @db.VarChar(510)
+
   created_at DateTime @default(now())
+  created_by Int
   updated_at DateTime @updatedAt
   updated_by Int
 }
