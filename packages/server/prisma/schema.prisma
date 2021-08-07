@@ -15,27 +15,51 @@ generator client {
 model Employee {
   @@map(name: "employee")
   id         Int    @id @default(autoincrement())
-  fullName String? @db.VarChar(255) @unique
-  displayName String? @db.VarChar(255) 
-  email String? @db.VarChar(255) @unique
+  fullName String @db.VarChar(255)
+  displayName String? @db.VarChar(255) @unique
+  email String @db.VarChar(255) @unique
+  password String? @db.VarChar(255)
   birthdate String @db.VarChar(8)
-  salary String @db.VarChar(25)
-  rate String @db.VarChar(25)
+  salary String? @db.VarChar(25)
+  rate String? @db.VarChar(25)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   updated_by Int
-  login Login @relation(fields: [login_id], references: [id])
-  login_id Int
 }
 
-model Login {
+model Client {
   @@map(name: "login")
-  id Int @unique
-  username String? @db.VarChar(255) @unique
-  password String? @db.VarChar(255) @unique
+  id Int @id @default(autoincrement())
+  fullName String @db.VarChar(255) @unique
+  displayName String @db.VarChar(255) @unique
+  birthdate String @db.VarChar(8)
+
+  
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   updated_by Int
-  employee Employee?
 }
+
+model Provider {
+  @@map(name: "provider")
+  id Int @id @default(autoincrement())
+  fullName String @db.VarChar(255) @unique
+  displayName String @db.VarChar(255) @unique
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  updated_by Int
+}
+
+model Program {
+  @@map(name: "program")
+  id Int @id @default(autoincrement())
+  Title String @db.VarChar(50)
+  description String @db.VarChar(510)
+  
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  updated_by Int
+}
+
+
 
