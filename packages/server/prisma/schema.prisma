@@ -1,66 +1,235 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// // npx prisma migrate dev --name init
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model Employee {
+  id          Int       @id @default(autoincrement())
+  fullName    String    @db.VarChar(255)
+  displayName String    @unique @db.VarChar(255)
+  email       String    @unique @db.VarChar(255)
+  password    String    @db.VarChar(255)
+  birthdate   String?   @db.VarChar(8)
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  updated_by  Int?
+  created_by  Int
+  position    Position
+  logins      Login[]
+  sessions    Session[]
+
+  @@map("employee")
 }
 
-model Employee {
-  @@map(name: "employee")
-  id         Int    @id @default(autoincrement())
-  fullName String @db.VarChar(255)
-  displayName String @db.VarChar(255) @unique
-  email String @db.VarChar(255) @unique
-  password String @db.VarChar(255)
-  birthdate String @db.VarChar(8)
-  salary String? @db.VarChar(25)
-  rate String? @db.VarChar(25)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  updated_by Int
+model Login {
+  id           Int       @id @default(autoincrement())
+  employeeId   Int
+  login_time   DateTime  @default(now())
+  logout_time  DateTime?
+  elapsed_time String    @default("00h00m00s") @db.VarChar(9)
+  employee     Employee  @relation(fields: [employeeId], references: [id])
+
+  @@index([employeeId], name: "employeeId")
+  @@map("login")
 }
 
 model Client {
-  @@map(name: "client")
-  id Int @id @default(autoincrement())
-  fullName String @db.VarChar(255) @unique
-  displayName String @db.VarChar(255) @unique
-  birthdate String @db.VarChar(8)
+  id          Int      @id @default(autoincrement())
+  fullName    String   @db.VarChar(255)
+  displayName String?  @unique @db.VarChar(255)
+  birthdate   String?  @db.VarChar(8)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  updated_by  Int?
+  created_by  Int
+  providerId  Int
+  renewalDate String?  @db.VarChar(8)
+  provider    Provider @relation(fields: [providerId], references: [id])
 
-  
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  updated_by Int
+  @@index([providerId], name: "providerId")
+  @@map("client")
+}
+
+model Session {
+  id           Int              @id @default(autoincrement())
+  employeeId   Int
+  notes        String           @db.VarChar(510)
+  clientId     Int
+  providerId   Int
+  start_time   DateTime
+  end_time     DateTime         @default(now())
+  elapsed_time String           @default("00h00m00s")
+  category     session_category
+  employee     Employee         @relation(fields: [employeeId], references: [id])
+
+  @@index([employeeId], name: "employeeId")
+  @@map("session")
+}
+
+model Billing {
+  id         Int           @id @default(autoincrement())
+  sessiondId Int           @unique
+  notes      String        @db.VarChar(510)
+  status     BillingStatus @default(STAGE_0)
+  start_time DateTime      @default(now())
+  end_time   DateTime?
+
+  @@map("billing")
 }
 
 model Provider {
-  @@map(name: "provider")
-  id Int @id @default(autoincrement())
-  fullName String @db.VarChar(255) @unique
-  displayName String @db.VarChar(255) @unique
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  updated_by Int
+  id          Int      @id @default(autoincrement())
+  fullName    String   @unique @db.VarChar(255)
+  displayName String   @db.VarChar(255)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  updated_by  Int?
+  address     String?  @db.VarChar(255)
+  created_by  Int
+  clients     Client[]
+
+  @@map("provider")
+}
+
+model PersonalInfo {
+  id          Int              @id @default(autoincrement())
+  type        PersonalInfoType
+  phoneNumber String?          @db.VarChar(10)
+  address     String?          @db.VarChar(255)
+  email       String?          @db.VarChar(255)
+  description String?          @db.VarChar(255)
+  employeeId  Int?             @unique
+  providerId  Int?
+  clientId    Int?
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @updatedAt
+  created_by  Int
+  updated_by  Int?
+
+  @@map("personalInfo")
+}
+
+model Plan {
+  id          Int          @id @default(autoincrement())
+  description String       @db.VarChar(255)
+  providerId  Int
+  category    CodeCategory
+  code        String       @db.VarChar(255)
+
+  @@map("plan")
 }
 
 model Program {
-  @@map(name: "program")
-  id Int @id @default(autoincrement())
-  title String @db.VarChar(50)
-  description String? @db.VarChar(510)
+  id          Int             @id @default(autoincrement())
+  description String?         @db.VarChar(510)
+  created_at  DateTime        @default(now())
+  updated_at  DateTime        @updatedAt
+  created_by  Int
+  title       String          @db.VarChar(50)
+  category    ProgramCategory @default(MISC)
+  type        ProgramType
 
-  created_at DateTime @default(now())
-  created_by Int
-  updated_at DateTime @updatedAt
-  updated_by Int
+  @@map("program")
 }
 
+model Record {
+  id          Int                @id @default(autoincrement())
+  date        DateTime           @default(now())
+  clientId    Int
+  sessionId   Int
+  programId   Int
+  programType record_programType
+  results     String             @db.VarChar(255)
 
+  @@map("record")
+}
 
+model ClientToEmployee {
+  A Int
+  B Int
+
+  @@unique([A, B], name: "_ClientToEmployee_AB_unique")
+  @@index([B], name: "_ClientToEmployee_B_index")
+  @@map("_ClientToEmployee")
+}
+
+model EmployeeToRecord {
+  A Int
+  B Int
+
+  @@unique([A, B], name: "_EmployeeToRecord_AB_unique")
+  @@index([B], name: "_EmployeeToRecord_B_index")
+  @@map("_EmployeeToRecord")
+}
+
+enum Position {
+  ADMIN
+  HEAD
+  MANAGEMENT
+  BILLING
+  BCBA
+  RBT
+  DEFAULT
+}
+
+enum BillingStatus {
+  STAGE_0
+  STAGE_1
+  STAGE_2
+  FINISHED
+}
+
+enum PersonalInfoType {
+  PARENTS
+  INSURANCE
+  OTHER
+}
+
+enum CodeCategory {
+  RBT
+  BCBA
+  SUPERVISED
+}
+
+enum ProgramCategory {
+  BEHAVIOR_NEG
+  BEHAVIOR_POS
+  SPEECH
+  MISC
+}
+
+enum ProgramType {
+  YES_OR_NO
+  LIST_YES_OR_NO
+  COUNTER_SUM
+  COUNTER_RESTART
+  MULTIPLE_CHOICE
+  SCALE_FIVE
+  SCALE_TEN
+  TEXT_SMALL
+  TEXT_MEDIUM
+  TEXT_LARGE
+}
+
+enum record_programType {
+  YES_OR_NO
+  LIST_YES_OR_NO
+  COUNTER_SUM
+  COUNTER_RESTART
+  MULTIPLE_CHOICE
+  SCALE_FIVE
+  SCALE_TEN
+  TEXT_SMALL
+  TEXT_MEDIUM
+  TEXT_LARGE
+}
+
+enum session_category {
+  RBT
+  BCBA
+  SUPERVISED
+}

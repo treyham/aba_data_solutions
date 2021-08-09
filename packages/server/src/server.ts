@@ -5,7 +5,7 @@ import mercurius, {
   MercuriusContext,
 } from 'mercurius'
 import { schema } from './shema.js'
-// import { context } from './context'
+import { context } from './context.js'
 
 declare module 'mercurius' { }
 const server = fastify()
@@ -13,7 +13,7 @@ const server = fastify()
 server.register(mercurius, {
   schema,
   graphiql: true,
-  // context: () => context
+  context: () => context
 })
 
 
