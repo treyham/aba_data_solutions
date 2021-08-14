@@ -7,6 +7,70 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model PersonalInfo {
+  id          String           @id @default(uuid())
+  type        PersonalInfoType
+  phoneNumber String?          @db.VarChar(10)
+  address     String?          @db.VarChar(255)
+  email       String?          @db.VarChar(255)
+  description String?          @db.VarChar(255)
+  employeeId  Int?             @unique
+  providerId  Int?
+  clientId    Int?
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @updatedAt
+  created_by  Int
+  updated_by  Int?
+
+  @@map("personalInfo")
+}
+
+model Provider {
+  id          String   @id @default(uuid())
+  fullName    String   @unique @db.VarChar(255)
+  displayName String   @db.VarChar(255)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  updated_by  Int?
+  created_by  Int
+  plans       Plan[]
+  clients     Client[]
+  sessions    Session[]
+
+  @@map("provider")
+}
+
+model Plan {
+  id          String       @id @default(uuid())
+  description String       @db.VarChar(255)
+  provider    Provider     @relation(fields: [providerId], references: [id])
+  providerId  String
+  category    CodeCategory
+  code        String       @db.VarChar(255)
+
+  @@map("plan")
+}
+
+model Client {
+  id          String   @id @default(uuid())
+  fullName    String   @db.VarChar(255)
+  displayName String?  @unique @db.VarChar(255)
+  birthdate   String?  @db.VarChar(8)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  updated_by  Int?
+  created_by  Int
+  renewalDate String?  @db.VarChar(8)
+  provider    Provider @relation(fields: [providerId], references: [id])
+  providerId  String
+  bcba        Bcba?     @relation(fields: [bcbaId], references: [id])
+  bcbaId      String?
+  treatmentPlans  TreatmentPlan[]
+  sessions    Session[]
+  // @@index([providerId], name: "providerId")
+  @@map("client")
+}
+
 model Employee {
   id          String    @id @default(uuid())
   fullName    String    @db.VarChar(255)
@@ -24,6 +88,17 @@ model Employee {
   logins      Login[]
 
   @@map("employee")
+}
+
+model Login {
+  id           String     @id @default(uuid())
+  login_time   DateTime  @default(now())
+  logout_time  DateTime?
+  employee     Employee  @relation(fields: [employeeId], references: [id])
+  employeeId   String
+
+  @@index([employeeId], name: "employeeId")
+  @@map("login")
 }
 
 model Head {
@@ -46,6 +121,17 @@ model Billing {
   @@map("billing")
 }
 
+model Rbt {
+  id           String    @id @default(uuid())
+  employee     Employee  @relation(fields: [employeeId], references: [id])
+  employeeId   String
+  bcba         Bcba      @relation(fields: [bcbaId], references: [id])
+  bcbaId       String
+  sessions     Session[]
+  @@index([employeeId], name: "employeeId")
+  @@map("rbt")
+}
+
 model Bcba {
   id              String    @id @default(uuid())
   employee        Employee  @relation(fields: [employeeId], references: [id])
@@ -55,7 +141,6 @@ model Bcba {
   treatmentPlan   TreatmentPlan[]
   programs        Program[]
   sessions        Session[]
-  records         Record[]
 
   @@index([employeeId], name: "employeeId")
   @@map("bcba")
@@ -68,59 +153,13 @@ model TreatmentPlan {
   bcba        Bcba            @relation(fields: [created_by], references: [id])
   created_by  String
   created_at  DateTime        @default(now())
-  updated_at  DateTime        @updatedAt
   client      Client          @relation(fields: [clientId], references: [id])
   clientId    String
   programs    Program[]
 }
 
-model Rbt {
-  id           String    @id @default(uuid())
-  employee     Employee  @relation(fields: [employeeId], references: [id])
-  employeeId   String
-  bcba         Bcba      @relation(fields: [bcbaId], references: [id])
-  bcbaId       String
-  sessions     Session[]
-  records      Record[]
-  @@index([employeeId], name: "employeeId")
-  @@map("rbt")
-}
-
-model Login {
-  id          String     @id @default(uuid())
-  login_time   DateTime  @default(now())
-  logout_time  DateTime?
-  employee     Employee  @relation(fields: [employeeId], references: [id])
-  employeeId   String
-
-  @@index([employeeId], name: "employeeId")
-  @@map("login")
-}
-
-model Client {
-  id          String   @id @default(uuid())
-  fullName    String   @db.VarChar(255)
-  displayName String?  @unique @db.VarChar(255)
-  birthdate   String?  @db.VarChar(8)
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  updated_by  Int?
-  created_by  Int
-  renewalDate String?  @db.VarChar(8)
-  provider    Provider @relation(fields: [providerId], references: [id])
-  providerId  String
-  bcba        Bcba?     @relation(fields: [bcbaId], references: [id])
-  bcbaId      String?
-  treatmentPlans  TreatmentPlan[]
-  sessions    Session[]
-  records     Record[]
-
-  // @@index([providerId], name: "providerId")
-  @@map("client")
-}
-
 model Session {
-  id           String           @id @default(uuid())
+  id           Int              @id @default(autoincrement())
   notes        String           @db.VarChar(510)
   start_time   DateTime
   end_time     DateTime         @default(now())
@@ -129,12 +168,50 @@ model Session {
   clientId     String
   provider     Provider         @relation(fields: [providerId], references: [id])
   providerId   String
-  bcba         Bcba?             @relation(fields: [bcbaId], references: [id])
+  bcba         Bcba?            @relation(fields: [bcbaId], references: [id])
   bcbaId       String?
-  rbt         Rbt?             @relation(fields: [rbtId], references: [id])
-  rbtId       String?
+  rbt          Rbt?             @relation(fields: [rbtId], references: [id])
+  rbtId        String?
+  records      Record[]
   // @@index([bcbaId, rbtId, clientId], name: "bcbaId")
   @@map("session")
+}
+
+model Program {
+  id          Int                 @id @default(autoincrement())
+  title       String              @db.VarChar(50)
+  description String?             @db.VarChar(510)
+  bcba        Bcba                @relation(fields: [created_by], references: [id])
+  created_by  String
+  created_at  DateTime            @default(now())
+  updated_at  DateTime            @updatedAt
+  vsibility   Visibility          @default(PRIVATE)
+  category    ProgramCategory     @default(MISC)
+  type        ProgramType
+  treatmentPlans  TreatmentPlan   @relation(fields: [trPlanId], references: [id])
+  trPlanId    Int
+  records     Record[]
+
+  @@map("program")
+}
+
+// model ProgramToTreatmentPlan {
+//   id              Int             @id @default(autoincrement())
+//   program         Program         @relation(fields: [programId], references: [id])
+//   programId       Int
+//   treatmentPlan   TreatmentPlan   @relation(fields: [treatPId], references: [id])
+//   treatPId        Int
+// }
+
+model Record {
+  id          Int                @id @default(autoincrement())
+  session     Session            @relation(fields: [sessionId], references: [id])
+  sessionId   Int
+  program     Program            @relation(fields: [programId], references: [id])
+  programId   Int
+  results     String             @db.VarChar(255)
+
+  @@map("record")
 }
 
 model BillingObject {
@@ -146,83 +223,6 @@ model BillingObject {
   end_time   DateTime?
 
   @@map("billingObject")
-}
-
-model Provider {
-  id          String   @id @default(uuid())
-  fullName    String   @unique @db.VarChar(255)
-  displayName String   @db.VarChar(255)
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  updated_by  Int?
-  created_by  Int
-  plans       Plan[]
-  clients     Client[]
-  sessions    Session[]
-
-  @@map("provider")
-}
-
-model PersonalInfo {
-  id          String           @id @default(uuid())
-  type        PersonalInfoType
-  phoneNumber String?          @db.VarChar(10)
-  address     String?          @db.VarChar(255)
-  email       String?          @db.VarChar(255)
-  description String?          @db.VarChar(255)
-  employeeId  Int?             @unique
-  providerId  Int?
-  clientId    Int?
-  created_at  DateTime         @default(now())
-  updated_at  DateTime         @updatedAt
-  created_by  Int
-  updated_by  Int?
-
-  @@map("personalInfo")
-}
-
-model Plan {
-  id          String       @id @default(uuid())
-  description String       @db.VarChar(255)
-  provider    Provider     @relation(fields: [providerId], references: [id])
-  providerId  String
-  category    CodeCategory
-  code        String       @db.VarChar(255)
-
-  @@map("plan")
-}
-
-model Program {
-  id          Int             @id @default(autoincrement())
-  title       String          @db.VarChar(50)
-  description String?         @db.VarChar(510)
-  bcba        Bcba            @relation(fields: [created_by], references: [id])
-  created_by  String
-  created_at  DateTime        @default(now())
-  updated_at  DateTime        @updatedAt
-  category    ProgramCategory @default(MISC)
-  type        ProgramType
-  treatmentPlans  TreatmentPlan   @relation(fields: [trPlanId], references: [id])
-  trPlanId    Int
-  records     Record[]
-
-  @@map("program")
-}
-
-model Record {
-  id          Int                @id @default(autoincrement())
-  date        DateTime           @default(now())
-  client      Client             @relation(fields: [clientId], references: [id])
-  clientId    String
-  rbt         Rbt?               @relation(fields: [rbtId], references: [id])
-  rbtId       String?
-  bcba        Bcba?              @relation(fields: [bcbaId], references: [id])
-  bcbaId      String?
-  program     Program           @relation(fields: [programId], references: [id])
-  programId   Int
-  results     String             @db.VarChar(255)
-
-  @@map("record")
 }
 
 
@@ -252,7 +252,11 @@ enum PersonalInfoType {
 enum CodeCategory {
   RBT
   BCBA
-  SUPERVISED
+  SUP_RBT
+  SUP_BCBA
+  TRAIN_RBT
+  TRAIN_BCBA
+  OTHER
 }
 
 enum ProgramCategory {
@@ -273,4 +277,10 @@ enum ProgramType {
   TEXT_SMALL
   TEXT_MEDIUM
   TEXT_LARGE
+  NONE
+}
+
+enum Visibility {
+  PRIVATE
+  PUBLIC
 }
