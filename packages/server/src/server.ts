@@ -16,7 +16,6 @@ server.register(mercurius, {
   context: () => context
 })
 
-
 server.listen(3000, (err) => {
   if (err) {
     console.error(err)
