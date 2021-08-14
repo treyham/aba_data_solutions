@@ -5,4 +5,4 @@ dist-ssr
 *.local
 packages/server/types
 migrations
-.notes.txt
+.notes
