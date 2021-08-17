@@ -29,6 +29,8 @@ model Provider {
   id          String   @id @default(uuid())
   fullName    String   @unique @db.VarChar(255)
   displayName String   @db.VarChar(255)
+  portal      String   @db.VarChar(255)
+  notes       String   @db.VarChar(1020)
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
   updated_by  Int?
@@ -74,7 +76,7 @@ model Employee {
   id          String    @id @default(uuid())
   fullName    String    @db.VarChar(255)
   displayName String    @unique @db.VarChar(255)
-  email       String    @unique @db.VarChar(255)
+  email       String?    @unique @db.VarChar(255)
   password    String    @db.VarChar(255)
   birthdate   String?   @db.VarChar(8)
   created_at  DateTime  @default(now())
@@ -91,8 +93,8 @@ model Employee {
 
 model Login {
   id           String    @id @default(uuid())
-  login_time   DateTime  @default(now())
-  logout_time  DateTime?
+  loginTime   DateTime  @default(now())
+  logoutTime  DateTime?
   employee     Employee  @relation(fields: [employeeId], references: [id])
   employeeId   String
 
@@ -191,15 +193,15 @@ model Session {
 }
 
 model Program {
-  id             Int                 @id @default(autoincrement())
-  title          String              @db.VarChar(50)
-  description    String?             @db.VarChar(510)
-  bcba           Bcba                @relation(fields: [created_by], references: [id])
+  id             Int                        @id @default(autoincrement())
+  title          String                     @db.VarChar(50)
+  description    String?                    @db.VarChar(510)
+  bcba           Bcba                       @relation(fields: [created_by], references: [id])
   created_by     String
-  created_at     DateTime            @default(now())
-  updated_at     DateTime            @updatedAt
-  vsibility      Visibility          @default(PRIVATE)
-  category       ProgramCategory     @default(MISC)
+  updated_at     DateTime                   @updatedAt
+  vsibility      Visibility                 @default(PRIVATE)
+  category       ProgramCategory            @default(MISC)
+  created_at     DateTime                   @default(now())
   type           ProgramType
   treatmentPlans TreatmentPlan_to_Program[]
   records        Record[]
@@ -266,9 +268,12 @@ enum CodeCategory {
 }
 
 enum ProgramCategory {
-  BEHAVIOR_NEG
-  BEHAVIOR_POS
-  SPEECH
+  COMMUNICATION
+  BEHAVIOR_SKILLS
+  SOCIAL_SKILLS
+  PLAYnLEISURE_SKILLS
+  INDEPENDENT_SKILLS
+  BEHAVIOR_REDUCTIONS
   MISC
 }
 
