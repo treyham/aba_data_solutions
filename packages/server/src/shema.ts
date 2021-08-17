@@ -3,6 +3,47 @@ import { DateTimeResolver } from 'graphql-scalars'
 import { Context } from './context'
 
 const typeDefs = `
+type Query {
+  
+}
+type Mutation {
+  createEmployee(data: {}): Employee!
+}
+type Employee {
+  id: String!
+  fullName: String!
+  displayName: String!
+  email: String!
+  password: String!
+  birthdate: String
+  created_at: Datetime!
+  updated_at: Datetime!
+  position: Position!
+  logins: [Login]
+}
+input EmployeeCreateInput {
+  fullName: String!
+  displayName: String!
+  email: String!
+  password: String!
+}
+enum Position {
+  admin
+  head
+  management
+  billing
+  bcba
+  rbt
+  default
+}
+type Login {
+  id: String!
+  loginTime: loginTime!
+  logoutTime: logoutTime
+  employee: employee!
+}
+`
+/*`
 type Mutation {
   createDraft(authorEmail: String!, data: PostCreateInput!): Post
   deletePost(id: Int!): Post
@@ -53,12 +94,16 @@ input UserUniqueInput {
   id: Int
 }
 scalar DateTime
-`
-// /home/tham/aba_data_solutions/packages/server/dist/src/shema
-// /home/tham/aba_data_solutions/packages/server/dist/src/shema.js
+`*/
 
 const resolvers = {
   Query: {
+
+    /* * *
+     *
+     * * * * * * * * * * * EMPLOYEE * * * * * * * * * * *       
+     *
+     * * */
     // allUsers: (_parent: any, _args: any, context: Context) => {
     //   return context.prisma.user.findMany()
     // },
@@ -104,6 +149,17 @@ const resolvers = {
     // }
   },
   Mutation: {
+    /* * *
+     *
+     * * * * * * * * * * * EMPLOYEE * * * * * * * * * * *       
+     *
+     * * */
+
+
+    createEmployee: (_parent: any, args: { data: {}, context: Context}) => {
+
+    }
+
     // signupUser: (_parent: any, args: { data: UserCreateInput }, context: Context) => {
     //   const postData = args.data.posts?.map(post => {
     //     return { title: post.title, content: post.content || undefined }
