@@ -26,9 +26,10 @@ yarn preview        // start vite preview server
 ## Recommended IDE Setup
 
 * [VSCode](https://code.visualstudio.com/) 
-    * [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
+    * [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur) 
+        Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
     * [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
-    * **User Settings** enable *expiremental decorators* settingID: js/ts.implicitProjectConfig.experimentalDecorators
+        Make sure to enable `js/ts.implicitProjectConfig.experimentalDecorators` in settings!
 
 
 # SQL GraphQL Server w/ fastify-graphql (SDL-first) & SQL
