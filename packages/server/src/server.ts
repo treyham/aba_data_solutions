@@ -9,14 +9,14 @@ import { context } from './context.js'
 
 declare module 'mercurius' { }
 const server = fastify()
-
+const dbPort = 3000
+const __prod__ = false
+console.log(`Dev: ${!__prod__}`)
 server.register(mercurius, {
   schema,
-  graphiql: true,
+  graphiql: !__prod__,
   context: () => context
 })
-
-const dbPort = 3000
 
 server.listen(dbPort, (err) => {
   if (err) {
