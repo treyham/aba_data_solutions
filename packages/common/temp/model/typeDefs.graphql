@@ -1,0 +1,236 @@
+type PersonalInfo {
+  id: String!
+  type: PersonalInfoType!
+  phoneNumber: String
+  address: String
+  email: String
+  description: String
+  employeeId: Int
+  providerId: Int
+  clientId: Int
+  # created_at  DateTime
+  # updated_at  DateTime
+  # created_by  Int
+  # updated_by  Int
+}
+
+type Provider {
+    id: String!
+    fullName: String!
+    displayName: String!
+    portal: String!
+    notes: String!
+    # updated_by: Int
+    # created_by: Int
+    plans: [Plan]!
+    clients: [Client]!
+}
+
+type Plan {
+  id: String!
+  description: String!
+  provider: Provider!
+  providerId: String!
+  category: CodeCategory!
+  code: String!
+}
+
+type Client {
+  id: String!
+  fullName: String!
+  displayName: String
+  birthdate: String
+#   created_at: DateTime
+#   updated_at: DateTime
+  # updated_by: Int
+  # created_by: Int   
+  renewalDate: String
+  provider: Provider
+  providerId: String
+  bcba: Bcba
+  bcbaId: String
+  treatmentPlans: [TreatmentPlan]!
+  sessions: [Session]!
+}
+
+type Employee {
+  id: String!
+  fullName: String!
+  displayName: String!
+  email: String
+  password: String!
+  birthdate: String
+#   created_at: DateTime
+#   updated_at: DateTime
+  position: Position!
+  Head: Head
+  Billing: Billing
+  Bcba: Bcba
+  Rbt: Rbt    
+  logins: [Login]
+}
+
+type Login {
+  id: String!
+#   loginTime: DateTime
+#   logoutTime: DateTime
+  employee: Employee!
+  employeeId: String!
+}
+
+type Head {
+  id: String!
+  employee: Employee!
+  employeeId: String!
+}
+
+type Billing {
+  id: String!
+  employee: Employee!
+  employeeId: String!
+}
+
+type Rbt {
+  id: String!
+  employee: Employee!
+  employeeId: String!
+  bcba: Bcba
+  bcbaId: String
+  sessions: [Session]!
+}
+
+type Bcba {
+  id: String!
+  employee: Employee!
+  employeeId: String!
+  rbts: [Rbt]!
+  clients: [Client]!
+  treatmentPlan: [TreatmentPlan]!
+  programs: [Program]!
+  sessions: [Session]!
+}
+
+type TreatmentPlan {
+  id: Int!
+  title: String!
+  description: String
+  bcba: Bcba!
+  created_by: String!
+#   created_at: DateTime
+  client: Client!
+  clientId: String!
+  programs: [TreatmentPlan_to_Program]!
+}
+
+type Session {
+  id: Int!
+  notes: String!
+#   start_time: DateTime
+#   end_time: DateTime
+  category: CodeCategory!
+  client: Client!
+  clientId: String!
+#   provider     Provider
+#   providerId   String
+  bcba: Bcba
+  bcbaId: String
+  rbt: Rbt
+  rbtId: String
+  records: [Record]!
+}
+
+type Program {
+  id: Int!
+  title: String!
+  description: String
+  # bcba: Bcba!
+  # created_by: String
+#   updated_at: DateTime
+  vsibility: Visibility!
+  category: ProgramCategory!
+#   created_at: DateTime
+  type: ProgramType!
+  treatmentPlans: [TreatmentPlan_to_Program]!
+  records: [Record]!
+}
+
+type TreatmentPlan_to_Program {
+#   added_at: DateTime        
+  treatmentPlan: TreatmentPlan!
+  treatmentPlanId: Int!
+  program: Program!
+  programId: Int!
+}
+
+type Record {
+  id: Int!
+  session: Session!
+  sessionId: Int!
+  program: Program!
+  programId: Int!
+  results: String!
+}
+
+
+
+enum Position {
+  ADMIN
+  HEAD
+  MANAGEMENT
+  BILLING
+  BCBA
+  RBT
+  DEFAULT
+}
+
+enum BillingStatus {
+  STAGE_0
+  STAGE_1
+  STAGE_2
+  FINISHED
+}
+
+enum PersonalInfoType {
+  PARENTS
+  INSURANCE
+  OTHER
+}
+
+enum CodeCategory {
+  RBT
+  BCBA
+  SUP_RBT
+  SUP_BCBA
+  TRAIN_RBT
+  TRAIN_BCBA
+  OTHER
+}
+
+enum ProgramCategory {
+  COMMUNICATION
+  BEHAVIOR_SKILLS
+  SOCIAL_SKILLS
+  PLAYnLEISURE_SKILLS
+  INDEPENDENT_SKILLS
+  BEHAVIOR_REDUCTIONS
+  MISC
+}
+
+enum ProgramType {
+  YES_OR_NO
+  LIST_YES_OR_NO
+  COUNTER_SUM
+  COUNTER_RESTART
+  MULTIPLE_CHOICE
+  SCALE_FIVE
+  SCALE_TEN
+  TEXT_SMALL
+  TEXT_MEDIUM
+  TEXT_LARGE
+  NONE
+}
+
+enum Visibility {
+  PRIVATE
+  PUBLIC
+}

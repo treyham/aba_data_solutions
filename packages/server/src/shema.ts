@@ -10,16 +10,15 @@ const Mutation = require('./resolvers/mutation')
 
 
 const typeDefs = fs.readFileSync(
-    path.join(__dirname, '../model/typeDefs.graphql'),
-    'utf8'
+  path.join(__dirname, '../model/typeDefs.graphql'),
+  'utf8'
 )
 
-const resolvers = {
-  Query,
-  Mutation
-}
 
 export const schema = makeExecutableSchema({
-  resolvers,
-  typeDefs,
+  resolvers: {
+    Query,
+    Mutation
+  },
+  typeDefs
 })

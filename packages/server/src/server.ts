@@ -16,14 +16,15 @@ server.register(mercurius, {
   context: () => context
 })
 
-server.listen(3000, (err) => {
+const dbPort = 3000
+
+server.listen(dbPort, (err) => {
   if (err) {
     console.error(err)
     process.exit(1)
   }
   console.log(`
-  Testing 1 2 3 4
-  🚀 Server ready at: http://localhost:3000/graphiql
+  🚀 Server ready at: http://localhost:${dbPort}/graphiql
   ⭐️ See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api
   `)
 })
