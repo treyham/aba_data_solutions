@@ -33,6 +33,8 @@ yarn preview        // start vite preview server
 # SQL GraphQL Server w/ fastify-graphql (SDL-first) & SQL
 [I made it up](https://github.com/prisma/prisma-examples/tree/latest/typescript/graphql-fastify-sdl-first)
 
+###### Important! vscode only! enable expiremental decorators in vscode user settings (settingID: js/ts.implicitProjectConfig.experimentalDecorators)
+
 ### Server
 
 ```
