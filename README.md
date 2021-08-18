@@ -6,51 +6,54 @@
 * server
 * vueApp
 
-## Commands
 *All commands can be run directly from the project root like:*
 
-### **dev**
+### **Getting Started**
 
 ```
-yarn start      // start vite dev server and backend dev server 
+// clone the repo 
 ```
-
-### Web
-*During web dev, no bundling has to be done as all of the library package's code is compiled JIT by Vite.*
+### Development
 ```
-yarn start:web      // start vite dev server 
+yarn dev                // start vite dev server and backend dev server 
 ```
+### Deploy
 ```
-yarn preview        // start vite preview server
+yarn build              // build vueApp and prodServer
 ```
-## Recommended IDE Setup
-
-* [VSCode](https://code.visualstudio.com/) 
-    * [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur) 
-        Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
-    * [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
-        Make sure to enable `js/ts.implicitProjectConfig.experimentalDecorators` in settings!
-
 
 # SQL GraphQL Server w/ fastify-graphql (SDL-first) & SQL
 [I made it up](https://github.com/prisma/prisma-examples/tree/latest/typescript/graphql-fastify-sdl-first)
 
-### Server
+*During server dev, changes update on save, as typescript is watched and compiled to dist folder, where nodemon runs entry point*
+### Development
+```
+yarn web:dev            // start vite dev server 
+```
+```
+yarn web:preview        // start vite preview server
+```
+## Recommended IDE Setup
 
-```
-yarn start:server     // starts backend dev server
-```
+* [VSCode](https://code.visualstudio.com/) 
+    * [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur) Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
+    * [Prisma](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma) Make sure to enable `js/ts.implicitProjectConfig.experimentalDecorators` in settings!
 
-### **Build**
-```
-yarn build:vueApp      // build vueApp with vite
-```
 
 # Vue 3 + Typescript + Vite
 
 This template should help get you started developing with Vue 3 and Typescript in Vite.
 
-## Type Support For `.vue` Imports in TS
+*During web dev, no bundling has to be done as all of the library package's code is compiled JIT by Vite.*
+### Development
+```
+yarn web:dev            // start vite dev server 
+```
+```
+yarn web:preview        // start vite preview server
+```
+
+### Type Support For `.vue` Imports in TS
 
 Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
 
