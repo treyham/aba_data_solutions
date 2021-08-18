@@ -7,7 +7,8 @@
     "outDir": "./dist/",
     // "module": "CommonJS",
     "declaration": true,
-    "declarationDir": "./types"
+    "declarationDir": "./types",
+    "experimentalDecorators": true,
   },
   "watchOptions": {
     "watchDirectory": "/home/tham/aba_data_solutions/packages/server/src"
