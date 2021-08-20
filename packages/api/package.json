@@ -7,8 +7,8 @@
     "@graphql-tools/schema": "^8.0.2",
     "@prisma/client": "^2.29.1",
     "@types/node": "^16.4.12",
+    "graphql": "^15.5.1",
     "graphql-scalars": "^1.10.0",
-    "type-graphql": "^1.1.1",
     "typescript": "^4.3.5"
   }
 }
