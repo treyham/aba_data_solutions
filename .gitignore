@@ -3,7 +3,9 @@ node_modules
 dist
 dist-ssr
 *.local
+*.log
 packages/server/types
 migrations
 generated
 .notes
+
