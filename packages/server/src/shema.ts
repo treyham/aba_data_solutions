@@ -1,7 +1,7 @@
+import { resolvers } from '../../api/src/type-graphql/generated';
 import { makeExecutableSchema } from '@graphql-tools/schema'
 // import { DateTimeResolver } from 'graphql-scalars'
 import { Context } from './context'
-import { resolvers } from '../../api/type-graphql/generated/index'
 
 const fs = require('fs');
 const path = require('path');
@@ -18,9 +18,8 @@ const typeDefs = fs.readFileSync(
 
 export const schema = makeExecutableSchema({
   typeDefs,
-  resolvers: {
-    Query,
-    Mutation
-  },
+  resolvers: [
+    
+  ]
   
 })
