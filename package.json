@@ -3,7 +3,14 @@
   "private": true,
   "workspaces": [
     "packages/*"
-],
+  ],
+  "imports": {
+    ".prisma/client": "./node_modules/.prisma/client/index",
+    "#root/*": "./*",
+    "#packages/*": "./packages/*",
+    "#common/*": "./packages/common/*",
+    "#type-graphql/*": "./packages/server/api/type-graphql"
+  },
   "scripts": {
     "dev": "yarn start:web && yarn start:server",
     "start:web": "vite packages/vueApp",
@@ -13,7 +20,7 @@
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "build:common": "cat 'Building common!",
     "build:vueApp": "vite build packages/vueApp"
-},
+  },
   "devDependencies": {
     "eslint": "^7.32.0",
     "jest": "^27.0.6",
