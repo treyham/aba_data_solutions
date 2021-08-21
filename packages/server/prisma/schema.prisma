@@ -9,9 +9,8 @@ generator client {
 
 generator typegraphql {
   provider = "typegraphql-prisma"
-  output = "../../api/type-graphql/generated"
+  output   = "../api/type-graphql/generated"
 }
-
 
 model PersonalInfo {
   id          String           @id @default(uuid())
@@ -80,20 +79,20 @@ model Client {
 }
 
 model Employee {
-  id          String   @id @default(uuid())
-  fullName    String   @db.VarChar(255)
-  displayName String   @unique @db.VarChar(255)
-  email       String?  @unique @db.VarChar(255)
-  password    String   @db.VarChar(255)
-  birthdate   String?  @db.VarChar(8)
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
-  position    Position
-  Head        Head?
-  Billing     Billing?
-  Bcba        Bcba?
-  Rbt         Rbt?
-  logins      Login[]
+  id             String          @id @default(uuid())
+  fullName       String          @db.VarChar(255)
+  displayName    String          @unique @db.VarChar(255)
+  email          String?         @unique @db.VarChar(255)
+  password       String          @db.VarChar(255)
+  birthdate      String?         @db.VarChar(8)
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+  position       Position
+  Administration Administration?
+  Billing        Billing?
+  Bcba           Bcba?
+  Rbt            Rbt?
+  logins         Login[]
 
   @@map("employee")
 }
@@ -109,14 +108,21 @@ model Login {
   @@map("login")
 }
 
-model Head {
-  id         String   @id @default(uuid())
-  employee   Employee @relation(fields: [employeeId], references: [id])
-  employeeId String
-
+model Administration {
+  id              String          @id @default(uuid())
+  employee        Employee        @relation(fields: [employeeId], references: [id])
+  employeeId      String
+  PermissionLevel PermissionLevel @default(LIMITED)
 
   @@index([employeeId], name: "employeeId")
-  @@map("head")
+  @@map("administration")
+}
+
+enum PermissionLevel {
+  SERVER_ADMIN_ALL
+  BUSINESS_ALL
+  LIMITED
+  OTHER
 }
 
 model Billing {
@@ -243,7 +249,6 @@ model Record {
 
 enum Position {
   ADMIN
-  HEAD
   MANAGEMENT
   BILLING
   BCBA
