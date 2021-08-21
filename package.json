@@ -5,7 +5,6 @@
     "packages/*"
   ],
   "imports": {
-    ".prisma/client": "./node_modules/.prisma/client/index",
     "#root/*": "./*",
     "#packages/*": "./packages/*",
     "#common/*": "./packages/common/*",
