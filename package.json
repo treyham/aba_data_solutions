@@ -16,6 +16,7 @@
     "preview": "vite serve packages/vueApp",
     "start:server": "nodemon packages/server/dist/src/index.js",
     "watch:server": "cd packages/server && yarn watch",
+    "compile:server": "cd packages/server && yarn compile",
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "build:common": "cat 'Building common!",
     "build:vueApp": "vite build packages/vueApp"

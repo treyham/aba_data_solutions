@@ -5,7 +5,8 @@
   "main": "src/server.ts",
   "license": "MIT",
   "scripts": {
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "compile": "tsc"
   },
   "devDependencies": {
     "@graphql-tools/schema": "^8.0.2",
