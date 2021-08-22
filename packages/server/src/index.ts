@@ -31,6 +31,7 @@ async function main() {
     `)
   })
 }
+main().catch(console.error)
 
 
 // watch ben's vid on how to do the ts compile stuff
