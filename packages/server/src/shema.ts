@@ -1,25 +1,25 @@
-import { resolvers } from '../../api/src/type-graphql/generated';
+//import { resolvers } from './../api/type-graphql/generated/index';
 import { makeExecutableSchema } from '@graphql-tools/schema'
 // import { DateTimeResolver } from 'graphql-scalars'
 import { Context } from './context'
 
-const fs = require('fs');
-const path = require('path');
 
-const Query = require('./resolvers/query')
-const Mutation = require('./resolvers/mutation')
+// const Query = require('./resolvers/query')
+// const Mutation = require('./resolvers/mutation')
 
+const typeDefs = `
+  type Query {
+    hello: String
+  }  
+`
 
-const typeDefs = fs.readFileSync(
-  path.join(__dirname, '../model/typeDefs.graphql'),
-  'utf8'
-)
-
+const resolvers = {
+  Query: {
+    hello: () => 'world'
+  }
+}
 
 export const schema = makeExecutableSchema({
   typeDefs,
-  resolvers: [
-    
-  ]
-  
+  resolvers
 })
