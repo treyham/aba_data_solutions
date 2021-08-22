@@ -11,6 +11,7 @@ import {
   Root,
 } from "type-graphql"
 import {
+  resolvers,
   Employee,
   EmployeeRelationsResolver,
   FindUniqueEmployeeResolver,
@@ -18,14 +19,15 @@ import {
 
 @Resolver()
 class CustomEmployeeResolver {
-  async test() {
-    return "testing 123"
+  async createEmployee() {
+    return "ok time to create an employee"
   }
 }
 
 
 export const schema = await buildSchema({
   resolvers: [
+    ...resolvers,
     CustomEmployeeResolver
   ]
 })
