@@ -9,6 +9,7 @@ import { context } from './context.js'
 
 declare module 'mercurius' { }
 
+
 async function main() {
   const server = fastify()
   const dbPort = 3000
