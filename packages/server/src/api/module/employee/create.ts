@@ -21,19 +21,19 @@ export class CreateEmployeeResolver {
     return "world"
   }
 
-  @Mutation(() => String)
-  async createEmployee(
-    @Arg('fullname') fullName: string,
-    @Arg('displayName') displayName: string,
-    @Arg('email') email: string,
-    @Arg('password') password: string,
-    @Arg('birthdate') birthdate: string,
-    @Arg('tempPosition') tempPosition: string
-    //   @Arg('created_at') created_at: string,
-    //   @Arg('updated_at') updated_at: string,
-  ) {
-    const hashedPass = await bcrypt.hash(password, 'temp')
-    // const newEmployee = await prisma.
-    return fullName
-  }
+//   @Mutation(() => String)
+//   async createEmployee(
+//     @Arg('fullname') fullName: string,
+//     @Arg('displayName') displayName: string,
+//     @Arg('email') email: string,
+//     @Arg('password') password: string,
+//     @Arg('birthdate') birthdate: string,
+//     @Arg('tempPosition') tempPosition: string
+//     //   @Arg('created_at') created_at: string,
+//     //   @Arg('updated_at') updated_at: string,
+//   ) {
+//     const hashedPass = await bcrypt.hash(password, 'temp')
+//     // const newEmployee = await prisma.
+//     return fullName
+//   }
 }
