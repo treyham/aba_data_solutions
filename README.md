@@ -19,7 +19,7 @@ yarn dev                // start vite dev server and backend dev server
 ```
 ### Deploy
 ```
-yarn build              // build vueApp and prodServer
+yarn build              // build vueApp and production server
 ```
 
 # SQL GraphQL Server w/ fastify-graphql (SDL-first) & SQL
@@ -28,10 +28,13 @@ yarn build              // build vueApp and prodServer
 *During server dev, changes update on save, as typescript is watched and compiled to dist folder, where nodemon runs entry point*
 ### Development
 ```
-yarn web:dev            // start vite dev server 
+yarn start:server       // run server from dist folder 
 ```
 ```
-yarn web:preview        // start vite preview server
+yarn compile            // compile server 
+```
+```
+yarn generate           // generates prisma client and correspondiong types
 ```
 ## Recommended IDE Setup
 
@@ -47,10 +50,10 @@ This template should help get you started developing with Vue 3 and Typescript i
 *During web dev, no bundling has to be done as all of the library package's code is compiled JIT by Vite.*
 ### Development
 ```
-yarn web:dev            // start vite dev server 
+yarn dev:web            // start vite dev server 
 ```
 ```
-yarn web:preview        // start vite preview server
+yarn preview            // start vite preview server
 ```
 
 ### Type Support For `.vue` Imports in TS
@@ -75,6 +78,7 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 * Ben Awad's 
     * [Fullstack Tut](https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=0s)
     * And much much [more...](https://www.youtube.com/channel/UC-8QAzbLcRglXeN_MY9blyw)
+* Michał Lytek's [demo](https://www.youtube.com/watch?v=v6cNeHCfSHs&t=957s) 
 * bytefish's 
     * [Writeup](https://javascript.plainenglish.io/set-up-vue3-enterprise-level-development-environments-with-vite-step-by-step-guide-32964d1df60e)
     * [github](https://github.com/BytefishMedium/vite-vue3-starter)
