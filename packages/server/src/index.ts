@@ -6,7 +6,7 @@ import mercurius, {
 } from 'mercurius'
 import { schema } from './shema.js'
 import { context } from './context.js'
-import { prisma } from ".prisma/client"
+import { prisma } from '../../../node_modules/.prisma/client'
 
 
 declare module 'mercurius' { }
