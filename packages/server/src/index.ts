@@ -19,7 +19,7 @@ async function main() {
   server.register(mercurius, {
     schema,
     graphiql: !__prod__,
-    context: ({ }: any) => context // ({  })
+    context: () => ({ prisma })                     // provide the prisma instance to the context
   })
   
   server.listen(dbPort, () => {
