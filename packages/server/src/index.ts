@@ -6,9 +6,10 @@ import mercurius, {
 } from 'mercurius'
 import { schema } from './shema.js'
 import { context } from './context.js'
+import { prisma } from ".prisma/client"
+
 
 declare module 'mercurius' { }
-
 
 async function main() {
   const server = fastify()
@@ -18,21 +19,18 @@ async function main() {
   server.register(mercurius, {
     schema,
     graphiql: !__prod__,
-    context: () => context
+    context: ({ }: any) => context // ({  })
   })
   
-  server.listen(dbPort, (err) => {
-    if (err) {
-      console.error(err)
-      process.exit(1)
-    }
+  server.listen(dbPort, () => {
     console.log(`
     🚀 Server ready at: http://localhost:${dbPort}/graphiql
     ⭐️ See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api
     `)
   })
 }
-main().catch(console.error)
+main()
+.catch(console.error)
 
 
 // watch ben's vid on how to do the ts compile stuff
