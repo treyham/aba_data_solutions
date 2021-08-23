@@ -18,7 +18,7 @@
     "generate": "cd packages/server && npx prisma generate",
     "start:server": "node --experimental-specifier-resolution=node packages/server/dist/src/index.js",
     "watch:server": "cd packages/server && yarn watch",
-    "compile:server": "cd packages/server && yarn compile",
+    "compile": "cd packages/server && yarn build",
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "build:common": "cat 'Building common!",
     "build:vueApp": "vite build packages/vueApp"

@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "watch": "tsc -w",
-    "compile": "tsc"
+    "build": "tsc"
   },
   "devDependencies": {
     "@graphql-tools/schema": "^8.0.2",
