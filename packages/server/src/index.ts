@@ -6,7 +6,6 @@ import mercurius, {
 } from 'mercurius'
 import { schema } from './shema.js'
 import { context } from './context.js'
-import { prisma } from '../../../node_modules/.prisma/client'
 
 
 declare module 'mercurius' { }
@@ -19,7 +18,7 @@ async function main() {
   server.register(mercurius, {
     schema,
     graphiql: !__prod__,
-    context: () => ({ prisma })                     // provide the prisma instance to the context
+    context: () => context                             // provide the prisma instance to the context
   })
   
   server.listen(dbPort, () => {
@@ -29,8 +28,17 @@ async function main() {
     `)
   })
 }
+/**
+ * If the below script runs multiple times in the context of a long-
+ * running application without calling ```$disconnect()```, a new
+ * connection pool is created with each new instance of
+ * ```{ PrismaClient }```.
+ */
 main()
 .catch(console.error)
+.finally(async () => {
+  await context.prisma.$disconnect()
+})
 
 
 // watch ben's vid on how to do the ts compile stuff
