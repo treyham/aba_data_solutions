@@ -17,7 +17,7 @@ async function main() {
   server.register(mercurius, {
     schema,
     graphiql: !__prod__,
-    context: () => context                             // provide the prisma instance to the context
+    context: () => (context)                             // provide the prisma instance to the context
   })
   
   server.listen(dbPort, () => {
@@ -36,8 +36,8 @@ async function main() {
 main()
 .catch(console.error)
 .finally(async () => {
-  console.log("Disconnecting...")
   await context.prisma.$disconnect()
+  console.log("Disconnecting...")
 })
 
 
