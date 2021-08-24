@@ -7,10 +7,10 @@ import {
     Query,
     Mutation,
     Arg,
-    // buildSchema,
-    // FieldResolver,
+    buildSchema,
+    FieldResolver,
     Ctx,
-    // Root,
+    Root,
   } from "type-graphql"
 
 const employee: Prisma.EmployeeCreateInput = {
