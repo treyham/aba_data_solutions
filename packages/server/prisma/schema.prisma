@@ -119,13 +119,6 @@ model Administration {
   @@map("administration")
 }
 
-enum PermissionLevel {
-  SERVER_ADMIN_ALL
-  BUSINESS_ALL
-  LIMITED
-  OTHER
-}
-
 model Billing {
   id         String   @id @default(uuid())
   employee   Employee @relation(fields: [employeeId], references: [id])
@@ -255,6 +248,13 @@ enum Position {
   BCBA
   RBT
   DEFAULT
+}
+
+enum PermissionLevel {
+  SERVER_ADMIN_ALL
+  BUSINESS_ALL
+  LIMITED
+  OTHER
 }
 
 enum BillingStatus {
