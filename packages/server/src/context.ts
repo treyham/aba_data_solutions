@@ -1,7 +1,6 @@
 import { PrismaClient } from '../node_modules/.prisma/client'
 const prisma = new PrismaClient()
 
-
 /**
  * ## exit hook
  * The ```beforeExit``` hook runs when Prisma is triggered externally
@@ -20,14 +19,6 @@ const prisma = new PrismaClient()
 //   })
 // })
 
-
-/**
- * ```
- * {
- *     prisma: Prisma.PrismaClient
- * }
- * ```
- */
 export interface Context {
   prisma: PrismaClient
 }
