@@ -2,7 +2,7 @@ import "reflect-metadata"
 import { buildSchema } from "type-graphql"
 
 // generated
-import * as models from '@generated/type-graphql/models'
+// import * as models from '@generated/type-graphql/models'
 import {
   AdministrationCrudResolver,
   BcbaCrudResolver,
@@ -49,7 +49,6 @@ export const schema = await buildSchema({
     /**
      *                        G e n e r a t e d 
      */ 
-    // types  
     // crud 
     AdministrationCrudResolver,
     BcbaCrudResolver,
@@ -85,7 +84,6 @@ export const schema = await buildSchema({
     /**
      *                          C u s t o m 
      */ 
-    // custom
     CreateEmployeeResolver
   ]
 })
