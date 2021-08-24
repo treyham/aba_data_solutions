@@ -30,7 +30,7 @@ export class CreateEmployeeResolver {
 
   /**
    * @param ctx ```ctx.prisma```
-   * @param employee```{
+   * @param employeeInput```{
    *   fullName: string,
    *   displayName: string,
    *   password: string,
@@ -39,7 +39,7 @@ export class CreateEmployeeResolver {
    * @returns ```true | false```
    */
   @Mutation(() => Boolean)
-  async employeeCreate(
+  async createEmployeeEncryptPass(
     @Ctx() ctx: Context,
     @Arg("employeeInput") employeeInput: EmployeeCreateInput
   ): Promise<boolean> {
