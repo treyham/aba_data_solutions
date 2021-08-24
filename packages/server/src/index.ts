@@ -7,12 +7,11 @@ import mercurius, {
 import { schema } from './shema.js'
 import { context } from './context.js'
 
-
 declare module 'mercurius' { }
 
 async function main() {
   const server = fastify()
-  const dbPort = 3000
+  const dbPort = 3001
   const __prod__ = false
   console.log(`Dev: ${!__prod__}`)
   server.register(mercurius, {
