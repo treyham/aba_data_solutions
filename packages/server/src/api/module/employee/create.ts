@@ -1,7 +1,7 @@
 import { Context } from './../../../../types/src/context.d';
 import "reflect-metadata"
 import * as bcrypt from 'bcryptjs'
-import { PrismaClient } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import {
     Resolver,
     Query,
@@ -17,26 +17,14 @@ import {
 @Resolver()
 export class CreateEmployeeResolver {
   @Query(() => String)
-  async hello() {
-    return "world"
+  async testing() {
+    return "attention pls"
   }
 
-  
-
-  @Mutation(() => String)
-  async createEmployee(
+  @Query(() => String)
+  async employeeCount(
     @Ctx() ctx: Context,
-    @Arg('fullname') fullName: string,
-    @Arg('displayName') displayName: string,
-    @Arg('email') email: string,
-    @Arg('password') password: string,
-    @Arg('birthdate') birthdate: string,
-    @Arg('tempPosition') tempPosition: string
-    //   @Arg('created_at') created_at: string,
-    //   @Arg('updated_at') updated_at: string,
-  ) {
-    const hashedPass = await bcrypt.hash(password, 'temp')
-    // const newEmployee = await ctx.prisma.employee.create()
-    return fullName
+  ):Promise<number> {
+    return await ctx.prisma.employee.count()
   }
 }
