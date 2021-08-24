@@ -4,13 +4,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "imports": {
-    "#root/*": "./*",
-    "#packages/*": "./packages/*",
-    "#common/*": "./packages/common/*",
-    "#.prisma/client": "./node_modules/.prisma/client",
-    "#type-graphql/*": "./packages/server/api/type-graphql"
-  },
   "scripts": {
     "dev": "yarn start:web && yarn dev:server",
     "start:web": "vite packages/vueApp",

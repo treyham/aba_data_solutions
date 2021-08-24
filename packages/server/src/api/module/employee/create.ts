@@ -36,7 +36,7 @@ export class CreateEmployeeResolver {
     //   @Arg('updated_at') updated_at: string,
   ) {
     const hashedPass = await bcrypt.hash(password, 'temp')
-    //const newEmployee = await ctx.prisma.employee.create()
+    // const newEmployee = await ctx.prisma.employee.create()
     return fullName
   }
 }

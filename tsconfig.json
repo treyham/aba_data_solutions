@@ -82,5 +82,8 @@
     // necessary for un-breaking jest types broken by cypress' chai dependency
     // https://github.com/cypress-io/cypress/issues/1087#issuecomment-353370449
     //"./node_modules/jest", 
+  ],
+  "exclude": [
+    
   ]
 }
