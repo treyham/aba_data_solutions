@@ -52,7 +52,6 @@ export class CreateEmployeeResolver {
         // tempPosition: employee.tempPosition,
         // position: employee.position
       }
-      
     })
     return !!isCreated
   }
