@@ -19,7 +19,6 @@ const employee: EmployeeCreateInput = {
   fullName: "", 
   displayName: "", 
   password: await bcrypt.hash("password", "tempHash"), 
-  tempPosition: "", 
   position: "ADMIN"
 }
 
