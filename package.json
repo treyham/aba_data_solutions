@@ -15,7 +15,7 @@
     "build:server": "cd packages/server && yarn build",
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "build:common": "cat 'Building common!",
-    "build:web": "vite build packages/vueApp"
+    "build:web": "vite build packages/vueApp" 
   },
   "devDependencies": {
     "eslint": "^7.32.0",
