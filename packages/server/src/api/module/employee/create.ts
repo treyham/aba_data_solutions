@@ -1,8 +1,7 @@
+import "reflect-metadata"
 import { EmployeeCreateInput } from '../../../../node_modules/@generated/type-graphql';
 import { Context } from './../../../../types/src/context.d'
-import "reflect-metadata"
-import * as bcrypt from 'bcryptjs'
-import { Prisma } from 'packages/server/node_modules/.prisma/client'
+import argon2 from 'argon2'
 
 import {
     Resolver,
@@ -44,9 +43,11 @@ export class CreateEmployeeResolver {
     @Ctx() ctx: Context,
     @Arg("employeeInput") employeeInput: EmployeeCreateInput
   ): Promise<boolean> {
+    console.log('password: ', employeeInput.password)
     // temporarally encrypt password here until we can do it sooner
-    const encryptedPass = await bcrypt.hash(employeeInput.password, "tempSalt")
-    // employeeInput.password = encryptedPass
+    const encryptedPass = await argon2.hash(employeeInput.password)
+    // const encryptedPass = employeeInput.password
+    console.log('encryptedPassword: ', encryptedPass)
     const isCreated = await ctx.prisma.employee.create({
       data: {
         fullName: employeeInput.fullName,
