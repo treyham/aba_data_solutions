@@ -1,5 +1,5 @@
-import Prisma from '@prisma/client'
-const prisma = new Prisma.PrismaClient()
+import { PrismaClient } from '../node_modules/.prisma/client'
+const prisma = new PrismaClient()
 
 
 /**
@@ -29,7 +29,7 @@ const prisma = new Prisma.PrismaClient()
  * ```
  */
 export interface Context {
-  prisma: Prisma.PrismaClient
+  prisma: PrismaClient
 }
 
 export const context: Context = {

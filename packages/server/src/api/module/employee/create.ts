@@ -1,24 +1,19 @@
-import { Context } from './../../../../types/src/context.d';
+import { EmployeeCreateInput } from '../../../../node_modules/@generated/type-graphql';
+import { Context } from './../../../../types/src/context.d'
 import "reflect-metadata"
 import * as bcrypt from 'bcryptjs'
-import { Prisma } from '@prisma/client'
+import { Prisma } from 'packages/server/node_modules/.prisma/client'
+
 import {
     Resolver,
     Query,
     Mutation,
     Arg,
-    buildSchema,
     FieldResolver,
     Ctx,
     Root,
   } from "type-graphql"
 
-const employee: Prisma.EmployeeCreateInput = {
-  fullName: "", 
-  displayName: "", 
-  password: await bcrypt.hash("password", "tempHash"), 
-  position: "ADMIN"
-}
 
 @Resolver()
 export class CreateEmployeeResolver {
@@ -34,21 +29,35 @@ export class CreateEmployeeResolver {
     return await ctx.prisma.employee.count()
   }
 
+  /**
+   * ```
+   * mutation {
+   *   employeeCreate(employeeInput: {
+   *   fullName: "",
+   *   displayName: "",
+   *   password: "",
+   *   position: ADMIN
+   *   })
+   * }
+   * ```
+   * @param ctx 
+   * @param employee 
+   * @returns ```true | false```
+   */
   @Mutation(() => Boolean)
   async employeeCreate(
     @Ctx() ctx: Context,
-    @Arg("employeeInput") EmployeeInput: Prisma.EmployeeCreateInput
+    @Arg("employeeInput") employeeInput: EmployeeCreateInput
   ): Promise<boolean> {
     // temporarally encrypt password here until we can do it sooner
-    EmployeeInput.password = await bcrypt.hash(EmployeeInput.password, "tempSalt")
-    const isCreated = ctx.prisma.employee.create({
+    // const encryptedPass = await bcrypt.hash(employee.password, "tempSalt")
+    // employee.password = encryptedPass
+    const isCreated = await ctx.prisma.employee.create({
       data: {
-        ...EmployeeInput
-        // fullName: employee.fullName,
-        // displayName: employee.displayName,
-        // password: employee.password,
-        // tempPosition: employee.tempPosition,
-        // position: employee.position
+        fullName: employeeInput.fullName,
+        displayName: employeeInput.displayName,
+        password: employeeInput.password,
+        position: employeeInput.position
       }
     })
     return !!isCreated
