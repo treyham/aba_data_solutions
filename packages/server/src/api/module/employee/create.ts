@@ -12,10 +12,8 @@ import {
     Ctx,
     // Root,
   } from "type-graphql"
-import { EmployeeCreateInput } from '../../../../../../node_modules/@generated/type-graphql'
 
-
-const employee: EmployeeCreateInput = {
+const employee: Prisma.EmployeeCreateInput = {
   fullName: "", 
   displayName: "", 
   password: await bcrypt.hash("password", "tempHash"), 
@@ -39,9 +37,10 @@ export class CreateEmployeeResolver {
   @Mutation(() => Boolean)
   async employeeCreate(
     @Ctx() ctx: Context,
-    @Arg("employeeInput") EmployeeInput: EmployeeCreateInput
+    @Arg("employeeInput") EmployeeInput: Prisma.EmployeeCreateInput
   ): Promise<boolean> {
-    // const encryptedPass = bcrypt.hash(password, "tempHash")
+    // temporarally encrypt password here until we can do it sooner
+    EmployeeInput.password = await bcrypt.hash(EmployeeInput.password, "tempSalt")
     const isCreated = ctx.prisma.employee.create({
       data: {
         ...EmployeeInput
