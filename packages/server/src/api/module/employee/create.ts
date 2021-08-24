@@ -30,18 +30,13 @@ export class CreateEmployeeResolver {
   }
 
   /**
-   * ```
-   * mutation {
-   *   employeeCreate(employeeInput: {
-   *   fullName: "",
-   *   displayName: "",
-   *   password: "",
-   *   position: ADMIN
-   *   })
-   * }
-   * ```
-   * @param ctx 
-   * @param employee 
+   * @param ctx ```ctx.prisma```
+   * @param employee```{
+   *   fullName: string,
+   *   displayName: string,
+   *   password: string,
+   *   position: enum
+   * }```
    * @returns ```true | false```
    */
   @Mutation(() => Boolean)
@@ -50,13 +45,13 @@ export class CreateEmployeeResolver {
     @Arg("employeeInput") employeeInput: EmployeeCreateInput
   ): Promise<boolean> {
     // temporarally encrypt password here until we can do it sooner
-    // const encryptedPass = await bcrypt.hash(employee.password, "tempSalt")
-    // employee.password = encryptedPass
+    const encryptedPass = await bcrypt.hash(employeeInput.password, "tempSalt")
+    // employeeInput.password = encryptedPass
     const isCreated = await ctx.prisma.employee.create({
       data: {
         fullName: employeeInput.fullName,
         displayName: employeeInput.displayName,
-        password: employeeInput.password,
+        password: encryptedPass,
         position: employeeInput.position
       }
     })
