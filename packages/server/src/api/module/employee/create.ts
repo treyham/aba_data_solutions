@@ -24,7 +24,7 @@ export class CreateEmployeeResolver {
   @Query(() => String)
   async employeeCount(
     @Ctx() ctx: Context,
-  ):Promise<number> {
+  ): Promise<number> {
     return await ctx.prisma.employee.count()
   }
 }
