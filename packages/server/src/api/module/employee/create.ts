@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { EmployeeCreateInput } from '../../../../node_modules/@generated/type-graphql';
+import { EmployeeCreateInput } from '@generated/type-graphql';
 import { Context } from './../../../../types/src/context.d'
 import argon2 from 'argon2'
 
