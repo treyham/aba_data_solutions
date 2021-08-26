@@ -11,7 +11,7 @@ import {
     FieldResolver,
     Ctx,
     Root,
-  } from "type-graphql"
+} from "type-graphql"
 
 
 @Resolver()
@@ -29,31 +29,26 @@ export class CreateEmployeeResolver {
   }
 
   /**
-   * @param ctx ```ctx.prisma```
-   * @param employeeInput```{
-   *   fullName: string,
-   *   displayName: string,
-   *   password: string,
-   *   position: enum
-   * }```
+   * @param ctx Context
+   * @param createInput 
    * @returns ```true | false```
    */
   @Mutation(() => Boolean)
   async createEmployeeEncryptPass(
     @Ctx() ctx: Context,
-    @Arg("employeeInput") employeeInput: EmployeeCreateInput
+    @Arg("createInput") createInput: EmployeeCreateInput
   ): Promise<boolean> {
-    console.log('password: ', employeeInput.password)
+    console.log('password: ', createInput.password)
     // temporarally encrypt password here until we can do it sooner
-    const encryptedPass = await argon2.hash(employeeInput.password)
+    const encryptedPass = await argon2.hash(createInput.password)
     // const encryptedPass = employeeInput.password
     console.log('encryptedPassword: ', encryptedPass)
     const isCreated = await ctx.prisma.employee.create({
       data: {
-        fullName: employeeInput.fullName,
-        displayName: employeeInput.displayName,
+        fullName: createInput.fullName,
+        displayName: createInput.displayName,
         password: encryptedPass,
-        position: employeeInput.position
+        position: createInput.position
       }
     })
     return !!isCreated
