@@ -6,7 +6,7 @@ import mercurius, {
 } from 'mercurius'
 import { schema } from './shema.js'
 import { context } from './context.js'
-
+import AltairFastify from 'altair-fastify-plugin'
 declare module 'mercurius' { }
 
 async function main() {
@@ -16,8 +16,16 @@ async function main() {
   console.log(`Dev: ${!__prod__}`)
   server.register(mercurius, {
     schema,
-    graphiql: !__prod__,
+    graphiql: false,
+    ide: false,
+    path: '/graphql',
     context: () => (context)                             // provide the prisma instance to the context
+  })
+
+  server.register(AltairFastify, {
+    path: '/altair',
+    baseURL: '/altair/',
+    endpointURL: '/graphql'                              // should be the same as the mercurius 'path'
   })
   
   server.listen(dbPort, () => {
