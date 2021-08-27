@@ -2,8 +2,8 @@ import "reflect-metadata"
 import { buildSchema } from "type-graphql"
 
 // generated
-// import * as models from '@generated/type-graphql/models'
 import {
+  // crud
   AdministrationCrudResolver,
   BcbaCrudResolver,
   BillingCrudResolver,
@@ -19,9 +19,8 @@ import {
   RecordCrudResolver,
   SessionCrudResolver,
   TreatmentPlanCrudResolver,
-  TreatmentPlan_to_ProgramCrudResolver
-} from '@generated/type-graphql/resolvers/crud'
-import {
+  TreatmentPlan_to_ProgramCrudResolver,
+  // relations
   AdministrationRelationsResolver,
   BcbaRelationsResolver,
   BillingRelationsResolver,
@@ -38,8 +37,7 @@ import {
   SessionRelationsResolver,
   TreatmentPlanRelationsResolver,
   // TreatmentPlan_to_PrograRelationsdResolver
-} from '@generated/type-graphql/resolvers/relations'
-
+} from '@-/api/graphql/generated'
 // custom
 import { CreateEmployeeResolver } from './api/module/employee/create'
 

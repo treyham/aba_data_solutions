@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { LoginCreateInput } from '@generated/type-graphql';
+import { LoginCreateInput } from '@-/api/graphql/generated';
 import { Context } from '@-/server/src/context'
 import argon2 from 'argon2'
 
