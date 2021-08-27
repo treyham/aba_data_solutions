@@ -9,6 +9,7 @@ generator client {
 
 generator typegraphql {
   provider = "typegraphql-prisma"
+  output = "../../api/graphql/generated"
 }
 
 model PersonalInfo {
