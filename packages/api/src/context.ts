@@ -1,6 +1,6 @@
+import { Context } from './graphql/interfaces'
 import { PrismaClient } from '.prisma/client'
 const prisma = new PrismaClient()
-
 /**
  * ## exit hook
  * The ```beforeExit``` hook runs when Prisma is triggered externally
@@ -18,11 +18,6 @@ const prisma = new PrismaClient()
 //     },
 //   })
 // })
-
-export interface Context {
-  prisma: PrismaClient
-}
-
 export const context: Context = {
   prisma: prisma
 }
