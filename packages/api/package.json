@@ -8,6 +8,9 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
+  "prisma": {
+    "seed:basic": "prisma/seeds/basic.ts" 
+  },
   "dependencies": {
     "@prisma/client": "2.30.0",
     "@app/config": "1.0.0"
