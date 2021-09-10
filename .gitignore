@@ -8,4 +8,6 @@ migrations
 generated
 dist
 dist-ssr
+.env
 .notes
+*.tsbuildinfo
