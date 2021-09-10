@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.packages.json",
+  //"include": ["./src/**/*.ts"],
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    // "module": "CommonJS",
+    "declaration": true,
+    "typeRoots": [
+      "./node_modules/@types",
+    ]
+  },
+  "include": [ "src/main.ts" ],
+  "exclude": [  
+    "node_modules",
+    "dist" 
+  ],
+  "references": [
+    { "path": "../api" }
+  ]
+}

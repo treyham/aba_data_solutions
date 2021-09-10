@@ -1,18 +1,19 @@
 {
-  "name": "@-/root",
+  "name": "app",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "config"
   ],
   "scripts": {
     "dev": "yarn start:web && yarn dev:server",
     "start:web": "vite packages/vueApp",
     "preview": "vite serve packages/vueApp",
-    "dev:server": "nodemon packages/server/dist/src/index.js",
-    "generate": "cd packages/server && npx prisma generate",
-    "start:server": "node --experimental-specifier-resolution=node packages/server/dist/index.js",
+    "generate": "cd packages/api && npx prisma generate",
+    "start:server": "node --experimental-specifier-resolution=node packages/server/dist/main.js",
     "watch:server": "cd packages/server && yarn watch",
-    "build:server": "cd packages/server && yarn build",
+    "dev:server": "cd packages/server && yarn build",
+    "build:server": "cd packages/server && yarn force",
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "build:common": "cat 'Building common!",
     "build:web": "vite build packages/vueApp" 
@@ -21,6 +22,7 @@
     "eslint": "^7.32.0",
     "jest": "^27.0.6",
     "lerna": "^4.0.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "@types/node": "^16.4.12"
   }
 }
