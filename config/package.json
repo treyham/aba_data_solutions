@@ -1,0 +1,12 @@
+{
+  "name": "@app/config",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "typescript": "^4.3.5"
+  }
+}

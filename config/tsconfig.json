@@ -1,0 +1,12 @@
+{
+    "extends": "../tsconfig.packages.json",
+    // "include": ["./src/index.ts"],
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "./src",
+        "outDir": "./dist",
+        // "module": "CommonJS",
+        "declaration": true,
+    },
+    "exclude": [ "./dist/**/*" ]
+}
