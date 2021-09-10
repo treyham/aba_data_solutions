@@ -1,4 +1,4 @@
-import { Context } from './graphql/interfaces'
+import { Context } from './interfaces'
 import { PrismaClient } from '.prisma/client'
 const prisma = new PrismaClient()
 /**

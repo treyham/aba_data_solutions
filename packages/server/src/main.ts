@@ -1,13 +1,13 @@
+import AltairFastify from 'altair-fastify-plugin'
 import fastify from 'fastify'
 import mercurius, {
   IFieldResolver,
   IResolvers,
   MercuriusContext,
 } from 'mercurius'
-import { schema, context } from '@app/api'
-// import { context } from '@app/api'
-import AltairFastify from 'altair-fastify-plugin'
-import { config } from '@app/config' 
+import { schema, context,  } from '@app/api'
+import { config } from '@app/config'                      // must be after import from @app/api
+
 declare module 'mercurius' { }
 
 
@@ -17,27 +17,21 @@ async function main() {
   if (!config.node_dev) () => {
     console.log('uhhhh, Improvise!!')
   }
-  server.register(mercurius, {
+  // await server.register(require('middie'))
+  await server.register(mercurius, {
     schema,
     graphiql: false,
     ide: false,
     path: '/graphql',
     context: () => (context)                             // provide the prisma instance to the context
   })
-
-  server.register(AltairFastify, {
+  await server.register(AltairFastify, {
     path: '/altair',
     baseURL: '/altair/',
     endpointURL: '/graphql'                              // should be the same as the mercurius 'path'
   })
-  
+  return server
 // See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api  
-  server.listen(config.server_port as string, () => {
-    console.log(`
-    🚀 Dev Server ready at: http://localhost:${config.server_port}/altair
-    ⭐️ You rock!
-    `)
-  })
 }
 /**
  * If the below script runs multiple times in the context of a long-
@@ -46,11 +40,18 @@ async function main() {
  * ```{ PrismaClient }```.
  */
 main()
-.catch(console.error)
-.finally(async () => {
-  await context.prisma.$disconnect()
-  console.log("Disconnecting...")
-})
+  // https://github.com/fastify/middie
+  .then(server => server.listen(config.server_port as string, () => {
+    console.log(`
+    🚀 Dev Server ready at: http://localhost:${config.server_port}/altair
+    ⭐️ You rock!
+    `)
+  }))                                                       
+  .catch(console.error)
+  .finally(async () => {
+    await context.prisma.$disconnect()
+    console.log("Disconnecting...") 
+  })
 
 
 // watch ben's vid on how to do the ts compile stuff

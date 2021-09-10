@@ -1,5 +1,6 @@
 export * from './context'
 export * from './shema'
 // export * from './graphql/generated'
-export * from './graphql/interfaces'
+export * from './interfaces'
 export * from './graphql/resolvers'
+export * from './graphql/middleware'
