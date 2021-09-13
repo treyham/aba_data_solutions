@@ -12,7 +12,7 @@ declare module 'mercurius' { }
 
 
 async function main() {
-  const server = fastify()
+  const server = fastify({ logger: !config.node_dev})
 
   if (!config.node_dev) () => {
     console.log('uhhhh, Improvise!!')
