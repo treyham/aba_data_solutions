@@ -33,7 +33,6 @@ export interface Config {
 
 }
 
-
 export const config: Config = {
     node_dev: NODE_DEV as string,
     vueapp_port: VUE_APP_PORT as string,
