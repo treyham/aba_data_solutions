@@ -1,6 +1,6 @@
 import AltairFastify from 'altair-fastify-plugin'
-import { FastifyCookieOptions } from 'fastify-cookie'
-import cookie from 'fastify-cookie'
+import cookie, { FastifyCookieOptions } from 'fastify-cookie'
+import fastifySession from 'fastify-session'
 import fastify from 'fastify'
 import mercurius, {
   IFieldResolver,
@@ -9,9 +9,9 @@ import mercurius, {
 } from 'mercurius'
 import { schema, context,  } from '@app/api'
 import { config } from '@app/config'                      // must be after import from @app/api
+import { request } from 'http'
 
 declare module 'mercurius' { }
-
 
 async function main() {
   const server = fastify({ logger: !config.node_dev})
@@ -19,24 +19,36 @@ async function main() {
   if (!config.node_dev) () => {
     console.log('uhhhh, Improvise!!')
   }
-  // await server.register(require('middie'))
+  // register plugins
   await server.register(mercurius, {
     schema,
     graphiql: false,
     ide: false,
     path: '/graphql',
-    context: () => (context)                             // provide the prisma instance to the context
+    context: () => (context)                              // provide the prisma instance to the context
   })
   // See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api  
   await server.register(AltairFastify, {
     path: '/altair',
     baseURL: '/altair/',
-    endpointURL: '/graphql'                              // should be the same as the mercurius 'path'
+    endpointURL: '/graphql'                               // should be the same as the mercurius 'path'
+  })
+  await server.register(fastifySession, {
+    secret: config.session_secret
   })
   await server.register(cookie, {
-    secret: "my-secret",                                  // for cookies signature
-    parseOptions: {}                                      // options for parsing cookies
+    secret: config.cookie_secret,                         // for cookies signature
+    parseOptions: {
+      httpOnly: true
+    }                                                     // options for parsing cookies
   } as FastifyCookieOptions)
+  // add hooks
+  await server.addHook('preHandler', (request, reply, next) => {
+    console.log("sessionId: ", request.session.sessionId, "\nencryptedSessionId: ", request.session.encryptedSessionId)
+
+  })
+
+  //if (config.node_dev) fastify.log.info()
   return server
 
 }
