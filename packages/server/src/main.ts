@@ -7,9 +7,8 @@ import mercurius, {
   IResolvers,
   MercuriusContext,
 } from 'mercurius'
-import { schema, context,  } from '@app/api'
+import { context, schema,  } from '@app/api'
 import { config } from '@app/config'                      // must be after import from @app/api
-import { request } from 'http'
 
 declare module 'mercurius' { }
 
@@ -34,7 +33,8 @@ async function main() {
     endpointURL: '/graphql'                               // should be the same as the mercurius 'path'
   })
   await server.register(fastifySession, {
-    secret: config.session_secret
+    secret: config.session_secret.split(','),             // allows comma delim string of secrets
+    saveUninitialized: false
   })
   await server.register(cookie, {
     secret: config.cookie_secret,                         // for cookies signature
@@ -43,7 +43,7 @@ async function main() {
     }                                                     // options for parsing cookies
   } as FastifyCookieOptions)
   // add hooks
-  await server.addHook('preHandler', (request, reply, next) => {
+  server.addHook('preHandler', (request, reply, next) => {
     console.log("sessionId: ", request.session.sessionId, "\nencryptedSessionId: ", request.session.encryptedSessionId)
 
   })
