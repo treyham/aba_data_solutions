@@ -1,4 +1,6 @@
 import AltairFastify from 'altair-fastify-plugin'
+import { FastifyCookieOptions } from 'fastify-cookie'
+import cookie from 'fastify-cookie'
 import fastify from 'fastify'
 import mercurius, {
   IFieldResolver,
@@ -25,13 +27,18 @@ async function main() {
     path: '/graphql',
     context: () => (context)                             // provide the prisma instance to the context
   })
+  // See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api  
   await server.register(AltairFastify, {
     path: '/altair',
     baseURL: '/altair/',
     endpointURL: '/graphql'                              // should be the same as the mercurius 'path'
   })
+  await server.register(cookie, {
+    secret: "my-secret",                                  // for cookies signature
+    parseOptions: {}                                      // options for parsing cookies
+  } as FastifyCookieOptions)
   return server
-// See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api  
+
 }
 /**
  * If the below script runs multiple times in the context of a long-
@@ -55,4 +62,3 @@ main()
 
 
 // watch ben's vid on how to do the ts compile stuff
-// right now if it breaks when you save just save again
