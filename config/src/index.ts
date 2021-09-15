@@ -2,6 +2,8 @@ import dotenv from 'dotenv'
 import { assert } from 'console'
 import { constants, Paths } from './constants'
 
+export * from './constants'
+
 dotenv.config()
 
 const {
@@ -57,7 +59,6 @@ export const config: Config = {
             routes: constants.paths.server.plugins
         }
     }
-
 }
 
 
