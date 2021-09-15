@@ -1,15 +1,16 @@
 import AltairFastify from 'altair-fastify-plugin'
 import cookie, { FastifyCookieOptions } from 'fastify-cookie'
 import fastifySession from 'fastify-session'
-import fastify from 'fastify'
+import fastify, { FastifyInstance } from 'fastify'
 import mercurius, {
   IFieldResolver,
   IResolvers,
   MercuriusContext,
 } from 'mercurius'
-import appService from './appService'
+import { appService }from './appService'
 import { context, schema,  } from '@app/api'
 import { config } from '@app/config'                      // must be after import from @app/api
+import FastifySessionPlugin from 'fastify-session'
 
 declare module 'mercurius' { }
 
@@ -32,20 +33,19 @@ async function main() {
     baseURL: '/altair/',
     endpointURL: '/graphql'                               // should be the same as the mercurius 'path'
   })
+  await server.register(cookie)
   await server.register(fastifySession, {
-    secret: config.sessionSecret.split(','),             // allows comma delim string of secrets
-    saveUninitialized: false
-  })
-  await server.register(cookie, {
-    secret: config.cookieSecret,                         // for cookies signature
-    parseOptions: {
-      httpOnly: true
-    }                                                     // options for parsing cookies
-  } as FastifyCookieOptions)
+    secret: config.sessionSecret.split(','),              // allows comma delim string of secrets
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: config.isProd                               // options for parsing cookies
+    } as FastifyCookieOptions
+  } as any)                                               // TODO fix any                      
+  
   // add hooks
   server.addHook('preHandler', (request, reply, next) => {
     console.log("HOOK", "sessionId: ", request.session.sessionId, "\nencryptedSessionId: ", request.session.encryptedSessionId)
-
   })
 
   //if (config.node_dev) fastify.log.info()
