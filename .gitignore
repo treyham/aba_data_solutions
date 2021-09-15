@@ -6,6 +6,7 @@ node_modules
 types
 migrations
 generated
+example
 dist
 dist-ssr
 .env
