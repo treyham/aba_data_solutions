@@ -1,36 +1,3 @@
-export interface Path {
-    api: {
-
-    }
-    client: {
-
-    }
-    server: {
-        plugins: string
-        routes: string
-    }
-    
-}
-
-export interface Constant {
-    path: Path
-    intro: (isProd: boolean) => boolean
-}
-
-export const path: Path = {
-    api: {
-
-    },
-    client: {
-        
-    },
-    server: {
-        plugins: 'packages/server/dist/plugins',
-        routes: 'packages/server/dist/routes'
-    }
-    
-}
-
 const hoyeah = 'hhhhhhhhhhhhHHHHHHHHHHHHHHHHHHHHHHHHHHOOOOOOOOOOOOOOOOO0000000000ooo0000OOOOOOOYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEaaaaaaaaawwwWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWhhhhhhhhhhhhhhhhhHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH'
 
 const intro = (isProd: boolean) => {
@@ -61,7 +28,53 @@ const intro = (isProd: boolean) => {
     return true
 }
 
-export const constant: Constant = {
-    path,
+export interface Path {
+    api: {
+
+    }
+    client: {
+
+    }
+    server: {
+        plugins: string
+        routes: string
+    }
+    
+}
+
+export interface Funct {
+    intro: (isProd: boolean) => boolean
+
+}
+
+export interface Constant {
+    path: Path
+    funct: Funct
+}
+
+export const path: Path = {
+    api: {
+
+    },
+    client: {
+        
+    },
+    server: {
+        plugins: 'packages/server/dist/plugins',
+        routes: 'packages/server/dist/routes'
+    }
+    
+}
+
+export const funct: Funct = {
     intro
 }
+
+
+
+export const constant: Constant = {
+    path,
+    funct
+}
+
+// TODO organize this
