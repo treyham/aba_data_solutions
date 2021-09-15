@@ -38,8 +38,7 @@ export interface Path {
     server: {
         plugins: string
         routes: string
-    }
-    
+    } 
 }
 
 export interface Funct {
@@ -63,18 +62,14 @@ export const path: Path = {
         plugins: 'packages/server/dist/plugins',
         routes: 'packages/server/dist/routes'
     }
-    
 }
 
 export const funct: Funct = {
     intro
 }
 
-
-
 export const constant: Constant = {
     path,
     funct
 }
-
 // TODO organize this
