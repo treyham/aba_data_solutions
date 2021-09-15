@@ -13,11 +13,10 @@ import { config } from '@app/config'                      // must be after impor
 declare module 'mercurius' { }
 
 async function main() {
-  const server = fastify({ logger: !config.node_dev})
+  const server = fastify({ logger: !config.nodeEnv})
 
-  if (!config.node_dev) () => {
-    console.log('uhhhh, Improvise!!')
-  }
+  config.isProd? console.log('uhhhh, Improvise!!') : console.log('develop time')
+
   // register plugins
   await server.register(mercurius, {
     schema,
@@ -33,11 +32,11 @@ async function main() {
     endpointURL: '/graphql'                               // should be the same as the mercurius 'path'
   })
   await server.register(fastifySession, {
-    secret: config.session_secret.split(','),             // allows comma delim string of secrets
+    secret: config.sessionSecret.split(','),             // allows comma delim string of secrets
     saveUninitialized: false
   })
   await server.register(cookie, {
-    secret: config.cookie_secret,                         // for cookies signature
+    secret: config.cookieSecret,                         // for cookies signature
     parseOptions: {
       httpOnly: true
     }                                                     // options for parsing cookies
@@ -60,9 +59,9 @@ async function main() {
  */
 main()
   // https://github.com/fastify/middie
-  .then(server => server.listen(config.server_port as string, () => {
+  .then(server => server.listen(config.serverPort as string, () => {
     console.log(`
-    🚀 Dev Server ready at: http://localhost:${config.server_port}/altair
+    🚀 Dev Server ready at: http://localhost:${config.serverPort}/altair
     ⭐️ You rock!
     `)
   }))                                                       
