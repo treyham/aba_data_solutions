@@ -35,7 +35,7 @@ export interface Env {
 
 export interface Config {
     env: Env
-    constant: Constant
+    const: Constant
     // functions: Functions
 }
 
@@ -49,7 +49,7 @@ export const config: Config = {
         cookieSecret: DATABASE_URL as string,
         sessionSecret: SESSION_SECRET as string,
     },
-    constant
+    const: constant
 }
 
 
