@@ -1,3 +1,4 @@
+import "reflect-metadata"
 // generated
 import {
   //types
@@ -12,7 +13,6 @@ import {
   // PersonalInfoRelationsResolver,
   PlanRelationsResolver, Program, ProgramCrudResolver, ProgramRelationsResolver, Provider, ProviderCrudResolver, ProviderRelationsResolver, Rbt, RbtCrudResolver, RbtRelationsResolver, Record, RecordCrudResolver, RecordRelationsResolver, Session, SessionCrudResolver, SessionRelationsResolver, TreatmentPlan, TreatmentPlanCrudResolver, TreatmentPlanRelationsResolver, TreatmentPlan_to_Program, TreatmentPlan_to_ProgramCrudResolver, TreatmentPlan_to_ProgramRelationsResolver
 } from '@generated/type-graphql'
-import "reflect-metadata"
 import { buildSchema } from "type-graphql"
 
 // custom
