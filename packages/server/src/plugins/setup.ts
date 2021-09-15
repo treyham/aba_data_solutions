@@ -9,7 +9,7 @@ import mercurius, {
 import { context, schema,  } from '@app/api'
 import { config } from '@app/config'
 
-// TODO setup misc plugins
+// TODO setup plugin
 export interface SetupPluginOptions {
     // Specify Support plugin options here
   }

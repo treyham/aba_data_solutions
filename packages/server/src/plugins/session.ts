@@ -3,7 +3,7 @@ import { FastifyInstance } from 'fastify'
 import { context, schema,  } from '@app/api'
 import { config } from '@app/config'
 
-// TODO setup session plugin
+// TODO session plugin
 export interface SessionPluginOptions {
     // Specify Support plugin options here
   }
