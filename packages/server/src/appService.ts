@@ -8,7 +8,7 @@ export type AppOptions = {
   // Place your custom options for app below here.
 } & Partial<AutoloadPluginOptions>;
 
-const server: FastifyPluginAsync<AppOptions> = async (
+const appService: FastifyPluginAsync<AppOptions> = async (
     fastify,
     opts
 ): Promise<void> => {
@@ -33,5 +33,5 @@ const server: FastifyPluginAsync<AppOptions> = async (
 
 };
 
-export default server;
-export { server }
+export default appService;
+export { appService as server }
