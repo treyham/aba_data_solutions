@@ -4653,6 +4653,14 @@ fastify-error@^0.3.0, fastify-error@^0.3.1:
   resolved "https://registry.yarnpkg.com/fastify-error/-/fastify-error-0.3.1.tgz#8eb993e15e3cf57f0357fc452af9290f1c1278d2"
   integrity sha512-oCfpcsDndgnDVgiI7bwFKAun2dO+4h84vBlkWsWnz/OUK9Reff5UFoFl241xTiLeHWX/vU9zkDVXqYUxjOwHcQ==
 
+fastify-graceful-shutdown@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/fastify-graceful-shutdown/-/fastify-graceful-shutdown-3.1.0.tgz#5620a3ee05a7d4694c3de234b380e445f46db3f8"
+  integrity sha512-5l3EAxYb99xb3NZkdoZwHgMjmyIlRHZaZNEc/U4CCpgosN2Obh7D3a7wjHfNhRtWfddXYkNuZ+KmUhW5SnAKgA==
+  dependencies:
+    fastify-plugin "^3.0.0"
+    fastparallel "^2.4.0"
+
 fastify-plugin@^2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/fastify-plugin/-/fastify-plugin-2.3.4.tgz#b17abdc36a97877d88101fb86ad8a07f2c07de87"
@@ -4748,7 +4756,7 @@ fastify@^3.0.0:
     semver "^7.3.2"
     tiny-lru "^7.0.0"
 
-fastparallel@^2.3.0:
+fastparallel@^2.3.0, fastparallel@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/fastparallel/-/fastparallel-2.4.0.tgz#65fbec1a5e5902494be772cf5765cbaaece08688"
   integrity sha512-sacwQ7wwKlQXsa7TN24UvMBLZNLmVcPhmxccC9riFqb3N+fSczJL8eWdnZodZ/KijGVgNBBfvF/NeXER08uXnQ==
