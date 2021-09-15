@@ -14,6 +14,7 @@ Check out:
 * [The hitchhiker's guide to plugins](https://www.fastify.io/docs/latest/Plugins-Guide/)
 * [Fastify decorators](https://www.fastify.io/docs/latest/Decorators/).
 * [Fastify lifecycle](https://www.fastify.io/docs/latest/Lifecycle/).
+```
 Incoming Request
   │
   └─▶ Routing
@@ -43,3 +44,4 @@ Incoming Request
                                                             4**/5** ◀─┴─▶ Outgoing Response
                                                                             │
                                                                             └─▶ onResponse Hook
+```
