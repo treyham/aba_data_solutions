@@ -34,4 +34,4 @@ const appService: FastifyPluginAsync<AppOptions> = async (
 };
 
 export default appService;
-export { appService as server }
+export { appService }
