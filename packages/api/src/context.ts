@@ -1,5 +1,5 @@
-import { Context } from './interfaces'
 import { PrismaClient } from '.prisma/client'
+import { Context } from './interfaces'
 const prisma = new PrismaClient()
 /**
  * ## exit hook

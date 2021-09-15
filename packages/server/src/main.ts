@@ -1,16 +1,15 @@
+import { context, schema } from '@app/api'
+import { config } from '@app/config' // must be after import from @app/api
 import AltairFastify from 'altair-fastify-plugin'
+import fastify from 'fastify'
 import cookie, { FastifyCookieOptions } from 'fastify-cookie'
 import fastifySession from 'fastify-session'
-import fastify, { FastifyInstance } from 'fastify'
 import mercurius, {
   IFieldResolver,
   IResolvers,
   MercuriusContext,
 } from 'mercurius'
-import { appService }from './appService'
-import { context, schema,  } from '@app/api'
-import { config } from '@app/config'                      // must be after import from @app/api
-import FastifySessionPlugin from 'fastify-session'
+import { appService } from './appService'
 
 declare module 'mercurius' { }
 
