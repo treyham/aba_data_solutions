@@ -11,36 +11,35 @@ import mercurius, {
 } from 'mercurius'
 import { appService } from './appService'
 
-declare module 'mercurius' { }
+declare module 'mercurius' {}
 
 async function main() {
   const server = fastify({ logger: !config.isProd})
-  //console.log('server: ', server)
   
   // register plugins
   await server.register(appService)
-  await server.register(mercurius, {
-    schema,
-    graphiql: false,
-    ide: false,
-    path: '/graphql',
-    context: () => (context)                              // provide the prisma instance to the context
-  })
-  // See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api  
-  await server.register(AltairFastify, {
-    path: '/altair',
-    baseURL: '/altair/',
-    endpointURL: '/graphql'                               // should be the same as the mercurius 'path'
-  })
-  await server.register(cookie)
-  await server.register(fastifySession, {
-    secret: config.sessionSecret.split(','),              // allows comma delim string of secrets
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: config.isProd                               // options for parsing cookies
-    } as FastifyCookieOptions
-  } as any)                                               // TODO fix any                      
+  // await server.register(mercurius, {
+  //   schema,
+  //   graphiql: false,
+  //   ide: false,
+  //   path: '/graphql',
+  //   context: () => (context)                              // provide the prisma instance to the context
+  // })
+  // // See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api  
+  // await server.register(AltairFastify, {
+  //   path: '/altair',
+  //   baseURL: '/altair/',
+  //   endpointURL: '/graphql'                               // should be the same as the mercurius 'path'
+  // })
+  // await server.register(cookie)
+  // await server.register(fastifySession, {
+  //   secret: config.sessionSecret.split(','),              // allows comma delim string of secrets
+  //   saveUninitialized: false,
+  //   cookie: {
+  //     httpOnly: true,
+  //     secure: config.isProd                               // options for parsing cookies
+  //   } as FastifyCookieOptions
+  // } as any)                                               // TODO fix any                      
   
   // add hooks
   server.addHook('preHandler', (request, reply, next) => {
