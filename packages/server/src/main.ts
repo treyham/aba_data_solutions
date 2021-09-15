@@ -15,7 +15,7 @@ declare module 'mercurius' { }
 
 async function main() {
   const server = fastify({ logger: !config.isProd})
-  console.log('server: ', server)
+  //console.log('server: ', server)
   
   // register plugins
   await server.register(appService)
@@ -44,7 +44,7 @@ async function main() {
   } as FastifyCookieOptions)
   // add hooks
   server.addHook('preHandler', (request, reply, next) => {
-    console.log("sessionId: ", request.session.sessionId, "\nencryptedSessionId: ", request.session.encryptedSessionId)
+    console.log("HOOK", "sessionId: ", request.session.sessionId, "\nencryptedSessionId: ", request.session.encryptedSessionId)
 
   })
 

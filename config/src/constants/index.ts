@@ -24,8 +24,8 @@ export const paths: Paths = {
         
     },
     server: {
-        plugins: 'packages/server/src/plugins',
-        routes: 'packages/server/src/routes'
+        plugins: 'packages/server/dist/plugins',
+        routes: 'packages/server/dist/routes'
     }
     
 }
