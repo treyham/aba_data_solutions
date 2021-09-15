@@ -1,4 +1,4 @@
-export interface Paths {
+export interface Path {
     api: {
 
     }
@@ -12,12 +12,12 @@ export interface Paths {
     
 }
 
-export interface Constants {
-    paths: Paths
+export interface Constant {
+    path: Path
     intro: (isProd: boolean) => boolean
 }
 
-export const paths: Paths = {
+export const path: Path = {
     api: {
 
     },
@@ -61,7 +61,7 @@ const intro = (isProd: boolean) => {
     return true
 }
 
-export const constants: Constants = {
-    paths,
+export const constant: Constant = {
+    path,
     intro
 }

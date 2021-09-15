@@ -1,8 +1,6 @@
 import dotenv from 'dotenv'
 import { assert } from 'console'
-import { constants, Paths } from './constants'
-
-export * from './constants'
+import { constant, Constant, Path } from './constants'
 
 dotenv.config()
 
@@ -25,8 +23,7 @@ assert(COOKIE_SECRET, 'COOKIE_SECRET is required.')
 assert(SESSION_SECRET, 'SESSION_SECRET is required.')
 // assert(CERTIFICATE_PATH, 'CERTIFICATE_PATH is required.')
 // assert(DECRYPTED_KEY_PATH, 'DECRYPTED_KEY_PATH is required.')
-
-export interface Config {
+export interface Env {
     nodeEnv: string
     isProd: boolean
     vuePort: string
@@ -34,31 +31,25 @@ export interface Config {
     dbUrl: string
     cookieSecret: string
     sessionSecret: string
+}
 
-    paths: Paths
+export interface Config {
+    env: Env
+    constant: Constant
+    // functions: Functions
 }
 
 export const config: Config = {
-    nodeEnv: NODE_ENV as string,
-    isProd: NODE_ENV === 'production',
-    vuePort: VUE_APP_PORT as string,
-    serverPort: SERVER_PORT as string,
-    dbUrl: DATABASE_URL as string,
-    cookieSecret: DATABASE_URL as string,
-    sessionSecret: SESSION_SECRET as string,
-
-    paths: {
-        api: {
-
-        },
-        client: {
-
-        },
-        server: {
-            plugins: constants.paths.server.plugins,
-            routes: constants.paths.server.plugins
-        }
-    }
+    env: {
+        nodeEnv: NODE_ENV as string,
+        isProd: NODE_ENV === 'production',
+        vuePort: VUE_APP_PORT as string,
+        serverPort: SERVER_PORT as string,
+        dbUrl: DATABASE_URL as string,
+        cookieSecret: DATABASE_URL as string,
+        sessionSecret: SESSION_SECRET as string,
+    },
+    constant
 }
 
 
