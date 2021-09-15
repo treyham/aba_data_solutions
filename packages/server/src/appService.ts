@@ -2,7 +2,7 @@ import AutoLoad, {AutoloadPluginOptions} from 'fastify-autoload';
 import { FastifyPluginAsync } from 'fastify';
 import { config } from '@app/config'
 
-console.log(config)
+console.log('appService')
 
 export type AppOptions = {
   // Place your custom options for app below here.
