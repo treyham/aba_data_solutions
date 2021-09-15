@@ -7,17 +7,18 @@ import mercurius, {
   IResolvers,
   MercuriusContext,
 } from 'mercurius'
+import appService from './appService'
 import { context, schema,  } from '@app/api'
 import { config } from '@app/config'                      // must be after import from @app/api
 
 declare module 'mercurius' { }
 
 async function main() {
-  const server = fastify({ logger: !config.nodeEnv})
-
-  config.isProd? console.log('uhhhh, Improvise!!') : console.log('develop time')
-
+  const server = fastify({ logger: !config.isProd})
+  console.log('server: ', server)
+  
   // register plugins
+  await server.register(appService)
   await server.register(mercurius, {
     schema,
     graphiql: false,
