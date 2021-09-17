@@ -40,13 +40,9 @@ export interface Path {
   }
 }
 
-export interface Funct {
-  intro: (isProd: boolean) => boolean
-}
-
 export interface Constant {
   path: Path
-  funct: Funct
+  intro: (isProd: boolean) => boolean
 }
 
 export const path: Path = {
@@ -58,12 +54,8 @@ export const path: Path = {
   }
 }
 
-export const funct: Funct = {
-  intro
-}
-
 export const constant: Constant = {
   path,
-  funct
+  intro
 }
 // TODO organize this
