@@ -1,19 +1,36 @@
-import { context, schema } from '@app/api'
+import { context, Context, schema } from '@app/api'
 import AltairFastify from 'altair-fastify-plugin'
 import fp from 'fastify-plugin'
-import mercurius from 'mercurius'
+import mercurius, { MercuriusContext, MercuriusSchemaOptions } from 'mercurius'
 // import mercurius, {
 //   IFieldResolver,
 //   IResolvers,
 //   MercuriusContext
 // } from 'mercurius'
 // TODO DbSchemaPluginOptions interface
-export interface DbSchemaPluginOptions {
+
+export interface MercuriusPluginOpts {
+  schema: MercuriusSchemaOptions
+  graphiql: boolean
+  ide: boolean
+  path: string
+  prismaClient: Context    
+}
+
+export interface AltairaPluginOpts {
+  path: string
+  baseURL: string
+  endpointURL: string
+}
+
+export interface DbSchemaPluginOpts {
   // Specify Support plugin options here
+  MercuriusPluginOpts: MercuriusPluginOpts
+  AltairaPluginOpts: AltairaPluginOpts
 }
 
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
-export default fp<DbSchemaPluginOptions>(async (fastify, opts) => {
+export default fp<DbSchemaPluginOpts>(async (fastify, opts) => {
   await fastify.register(mercurius, {
     schema,
     graphiql: false,
