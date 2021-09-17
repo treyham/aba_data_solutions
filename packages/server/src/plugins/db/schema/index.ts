@@ -42,6 +42,6 @@ export const dbSchemaPlugin = fp<DbSchemaPluginOpts>(async (fastify, opts: DbSch
   await fastify.register(AltairFastify, {
     path: '/altair',
     baseURL: '/altair/',
-    endpointURL: '/graphql' // should be the same as the mercurius 'path'
+    endpointURL: '/graphql'                                                    // should be the same as the mercurius 'path'
   })
 })
