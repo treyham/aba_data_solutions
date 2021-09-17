@@ -15,7 +15,8 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/axios',
     name: 'Axios',
-    component: () => import('@/vueApp/src/views/Axios.vue') // lazy-load
+    component: () => import('@app/client/src/router') // lazy-load
+    // @/vueApp/src/views/Axios.vue
   }
 ]
 const router = createRouter({
