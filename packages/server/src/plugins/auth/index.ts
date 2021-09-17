@@ -1,30 +1,30 @@
 import fp from 'fastify-plugin'
-import cookie, { FastifyCookieOptions } from 'fastify-cookie'
+import cookie, { FastifyCookieOpts } from 'fastify-cookie'
 import fastifySession from 'fastify-session'
 import { config } from '@app/config'
 import FastifySessionPlugin from 'fastify-session'
 import { nextTick } from 'process'
 
-export interface FastifySessionOptions {
+export interface FastifySessionOpts {
   secret: string
   saveUninitialized: boolean
-  cookie: FastifyCookieOptions
+  cookie: FastifyCookieOpts
 }
 
 // TODO AuthPluginOptions interface
-export interface AuthPluginOptions {
+export interface AuthPluginOpts {
   // Specify Support plugin options here
-  session: FastifySessionOptions
-  cookie: FastifyCookieOptions
+  session: FastifySessionOpts
+  cookie: FastifyCookieOpts
 }
 
 export interface AuthPlugin {
-  opts: AuthPluginOptions
+  opts: AuthPluginOpts
 }
 
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
-export const authPlugin = fp<AuthPluginOptions>(
-  async (fastify, opts: AuthPluginOptions) => {
+export const authPlugin = fp<AuthPluginOpts>(
+  async (fastify, opts: AuthPluginOpts) => {
     fastify.decorate('auth', async () => {
       await fastify.register(cookie)
       await fastify.register(fastifySession, {
