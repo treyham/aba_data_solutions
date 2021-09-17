@@ -30,7 +30,7 @@ export interface DbSchemaPluginOpts {
 }
 
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
-export default fp<DbSchemaPluginOpts>(async (fastify, opts) => {
+export const dbSchemaPlugin = fp<DbSchemaPluginOpts>(async (fastify, opts: DbSchemaPluginOpts) => {
   await fastify.register(mercurius, {
     schema,
     graphiql: false,

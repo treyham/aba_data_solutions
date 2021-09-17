@@ -1,5 +1,5 @@
 import fp from 'fastify-plugin'
-import { DbSchemaPluginOpts } from './schema'
+import { dbSchemaPlugin, DbSchemaPluginOpts } from './schema'
 
 export interface DbPluginOpts {
   // Specify Support plugin options here
@@ -7,8 +7,8 @@ export interface DbPluginOpts {
 }
 
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
-export const dbPlugin = fp<DbPluginOpts>(async (fastify, opts) => {
+export const dbPlugin = fp<DbPluginOpts>(async (fastify, opts: DbPluginOpts) => {
   fastify.decorate('db', function () {
-    fastify.register(require('./schema'))
+    fastify.register(dbSchemaPlugin, opts.schemaOpts)
   })
 })

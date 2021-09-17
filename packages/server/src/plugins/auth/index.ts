@@ -3,7 +3,6 @@ import cookie, { FastifyCookieOpts } from 'fastify-cookie'
 import fastifySession from 'fastify-session'
 import { config } from '@app/config'
 import FastifySessionPlugin from 'fastify-session'
-import { nextTick } from 'process'
 
 export interface FastifySessionOpts {
   secret: string
@@ -16,10 +15,6 @@ export interface AuthPluginOpts {
   // Specify Support plugin options here
   session: FastifySessionOpts
   cookie: FastifyCookieOpts
-}
-
-export interface AuthPlugin {
-  opts: AuthPluginOpts
 }
 
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope

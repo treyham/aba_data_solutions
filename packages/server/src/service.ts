@@ -1,3 +1,5 @@
+import { AuthPluginOpts } from './plugins/auth';
+import { DbPluginOpts } from './plugins/db';
 import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
 import { FastifyPluginAsync } from 'fastify'
 import { config } from '@app/config'
@@ -5,6 +7,9 @@ import { config } from '@app/config'
 console.log('appService')
 export type AppOptions = {
   // Place your custom options for app below here.
+  AuthPluginOpts: AuthPluginOpts,
+  DbPluginOpts: DbPluginOpts,
+
 } & Partial<AutoloadPluginOptions>
 
 const plugins: FastifyPluginAsync<AppOptions> = async (
@@ -12,7 +17,7 @@ const plugins: FastifyPluginAsync<AppOptions> = async (
   opts
 ): Promise<void> => {
   // Place here your custom code!
-  config.const.funct.intro(config.env.isProd)
+  config.const.intro(config.env.isProd)
   // Do not touch the following lines
 
   // This loads all plugins defined in plugins
