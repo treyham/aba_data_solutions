@@ -5,7 +5,6 @@ node_modules
 **/*.log
 migrations
 generated
-example
 dist
 dist-ssr
 .env
