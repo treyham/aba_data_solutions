@@ -1,19 +1,20 @@
 import FastifyInstance from './plugins/misc/index'
 import { context } from '@app/api'
 import { config } from '@app/config' // must be after import from @app/api
-import fastify from 'fastify'
+import fastify, { FastifyLoggerInstance } from 'fastify'
 import { IncomingMessage, Server, ServerResponse } from 'http'
 import { plugins } from './service'
 // import closeWithGrace from 'close-with-grace'
 declare module 'mercurius' {}
 
 // TODO FastifyInstance https://medium.com/sharenowtech/fastify-with-typescript-production-ready-integration-2303318ecd9e
-// FastifyInstance<>
 
+// FastifyInstance<>
 // const server: fastify.FastifyInstance<
 //   Server,
 //   IncomingMessage,
-//   ServerResponse
+//   ServerResponse,
+//   FastifyLoggerInstance
 // > = fastify(logger: !config.env.isProd)
 
 const server = fastify()
