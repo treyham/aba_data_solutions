@@ -1,11 +1,11 @@
 import { context } from '@app/api'
-import { config } from '@app/config' // must be after import from @app/api
+import { config } from '@app/config'                                           // must be after import from @app/api
 import fastify from 'fastify'
 import { plugins } from './service'
 // import closeWithGrace from 'close-with-grace'
 declare module 'mercurius' {}
 
-// TODO FastifyInstance 
+// TODO FastifyInstance
 // https://www.fastify.io/docs/latest/TypeScript/#plugins
 // https://medium.com/sharenowtech/fastify-with-typescript-production-ready-integration-2303318ecd9e
 
@@ -15,7 +15,8 @@ async function start() {
   // register plugins
   await server.register(plugins)
   // add hooks
-  server.addHook('preHandler', (request: any, reply: any) => { // TODO fix any's
+  // TODO fix any's
+  server.addHook('preHandler', (request: any, reply: any) => {
     console.log(
       'HOOK',
       'sessionId: ',
