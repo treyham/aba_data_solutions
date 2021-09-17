@@ -7,6 +7,6 @@ import { dbPlugin } from './db'
 export default fp<ServicePluginOpts>(async (fastify, opts) => {
   fastify.decorate('plugins', async () => {
     fastify.register(require('./auth'))
-    fastify.register(dbPlugin, opts.dbOpts)
+    fastify.register(require('./db'), opts.dbOpts)
   })
 })
