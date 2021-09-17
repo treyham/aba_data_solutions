@@ -1,32 +1,21 @@
-import FastifyInstance from './plugins/misc/index'
 import { context } from '@app/api'
 import { config } from '@app/config' // must be after import from @app/api
-import fastify, { FastifyLoggerInstance } from 'fastify'
-import { IncomingMessage, Server, ServerResponse } from 'http'
+import fastify from 'fastify'
 import { plugins } from './service'
 // import closeWithGrace from 'close-with-grace'
 declare module 'mercurius' {}
 
-// TODO FastifyInstance https://medium.com/sharenowtech/fastify-with-typescript-production-ready-integration-2303318ecd9e
-
-// FastifyInstance<>
-// const server: fastify.FastifyInstance<
-//   Server,
-//   IncomingMessage,
-//   ServerResponse,
-//   FastifyLoggerInstance
-// > = fastify(logger: !config.env.isProd)
+// TODO FastifyInstance 
+// https://www.fastify.io/docs/latest/TypeScript/#plugins
+// https://medium.com/sharenowtech/fastify-with-typescript-production-ready-integration-2303318ecd9e
 
 const server = fastify()
 
 async function start() {
   // register plugins
   await server.register(plugins)
-  // old stuff moved to
-  // packages/server/src/plugins/db/schema/index.ts
-  // packages/server/src/plugins/auth/index.ts
   // add hooks
-  server.addHook('preHandler', (request, reply, next) => {
+  server.addHook('preHandler', (request: any, reply: any) => { // TODO fix any's
     console.log(
       'HOOK',
       'sessionId: ',
@@ -35,27 +24,10 @@ async function start() {
       request.session.encryptedSessionId
     )
   })
-  // TODO close with grace onClose hook
-  // const closeListeners = closeWithGrace({ delay: 500 }, async ({ err:  }) => {
-  //   if (err) {
-  //     server.log.error(err)
-  //   }
-  //   await server.close()
-  // })
-  // server.addHook('onClose', async (instance, done) => {
-  //   closeListeners.uninstall()
-  //   done()
-  // })
+  // TODO close with grace onClose hook (broken code in notes/scrap.txt)
   return server
 }
-
 // TODO server error catching
-//  server.on("uncaughtException", error => {
-//   console.error(error);
-// })
-// server.on("unhandledRejection", error => {
-//   console.error(error);
-// })
 
 start()
   // https://github.com/fastify/middie
