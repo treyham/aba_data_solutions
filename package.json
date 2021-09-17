@@ -10,6 +10,9 @@
     "start:web": "vite packages/vueApp",
     "preview": "vite serve packages/vueApp",
     "generate": "cd packages/api && npx prisma generate",
+    "prettify": "prettier --config .prettierrc '**/src/**/*.ts' --write",
+    "prettify:debug": "prettier --config .prettierrc '**/src/**/*.ts' --write --loglevel debug",
+    "prettify:check": "prettier --config .prettierrc '**/src/**/*.ts' --check",
     "seed:basic": "cd packages/api && npx prisma db seed",
     "start:server": "node --experimental-specifier-resolution=node packages/server/dist/main.js",
     "watch:server": "cd packages/server && yarn watch",
@@ -19,13 +22,14 @@
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "build:common": "cat 'Building common!",
     "build:web": "vite build packages/vueApp",
-    "clean:all": "rm -rf **/dist/*.* **/dist/**/*.*" 
+    "clean:all": "rm -rf **/dist/*.* **/dist/**/*.*"
   },
   "devDependencies": {
+    "@types/node": "^16.4.12",
     "eslint": "^7.32.0",
     "jest": "^27.0.6",
     "lerna": "^4.0.0",
-    "typescript": "^4.3.5",
-    "@types/node": "^16.4.12"
+    "prettier": "^2.4.1",
+    "typescript": "^4.3.5"
   }
 }

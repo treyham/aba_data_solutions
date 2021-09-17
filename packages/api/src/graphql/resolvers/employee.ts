@@ -1,31 +1,28 @@
-import "reflect-metadata"
+import 'reflect-metadata'
 import { EmployeeCreateInput } from '@generated/type-graphql'
 import { Context } from '../../../src'
 import argon2 from 'argon2'
 
 import {
-    Resolver,
-    Query,
-    Mutation,
-    Arg,
-    FieldResolver,
-    Ctx,
-    Root,
-    Authorized
-} from "type-graphql"
-
+  Resolver,
+  Query,
+  Mutation,
+  Arg,
+  FieldResolver,
+  Ctx,
+  Root,
+  Authorized
+} from 'type-graphql'
 
 @Resolver()
 export class CreateEmployeeResolver {
   @Query(() => String)
   async testing() {
-    return "attention pls"
+    return 'attention pls'
   }
 
   @Query(() => String)
-  async employeeCount(
-    @Ctx() ctx: Context,
-  ): Promise<number> {
+  async employeeCount(@Ctx() ctx: Context): Promise<number> {
     return await ctx.prisma.employee.count()
   }
 
@@ -37,7 +34,7 @@ export class CreateEmployeeResolver {
   @Mutation(() => Boolean)
   async createEmployeeEncryptPass(
     @Ctx() ctx: Context,
-    @Arg("createInput") createInput: EmployeeCreateInput
+    @Arg('createInput') createInput: EmployeeCreateInput
   ): Promise<boolean> {
     console.log('password: ', createInput.password)
     // temporarally encrypt password here until we can do it sooner

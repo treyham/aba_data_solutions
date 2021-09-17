@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
  * (e.g. via a ```SIGINT``` signal) to shut down, and allows you to run
  * code before the Client disconnects - for example, to issue
  * queries as part of a graceful shutdown of a service:
- * 
+ *
  */
 // prisma.$on('beforeExit', async () => {
 //   console.log('beforeExit hook')

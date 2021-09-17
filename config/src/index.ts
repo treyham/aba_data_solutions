@@ -5,14 +5,14 @@ import { constant, Constant, Path } from './constants'
 dotenv.config()
 
 const {
-    NODE_ENV,
-    VUE_APP_PORT,
-    SERVER_PORT,
-    DATABASE_URL,
-    COOKIE_SECRET,
-    SESSION_SECRET
-    // CERTIFICATE_PATH,
-    // DECRYPTED_KEY_PATH
+  NODE_ENV,
+  VUE_APP_PORT,
+  SERVER_PORT,
+  DATABASE_URL,
+  COOKIE_SECRET,
+  SESSION_SECRET
+  // CERTIFICATE_PATH,
+  // DECRYPTED_KEY_PATH
 } = process.env
 
 assert(NODE_ENV, 'NODE_ENV is required.')
@@ -24,33 +24,30 @@ assert(SESSION_SECRET, 'SESSION_SECRET is required.')
 // assert(CERTIFICATE_PATH, 'CERTIFICATE_PATH is required.')
 // assert(DECRYPTED_KEY_PATH, 'DECRYPTED_KEY_PATH is required.')
 export interface Env {
-    nodeEnv: string
-    isProd: boolean
-    vuePort: string
-    serverPort: string
-    dbUrl: string
-    cookieSecret: string
-    sessionSecret: string
+  nodeEnv: string
+  isProd: boolean
+  vuePort: string
+  serverPort: string
+  dbUrl: string
+  cookieSecret: string
+  sessionSecret: string
 }
 
 export interface Config {
-    env: Env
-    const: Constant
-    // functions: Functions
+  env: Env
+  const: Constant
+  // functions: Functions
 }
 
 export const config: Config = {
-    env: {
-        nodeEnv: NODE_ENV as string,
-        isProd: NODE_ENV === 'production',
-        vuePort: VUE_APP_PORT as string,
-        serverPort: SERVER_PORT as string,
-        dbUrl: DATABASE_URL as string,
-        cookieSecret: DATABASE_URL as string,
-        sessionSecret: SESSION_SECRET as string,
-    },
-    const: constant
+  env: {
+    nodeEnv: NODE_ENV as string,
+    isProd: NODE_ENV === 'production',
+    vuePort: VUE_APP_PORT as string,
+    serverPort: SERVER_PORT as string,
+    dbUrl: DATABASE_URL as string,
+    cookieSecret: DATABASE_URL as string,
+    sessionSecret: SESSION_SECRET as string
+  },
+  const: constant
 }
-
-
-
