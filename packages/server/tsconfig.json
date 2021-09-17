@@ -9,6 +9,7 @@
       "declaration": true,
       "typeRoots": [
         "./node_modules/@types",
+        "packages/server/src/types"
       ]
     },
     "include": [ "src/*.ts", "src/**/*.ts" ],
