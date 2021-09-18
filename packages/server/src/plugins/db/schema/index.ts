@@ -1,7 +1,7 @@
-import { context, Context, schema } from '@app/api'
-import AltairFastify from 'altair-fastify-plugin'
+import { Context } from '@app/api'
+import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
-import mercurius, { MercuriusContext, MercuriusSchemaOptions } from 'mercurius'
+import mercurius, { MercuriusSchemaOptions } from 'mercurius'
 // import mercurius, {
 //   IFieldResolver,
 //   IResolvers,
@@ -17,7 +17,7 @@ export interface MercuriusPluginOpts {
   prismaClient: Context
 }
 
-export interface AltairaPluginOpts {
+export interface AltairPluginOpts {
   path: string
   baseURL: string
   endpointURL: string
@@ -26,24 +26,21 @@ export interface AltairaPluginOpts {
 export interface DbSchemaPluginOpts {
   // Specify Support plugin options here
   MercuriusPluginOpts: MercuriusPluginOpts
-  AltairaPluginOpts: AltairaPluginOpts
+  AltairaPluginOpts: AltairPluginOpts
 }
 
+console.log('schema')
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
-export const dbSchemaPlugin = fp<DbSchemaPluginOpts>(
-  async (fastify, opts: DbSchemaPluginOpts) => {
-    await fastify.register(mercurius, {
-      schema,
-      graphiql: false,
-      ide: false,
-      path: '/graphql',
-      context: () => context // provide the prisma instance to the context
-    })
-    // See sample queries: http://pris.ly/e/ts/graphql-fastify-sdl-first#using-the-graphql-api
-    await fastify.register(AltairFastify, {
-      path: '/altair',
-      baseURL: '/altair/',
-      endpointURL: '/graphql' // should be the same as the mercurius 'path'
-    })
-  }
+export const dbSchemaPlugin: FastifyPluginAsync<DbSchemaPluginOpts> = fp(
+  // my plugin
+  (async (fastify, options) => {
+    console.log('DbSchema plugins')
+    const mercPlugin = fastify.register(mercurius, {
+      
+    } 
+    )
+    // const { MercuriusPluginOpts, AltairaPluginOpts} = options
+    const mOpts = options
+  }),
+  '3.x'
 )

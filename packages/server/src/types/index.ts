@@ -1,32 +1,26 @@
-import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
-import { AuthPluginOpts } from '../plugins/auth'
-import { DbPluginOpts } from '../plugins/db'
+import { AuthPluginOpts, DbPluginOpts } from '../plugins'
 
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
   interface FastifyRequest {
-    myPluginProp: string
+    servicePluginProp: ServiceOpts
   }
   interface FastifyReply {
-    myPluginProp: number
+    servicePluginProp: ServiceOpts
   }
 }
-// define options
-export interface ServicePluginOpts {
+
+export interface ServiceOpts {
   // Specify Support plugin options here
   authOpts: AuthPluginOpts
   dbOpts: DbPluginOpts
 }
 
-// define plugin using promises
-const myPluginAsync: FastifyPluginAsync<ServicePluginOpts> = async (
-  fastify,
-  options
-) => {
-  fastify.decorateRequest('myPluginProp', 'super_secret_value')
-  fastify.decorateReply('myPluginProp', options)
-}
 
 // export plugin using fastify-plugin
-export default fp(myPluginAsync, '3.x')
+export default fp(async (fastify, options): Promise<void> => { 
+  fastify.decorate('service', options) 
+}, 
+'3.x') 
+

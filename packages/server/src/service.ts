@@ -18,7 +18,6 @@ const plugins: FastifyPluginAsync<AppOptions> = async (
   // Place here your custom code!
   config.const.intro(config.env.isProd)
   // Do not touch the following lines
-
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
   // through your application
@@ -26,7 +25,6 @@ const plugins: FastifyPluginAsync<AppOptions> = async (
     dir: config.const.path.server.plugins,
     options: opts
   })
-
   // This loads all plugins defined in routes
   // define your routes in one of these
   void fastify.register(AutoLoad, {

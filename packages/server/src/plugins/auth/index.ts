@@ -1,8 +1,6 @@
-import fp from 'fastify-plugin'
 import cookie, { FastifyCookieOpts } from 'fastify-cookie'
-import fastifySession from 'fastify-session'
-import { config } from '@app/config'
-import FastifySessionPlugin from 'fastify-session'
+import { FastifyInstance } from 'fastify'
+import fp from 'fastify-plugin'
 
 export interface FastifySessionOpts {
   secret: string
@@ -17,16 +15,21 @@ export interface AuthPluginOpts {
   cookie: FastifyCookieOpts
 }
 
+console.log('auth')
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
-export const authPlugin = fp<AuthPluginOpts>(
-  async (fastify, opts: AuthPluginOpts) => {
+// fn: FastifyPluginAsync<DbPluginOpts, Server>, options?: PluginMetadata | undefined): FastifyPluginAsync<...>
+export default fp<AuthPluginOpts>(
+  async (fastify: FastifyInstance, opts: AuthPluginOpts) => {
+    console.log('auth plugins')
+    const cookieOpts = opts.cookie
+
     fastify.decorate('auth', async () => {
-      await fastify.register(cookie)
-      await fastify.register(fastifySession, {
-        secret: opts.session.secret.split(','), // allows comma delim string of secrets
-        saveUninitialized: config.env.isProd,
-        cookie: opts.cookie
-      } as any) // TODO fix any
-    })
-  }
-)
+      await fastify.register(cookie, cookieOpts)
+        
+      })
+   
+  })
+// })
+  
+  // (plugin: FastifyPluginAsync<Options, Server>, opts?: FastifyRegisterOptions<Options> | undefined): FastifyInstance<...> & PromiseLike<...>
+
