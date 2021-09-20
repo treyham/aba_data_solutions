@@ -1,6 +1,7 @@
 import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
 import auth from './plugins/auth'
 import db from './plugins/db'
+import validator from './plugins/validator'
 import { AuthOpts, DbOpts } from './types'
 import { FastifyInstance } from 'fastify'
 import { config } from '@app/config'
@@ -8,8 +9,9 @@ import { config } from '@app/config'
 
 export type pluginOpts = {
   // Place your custom options for app below here.
-  AuthPluginOpts: AuthOpts
-  DbPluginOpts: DbOpts
+  authOpts: AuthOpts
+  dbOpts: DbOpts
+
 } & Partial<AutoloadPluginOptions>
 
 const plugin = async (fastify: FastifyInstance, opts: pluginOpts) => {
@@ -17,6 +19,7 @@ const plugin = async (fastify: FastifyInstance, opts: pluginOpts) => {
   config.intro(config.isProd)
   fastify.decorate('auth', auth)
   fastify.decorate('db', db)
+  fastify.decorate('validator', validator)
 
   // Do not touch the following lines
   // This loads all plugins defined in plugins

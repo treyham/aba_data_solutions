@@ -53,7 +53,9 @@ export interface DbOpts {
 }
 
 // validation
-
+export interface ValidOpts {
+  // Specify Support plugin options here
+}
 
 
 // server
