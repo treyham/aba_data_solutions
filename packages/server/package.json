@@ -10,20 +10,25 @@
   },
   "scripts": {
     "test": "npm run build:ts && tsc -p test/tsconfig.test.json && cross-env TS_NODE_FILES=true tap --ts test/**/*.test.ts",
-    "start": "npm run build:ts && fastify start -l info dist/app.js",
-    "build:ts": "tsc",
+    "start": "fastify start -l info dist/main.js",
+    "start:node": "node --experimental-specifier-resolution=node packages/server/dist/main.js",
+    "build": "rm -rf packages/server/dist && mkdir packages/server/dist && tsc --build",
     "dev": "tsc && concurrently -k -p \"[{name}]\" -n \"TypeScript,App\" -c \"yellow.bold,cyan.bold\" \"tsc -w\" \"fastify start --ignore-watch=.ts$ -w -l info -P dist/app.js\"",
     "force": "tsc --build --force"
   },
   "keywords": [],
   "author": "",
   "dependencies": {
-    "@app/api": "1.0.0"
+    "@app/api": "1.0.0",
+    "@app/config": "1.0.0"
   },
   "devDependencies": {
+    "@fastify/session": "^6.2.0",
+    "@sinclair/typebox": "^0.20.5",
     "@types/node": "^15.0.0",
     "@types/tap": "^15.0.0",
     "altair-fastify-plugin": "^4.0.9",
+    "close-with-grace": "^1.1.0",
     "concurrently": "^6.0.0",
     "cross-env": "^7.0.3",
     "fastify": "^3.0.0",
@@ -33,7 +38,6 @@
     "fastify-graceful-shutdown": "^3.1.0",
     "fastify-plugin": "^3.0.0",
     "fastify-sensible": "^3.1.0",
-    "fastify-session": "^5.2.1",
     "fastify-tsconfig": "^1.0.1",
     "graphql": "^15.5.3",
     "mercurius": "^8.1.1",
