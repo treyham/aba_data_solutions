@@ -6,7 +6,7 @@
     "config"
   ],
   "scripts": {
-    "dev": "yarn start:web && yarn dev:server",
+    "build:web": "vite build packages/vueApp",
     "start:web": "vite packages/vueApp",
     "preview": "vite serve packages/vueApp",
     "generate": "cd packages/api && npx prisma generate",
@@ -15,13 +15,10 @@
     "prettify:check": "prettier --config .prettierrc '**/src/**/*.ts' --check",
     "seed:basic": "cd packages/api && npx prisma db seed",
     "start:server": "node --experimental-specifier-resolution=node packages/server/dist/main.js",
-    "watch:server": "cd packages/server && yarn watch",
-    "dev:server": "cd packages/server && yarn build",
-    "clean:server": "rm -rf packages/server/dist/*.* server/dist/**/*.*",
-    "build:server": "cd packages/server && yarn force",
+    "warn:server": "node --trace-warnings --experimental-specifier-resolution=node packages/server/dist/main.js",
+    "clean:server": "rm -rf packages/server/dist && mkdir packages/server/dist",
+    "build:server": "yarn clean:server && cd packages/server && yarn force",
     "build": "yarn build:server && yarn build:vueApp && yarn build:common",
-    "build:common": "cat 'Building common!",
-    "build:web": "vite build packages/vueApp",
     "clean:all": "rm -rf **/dist/*.* **/dist/**/*.*"
   },
   "devDependencies": {
