@@ -1,37 +1,38 @@
-import { AuthPluginOpts } from './plugins/auth'
-import { DbPluginOpts } from './plugins/db'
 import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
-import { FastifyPluginAsync } from 'fastify'
+import auth from './plugins/auth'
+import db from './plugins/db'
+import { AuthOpts, DbOpts } from './types'
+import { FastifyInstance } from 'fastify'
 import { config } from '@app/config'
 
-console.log('appService')
-export type AppOptions = {
+
+export type pluginOpts = {
   // Place your custom options for app below here.
-  AuthPluginOpts: AuthPluginOpts
-  DbPluginOpts: DbPluginOpts
+  AuthPluginOpts: AuthOpts
+  DbPluginOpts: DbOpts
 } & Partial<AutoloadPluginOptions>
 
-const plugins: FastifyPluginAsync<AppOptions> = async (
-  fastify,
-  opts
-): Promise<void> => {
+const plugin = async (fastify: FastifyInstance, opts: pluginOpts) => {
   // Place here your custom code!
-  config.const.intro(config.env.isProd)
+  config.intro(config.isProd)
+  fastify.decorate('auth', auth)
+  fastify.decorate('db', db)
+
   // Do not touch the following lines
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
   // through your application
   void fastify.register(AutoLoad, {
-    dir: config.const.path.server.plugins,
+    dir: config.path.server.plugins,
     options: opts
   })
   // This loads all plugins defined in routes
   // define your routes in one of these
   void fastify.register(AutoLoad, {
-    dir: config.const.path.server.routes,
+    dir: config.path.server.routes,
     options: opts
   })
 }
 
-export default plugins
-export { plugins }
+export default plugin
+export { plugin }

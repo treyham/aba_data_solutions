@@ -1,53 +1,60 @@
-import servicePlugin from './types';
-import { context } from '@app/api'
-import { config } from '@app/config'                                           // must be after import from @app/api
-import fastify, { FastifyReply, FastifyRequest } from 'fastify'
-// import closeWithGrace from 'close-with-grace'
-declare module 'mercurius' {}
+import { IncomingMessage, Server, ServerResponse } from 'http'
 
-// TODO FastifyInstance
-// https://www.fastify.io/docs/latest/TypeScript/#plugins
-// https://medium.com/sharenowtech/fastify-with-typescript-production-ready-integration-2303318ecd9e
+import AltairFastify from 'altair-fastify-plugin'
+import closeWithGrace from 'close-with-grace';
+import Fastify, { FastifyPluginAsync } from 'fastify'
+import mercurius, {
+  IFieldResolver,
+  IResolvers,
+  MercuriusContext,
+  MercuriusLoaders
+} from 'mercurius'
+import { context, schema } from '@app/api'
+import { config } from '@app/config'
 
-const server = fastify()
-
-async function start() {
-  // register plugins
-  await server.register(servicePlugin)
-  // add hooks
-  // TODO fso close. i think its right here
-  server.addHook('preHandler', (request: FastifyRequest, reply: FastifyReply) => {
-    console.log(
-      'HOOK',
-      'sessionId: ',
-      request.id,
-      '\nencryptedSessionId: ',
-      request
-    )
-  })
-  // TODO close with grace onClose hook (broken code in notes/scrap.txt)
-  return server
+const server = Fastify({ logger: !config.isProd})
+declare module 'fastify' {
+  const server: FastifyInstance<Server, IncomingMessage, ServerResponse>
 }
-// TODO server error catching
 
-start()
-  .then(server =>
-    server.listen(config.env.serverPort as string, () => {
-      console.log(`
+async function main() {
+  // delay is the number of milliseconds for the graceful close to finish
+  const closeListeners = closeWithGrace({ delay: 500 }, async function (signal, err: Console['error']) {
+    if (err) server.log.error(err)
+    await server.close()
+  })
+  return server
+  .register(AltairFastify, {
+    path: '/altair',
+    baseURL: '/altair/',
+    // should be the same as the mercurius 'path'
+    endpointURL: '/api'                                                  
+  })
+    .addHook('onClose', async (instance, done) => {
+    closeListeners.uninstall()
+    done()
+  })
+  // add hooks
+    .addHook('preHandler', (request, reply, next) => {
+    console.log('preHandler hook')
+    next()
+  })
+  // })
+
+  //if (config.node_dev) fastify.log.info()
+  
+
+}
+main()
+  // https://github.com/fastify/middie
+  .then(server => server.listen(config.env.serverPort, () => {
+    console.log(`
     🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
     ⭐️ You rock!
     `)
-    })
-  )
+  }))                                                       
   .catch(console.error)
   .finally(async () => {
     await context.prisma.$disconnect()
-    console.log('Disconnecting...')
+    console.log('disconnecting....')
   })
-/**
- * If the above script runs multiple times in the context of a long-
- * running application without calling ```$disconnect()```, a new
- * connection pool is created with each new instance of
- * ```{ PrismaClient }```.
- */
-// watch ben's vid on how to do the ts compile stuff
