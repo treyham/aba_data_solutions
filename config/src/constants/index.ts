@@ -39,9 +39,7 @@ export interface Path {
     rbt: string
     root: string
   }
-  client: {
-
-  }
+  client: {}
   server: {
     plugins: string
     routes: string
@@ -57,11 +55,11 @@ const apiPath = '/api'
 
 export const path: Path = {
   api: {
-  root: `${apiPath}`,
-  bcba: `${apiPath}/bcba`,
-  billing: `${apiPath}/billing`,
-  management: `${apiPath}/management`,
-  rbt: `${apiPath}/rbt`,
+    root: `${apiPath}`,
+    bcba: `${apiPath}/bcba`,
+    billing: `${apiPath}/billing`,
+    management: `${apiPath}/management`,
+    rbt: `${apiPath}/rbt`
   },
   client: {},
   server: {

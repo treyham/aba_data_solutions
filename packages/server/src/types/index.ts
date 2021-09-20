@@ -3,7 +3,6 @@ import { FastifyInstance } from 'fastify'
 import { FastifyCookieOptions } from 'fastify-cookie'
 import { MercuriusSchemaOptions } from 'mercurius'
 
-
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
   interface FastifyRequest {
@@ -17,7 +16,6 @@ declare module 'fastify' {
     DbProp: DbOpts
   }
 }
-
 
 // auth
 export interface FastifySessionOpts {
@@ -57,7 +55,6 @@ export interface ValidOpts {
   // Specify Support plugin options here
 }
 
-
 // server
 export interface PluginOpts {
   // Specify Support plugin options here
@@ -65,13 +62,10 @@ export interface PluginOpts {
   dbOpts: DbOpts
 }
 
-
-
 // export plugin using fastify-plugin
-// export default fp(async (fastify: FastifyInstance, options: pluginOpts): Promise<void> => { 
+// export default fp(async (fastify: FastifyInstance, options: pluginOpts): Promise<void> => {
 //   fastify.decorate('plugins', options)
 //   fastify.decorate('auth', options.AuthPluginOpts)
 //   fastify.decorate('db', options.DbPluginOpts)
-// }, 
-// '3.x') 
-
+// },
+// '3.x')
