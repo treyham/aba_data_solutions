@@ -603,6 +603,15 @@
   dependencies:
     ajv "^6.12.6"
 
+"@fastify/session@^6.2.0":
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/@fastify/session/-/session-6.2.0.tgz#15b0519cfdf9c639cf6fecb3e6eb9d274d0d6ff7"
+  integrity sha512-3kH9mTa2bj+sWp5i+hvydY06h02KWwIBp1EL3Tr3HnPno+jJ8pb748OHj9AFSeNRlhEwBlwj++ieHK2NDE+mvw==
+  dependencies:
+    cookie-signature "^1.1.0"
+    fastify-plugin "^3.0.0"
+    uid-safe "^2.1.5"
+
 "@graphql-typed-document-node/core@^3.0.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.0.tgz#0eee6373e11418bfe0b5638f654df7a4ca6a3950"
@@ -1821,6 +1830,11 @@
     tempy "1.0.1"
     terminal-link "2.1.1"
     tmp "0.2.1"
+
+"@sinclair/typebox@^0.20.5":
+  version "0.20.5"
+  resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.20.5.tgz#d5828bbb8237876d7937dd229e3dac71d1220771"
+  integrity sha512-WNiVFcS1rdz5KyEutpl3Wmp/AwSQHBUFTyJz7KqMLkpLhOXCj1dnvMytBM6uMS5OTwhwwq877T7EC4vDGrX5Eg==
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
@@ -3429,7 +3443,7 @@ clone@^1.0.2:
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha1-2jCcwmPfFZlMaIypAheco8fNfH4=
 
-close-with-grace@^1.0.0:
+close-with-grace@^1.0.0, close-with-grace@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/close-with-grace/-/close-with-grace-1.1.0.tgz#91a48cf2019b5ae6e67b0255a32abcfd9bbca233"
   integrity sha512-6cCp71Y5tKw1o9sGVBOa9OwY4vJ+YoLpFcWiTt9YCBhYlcQi0z68EiiN9mJ6/401Za6TZ5YOZg012IHHZt15lw==
@@ -4684,15 +4698,6 @@ fastify-sensible@^3.1.0:
     http-errors "^1.7.3"
     type-is "^1.6.18"
     vary "^1.1.2"
-
-fastify-session@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/fastify-session/-/fastify-session-5.2.1.tgz#0811ccd1ef3ca0806cf6f9cf0f2da91b197f8832"
-  integrity sha512-2ZOLPGPeeBE35HOgYD4/v9c304IGF2ExOh35tuKegrB3QSNB+kKeqqzUXrUJ2h0Vr5nTyvrimtPAPQZG963vOw==
-  dependencies:
-    cookie-signature "^1.1.0"
-    fastify-plugin "^3.0.0"
-    uid-safe "^2.1.5"
 
 fastify-static@^3.2.1:
   version "3.4.0"
