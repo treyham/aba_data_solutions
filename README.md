@@ -78,7 +78,10 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 * Ben Awad's 
     * [Fullstack Tut](https://www.youtube.com/watch?v=I6ypD7qv3Z8&t=0s)
     * And much much [more...](https://www.youtube.com/channel/UC-8QAzbLcRglXeN_MY9blyw)
-* Michał Lytek's [demo](https://www.youtube.com/watch?v=v6cNeHCfSHs&t=957s) 
+* Michał Lytek's [demo](https://www.youtube.com/watch?v=v6cNeHCfSHs&t=957s)
+* [Jay Wolfe's](https://www.youtube.com/watch?v=xRjEXeAKGxg&list=PLU_22oKqONimKqe-https://www.youtube.com/c/JayWolfe) 
+    * [Twitter Bot](walk-trhough)
+    * [Getting started w/ Fastify & TS](https://www.youtube.com/watch?v=WHV57q6p3Lk&t=381s)
 * bytefish's 
     * [Writeup](https://javascript.plainenglish.io/set-up-vue3-enterprise-level-development-environments-with-vite-step-by-step-guide-32964d1df60e)
     * [github](https://github.com/BytefishMedium/vite-vue3-starter)
