@@ -32,8 +32,16 @@ const intro = (isProd: boolean) => {
 }
 
 export interface Path {
-  api: {}
-  client: {}
+  api: {
+    bcba: string
+    billing: string
+    management: string
+    rbt: string
+    root: string
+  }
+  client: {
+
+  }
   server: {
     plugins: string
     routes: string
@@ -45,8 +53,16 @@ export interface Constant {
   intro: (isProd: boolean) => boolean
 }
 
+const apiPath = '/api'
+
 export const path: Path = {
-  api: {},
+  api: {
+  root: `${apiPath}`,
+  bcba: `${apiPath}/bcba`,
+  billing: `${apiPath}/billing`,
+  management: `${apiPath}/management`,
+  rbt: `${apiPath}/rbt`,
+  },
   client: {},
   server: {
     plugins: 'packages/server/dist/plugins',
