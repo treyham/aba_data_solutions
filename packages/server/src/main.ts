@@ -28,10 +28,6 @@ async function main() {
   // add hooks
   return (
     server
-      // .addHook('preHandler', (request, reply, next) => {
-      //   console.log('preHandler hook')
-      //   next()
-      // })
       .addHook('onClose', async (instance, done) => {
         closeListeners.uninstall()
         done()
