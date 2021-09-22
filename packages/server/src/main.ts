@@ -42,11 +42,11 @@ main()
     🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
     ⭐️ You rock!
     `)
-      console.log(`node env prod: ${config.isProd}`)
+      config.isProd? () => {} : console.log('in development mode')
     })
   )
   .catch(console.error)
   .finally(async () => {
     await context.prisma.$disconnect()
-    console.log('disconnecting....')
+    console.log('prisma disconnecting....')
   })
