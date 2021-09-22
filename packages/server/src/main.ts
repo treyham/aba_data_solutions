@@ -1,6 +1,5 @@
 import { IncomingMessage, Server, ServerResponse } from 'http'
 
-import AltairFastify from 'altair-fastify-plugin'
 import closeWithGrace from 'close-with-grace'
 import Fastify, { FastifyPluginAsync } from 'fastify'
 import mercurius, {
@@ -26,34 +25,28 @@ async function main() {
       await server.close()
     }
   )
+  // add hooks
   return (
     server
-      .register(AltairFastify, {
-        path: '/altair',
-        baseURL: '/altair/',
-        // should be the same as the mercurius 'path'
-        endpointURL: '/api'
-      })
+      // .addHook('preHandler', (request, reply, next) => {
+      //   console.log('preHandler hook')
+      //   next()
+      // })
       .addHook('onClose', async (instance, done) => {
         closeListeners.uninstall()
         done()
-      })
-      // add hooks
-      .addHook('preHandler', (request, reply, next) => {
-        console.log('preHandler hook')
-        next()
       })
   )
 }
 
 main()
-  // https://github.com/fastify/middie
   .then(server =>
     server.listen(config.env.serverPort, () => {
       console.log(`
     🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
     ⭐️ You rock!
     `)
+      console.log(`node env prod: ${config.isProd}`)
     })
   )
   .catch(console.error)
