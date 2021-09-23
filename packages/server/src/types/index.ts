@@ -33,7 +33,7 @@ export interface AuthOpts {
 
 // database
 export interface BuildContext {
-  (req: FastifyRequest, _reply: FastifyReply): Promise<void>
+  (req: FastifyRequest, _reply: FastifyReply): Promise<void> // TODO this is why, should be returning promise<context> i think
   // { authorization: IncomingHttpHeaders }
 }
 

@@ -4,13 +4,14 @@ import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
 import { AuthOpts, BuildContext, DbOpts } from './types'
 
-console.log('plugin')
-
 const buildContext: BuildContext = async (
   req: FastifyRequest,
-  _reply: FastifyReply
+  _reply: FastifyReply,
 ) => {
-  console.log('build context')
+  console.log('build context', _reply)
+  
+  req
+  _reply
   // return { authorization: req.headers }
 }
 

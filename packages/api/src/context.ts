@@ -3,12 +3,8 @@ import { PrismaClient } from '.prisma/client'
 import { Context } from './interfaces'
 const prisma = new PrismaClient()
 
-export const context: Context = {
-  prisma
-}
-
 export interface PrismaContext {
-  (request: FastifyRequest, reply: FastifyReply): Context
+  prisma: PrismaClient
 }
 
 // export const context: Context = (request, reply) => {return prisma}

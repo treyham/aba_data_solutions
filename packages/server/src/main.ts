@@ -27,7 +27,7 @@ async function main() {
       // add hooks
       .addHook('onRequest', (request, reply, done) => {
         request.log.info(
-          `\nonRequest\n`,
+          `onRequest`,
           { url: request.raw.url, id: request.id },
           'received request'
         )
@@ -41,7 +41,7 @@ async function main() {
             reqUrl: req.raw.url, // add url to response as well for simple correlating
             replyStatusCode: reply.raw.statusCode
           },
-          'request completed'
+          'response completed'
         )
         done()
       })
