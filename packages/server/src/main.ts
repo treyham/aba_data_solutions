@@ -1,15 +1,9 @@
-import { IncomingMessage, Server, ServerResponse } from 'http'
-
-import closeWithGrace from 'close-with-grace'
-import Fastify, { FastifyPluginAsync } from 'fastify'
-import mercurius, {
-  IFieldResolver,
-  IResolvers,
-  MercuriusContext,
-  MercuriusLoaders
-} from 'mercurius'
-import { context } from '@app/api'
 import { config } from '@app/config'
+import closeWithGrace from 'close-with-grace'
+import Fastify from 'fastify'
+import { IncomingMessage, Server, ServerResponse } from 'http'
+import plugin, { pluginOpts } from './pluginConfig'
+
 
 const server = Fastify({ logger: !config.isProd })
 declare module 'fastify' {
@@ -17,6 +11,7 @@ declare module 'fastify' {
 }
 
 async function main() {
+  (!config.isProd) && console.log('in development mode')                       // noop if in
   // delay is the number of milliseconds for the graceful close to finish
   const closeListeners = closeWithGrace(
     { delay: 500 },
@@ -25,13 +20,30 @@ async function main() {
       await server.close()
     }
   )
-  // add hooks
+  
   return (
     server
-      .addHook('onClose', async (instance, done) => {
-        closeListeners.uninstall()
-        done()
-      })
+    .register(plugin, pluginOpts)
+    // add hooks
+    .addHook('onRequest', (request, reply, done) => {
+      request.log.info(`\nonRequest\n`, { url: request.raw.url, id: request.id }, "received request")
+      console.log({request})
+      done()
+    })
+    .addHook("onResponse", (req, reply, done) => {
+      req.log.info(
+        `\nonResponse\n`, {
+          url: req.raw.url, // add url to response as well for simple correlating
+          statusCode: reply.raw.statusCode,
+        },
+        "request completed"
+      )
+      done()
+    })
+    .addHook('onClose', async (instance, done) => {
+      closeListeners.uninstall()
+      done()
+    })
   )
 }
 
@@ -42,11 +54,6 @@ main()
     🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
     ⭐️ You rock!
     `)
-      config.isProd? () => {} : console.log('in development mode')
     })
   )
   .catch(console.error)
-  .finally(async () => {
-    await context.prisma.$disconnect()
-    console.log('prisma disconnecting....')
-  })

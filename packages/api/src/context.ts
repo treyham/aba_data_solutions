@@ -1,6 +1,18 @@
+import { FastifyRequest, FastifyReply } from 'fastify'
 import { PrismaClient } from '.prisma/client'
 import { Context } from './interfaces'
 const prisma = new PrismaClient()
+
+export const context: Context = {
+  prisma
+}
+
+export interface PrismaContext{
+
+  (request: FastifyRequest, reply: FastifyReply): Context
+}
+
+// export const context: Context = (request, reply) => {return prisma}
 /**
  * ## exit hook
  * The ```beforeExit``` hook runs when Prisma is triggered externally
@@ -18,6 +30,5 @@ const prisma = new PrismaClient()
 //     },
 //   })
 // })
-export const context: Context = {
-  prisma: prisma
-}
+
+

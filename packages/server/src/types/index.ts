@@ -1,7 +1,12 @@
+import { PrismaContext } from '@app/api';
+import 'reflect-metadata'
 import { Context } from '@app/api'
-import { FastifyInstance } from 'fastify'
+import { IncomingHttpHeaders } from 'http'
+
+import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import { FastifyCookieOptions } from 'fastify-cookie'
-import { MercuriusSchemaOptions } from 'mercurius'
+import { MercuriusContext, MercuriusSchemaOptions } from 'mercurius'
+import { GraphQLSchema } from 'graphql'
 
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
@@ -32,12 +37,18 @@ export interface AuthOpts {
 }
 
 // database
+export interface BuildContext {
+  (req: FastifyRequest, _reply: FastifyReply): Promise<{
+    authorization: IncomingHttpHeaders
+}>
+}
+
 export interface MercuriusPluginOpts {
-  schema: MercuriusSchemaOptions
+  schema: GraphQLSchema
   graphiql: boolean
   ide: boolean
   path: string
-  context: Context
+  context: BuildContext
 }
 export interface AltairPluginOpts {
   path: string

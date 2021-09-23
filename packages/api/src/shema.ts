@@ -54,11 +54,8 @@ import {
 } from '@generated/type-graphql'
 import { buildSchema } from 'type-graphql'
 
-// custom
-// import { CreateEmployeeResolver } from './api/module/employee/create'
-// /home/tham/aba_data_solutions/node_modules/@-/api/dist/generated/resolvers/crud
 
-export const schema = await buildSchema({
+export const schema = await buildSchema({                                       // build TypeGraphQL executable schema
   resolvers: [
     // AdministrationCrudResolver
     /**
@@ -113,7 +110,6 @@ export const schema = await buildSchema({
     Session,
     TreatmentPlan,
     TreatmentPlan_to_Program
-
     /**
      *                          C u s t o m
      */

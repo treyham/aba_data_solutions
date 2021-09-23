@@ -9,7 +9,9 @@ import { FastifySessionOpts } from '../types'
 export default fp(
   async (fastify: FastifyInstance, opts: FastifySessionOpts) => {
     !config.isProd && fastify.log.info
-    return fastify.register(cookie).register(session, {
+    return fastify
+    .register(cookie)
+    .register(session, {
       saveUninitialized: opts.saveUninitialized,
       secret: opts.secret,
       cookie: {
