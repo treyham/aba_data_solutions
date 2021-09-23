@@ -51,16 +51,12 @@ const plugin = async (fastify: FastifyInstance, opts: PluginOpts) => {
   fastify.decorate<AuthOpts>('auth', opts.authOpts)
   fastify.decorate<DbOpts>('db', opts.dbOpts)
 
-  // Do not touch the following lines
-  // This loads all plugins defined in plugins
-  // those should be support plugins that are reused
-  // through your application
+  // load plugins 
   void fastify.register(AutoLoad, {
     dir: config.path.server.plugins,
     options: opts
   })
-  // This loads all plugins defined in routes
-  // define your routes in one of these
+  // load route plugins
   void fastify.register(AutoLoad, {
     dir: config.path.server.routes,
     options: opts
