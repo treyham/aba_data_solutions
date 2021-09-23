@@ -1,10 +1,8 @@
-import { FastifyRequest, FastifyReply } from 'fastify'
 import { PrismaClient } from '.prisma/client'
-import { Context } from './interfaces'
-const prisma = new PrismaClient()
+export const prisma = new PrismaClient()
 
-export interface PrismaContext {
-  prisma: PrismaClient
+export const prismaContext = {
+  prisma
 }
 
 // export const context: Context = (request, reply) => {return prisma}

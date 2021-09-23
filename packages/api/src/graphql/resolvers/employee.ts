@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { EmployeeCreateInput } from '@generated/type-graphql'
-import { Context } from '../../../src'
+import { Context } from '../../interfaces'
 import argon2 from 'argon2'
 
 import {

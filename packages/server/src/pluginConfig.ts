@@ -1,17 +1,19 @@
-import { schema } from '@app/api'
+import { schema, prisma, Context } from '@app/api'
 import { config } from '@app/config'
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
-import { AuthOpts, BuildContext, DbOpts } from './types'
+import { AuthOpts, BuildContext, DbOpts, Contex } from './types'
 
 const buildContext: BuildContext = async (
   req: FastifyRequest,
   _reply: FastifyReply,
-) => {
-  console.log('build context', _reply)
-  
-  req
-  _reply
+):Promise<Context> => {
+  // console.log('build context', _reply)
+  return {
+    req,
+    reply: _reply,
+    prisma
+  }
   // return { authorization: req.headers }
 }
 

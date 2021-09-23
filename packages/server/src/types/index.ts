@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import { PrismaContext } from '@app/api'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { FastifyCookieOptions } from 'fastify-cookie'
 import { GraphQLSchema } from 'graphql'
@@ -32,8 +33,13 @@ export interface AuthOpts {
 }
 
 // database
+export type Contex = {
+  req: FastifyRequest
+  reply: FastifyReply
+} & PrismaContext
+
 export interface BuildContext {
-  (req: FastifyRequest, _reply: FastifyReply): Promise<void> // TODO this is why, should be returning promise<context> i think
+  (req: FastifyRequest, _reply: FastifyReply): Promise<Contex> // TODO this is why, should be returning promise<context> i think
   // { authorization: IncomingHttpHeaders }
 }
 
