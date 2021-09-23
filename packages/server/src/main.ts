@@ -11,19 +11,21 @@ declare module 'fastify' {
 
 async function main() {
   !config.isProd && console.log('in development mode') // noop if in
+  const closeListeners = closeWithGrace(
+    { delay: 500 }, // number of milliseconds for the graceful close to finish
+    async function (signal, err: Console['error']) {
+      err
+        ? server.log.error(err)
+        : await server.close()
+    }
+  )
   return (
     server
       // register server plugin
       .register(plugin, pluginOpts)
       // add hooks
       .addHook('onClose', async (instance, done) => {
-        closeWithGrace(
-          { delay: 500 }, // number of milliseconds for the graceful close to finish
-          async function (signal, err: Console['error']) {
-            if (err) server.log.error(err)
-            await server.close()
-          }
-        ).uninstall()
+        closeListeners.uninstall()
         done()
       })
   )
@@ -35,8 +37,8 @@ main()
       err
         ? console.log(err)
         : console.log(`
-    🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
-    ⭐️ You rock!`)
+          \t\t🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
+          \t\t⭐️ You rock!\n\n`)
     })
   )
   .catch(console.error)
