@@ -18,7 +18,7 @@ async function main() {
       // add hooks
       .addHook('onClose', async (instance, done) => {
         closeWithGrace(
-          { delay: 500 }, // delay is the number of milliseconds for the graceful close to finish
+          { delay: 500 }, // number of milliseconds for the graceful close to finish
           async function (signal, err: Console['error']) {
             if (err) server.log.error(err)
             await server.close()

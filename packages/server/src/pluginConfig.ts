@@ -26,7 +26,6 @@ export type PluginOpts = {
   // Place your custom options for app below here.
   authOpts: AuthOpts
   dbOpts: DbOpts
-  // validOpts: ValidOpts
 } & Partial<AutoloadPluginOptions>
 
 export const pluginOpts: PluginOpts = {
