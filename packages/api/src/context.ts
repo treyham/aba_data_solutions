@@ -7,8 +7,7 @@ export const context: Context = {
   prisma
 }
 
-export interface PrismaContext{
-
+export interface PrismaContext {
   (request: FastifyRequest, reply: FastifyReply): Context
 }
 
@@ -30,5 +29,3 @@ export interface PrismaContext{
 //     },
 //   })
 // })
-
-

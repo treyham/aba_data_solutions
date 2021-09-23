@@ -55,8 +55,8 @@ import {
 import { CreateEmployeeResolver } from './graphql/resolvers'
 import { buildSchema } from 'type-graphql'
 
-
-export const schema = await buildSchema({                                       // build TypeGraphQL executable schema
+export const schema = await buildSchema({
+  // build TypeGraphQL executable schema
   resolvers: [
     /**
      *                        G e n e r a t e d

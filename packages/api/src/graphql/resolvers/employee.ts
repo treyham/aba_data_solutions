@@ -48,6 +48,6 @@ export class CreateEmployeeResolver {
         password: encryptedPass,
         position: createInput.position
       }
-    })
-  )}
+    }))
+  }
 }

@@ -35,8 +35,6 @@ export const path: Path = {
   }
 }
 
-
-
 export const constant: Constant = {
   path,
   cookieName: 'COOKIEsessionId'

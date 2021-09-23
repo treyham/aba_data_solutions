@@ -6,7 +6,10 @@ import { AuthOpts, BuildContext, DbOpts } from './types'
 
 console.log('plugin')
 
-const buildContext: BuildContext = async (req: FastifyRequest, _reply: FastifyReply) => {
+const buildContext: BuildContext = async (
+  req: FastifyRequest,
+  _reply: FastifyReply
+) => {
   console.log('build context')
   // return { authorization: req.headers }
 }
@@ -14,7 +17,8 @@ const buildContext: BuildContext = async (req: FastifyRequest, _reply: FastifyRe
 type PromiseType<T> = T extends PromiseLike<infer U> ? U : T
 
 declare module 'mercurius' {
-  interface MercuriusContext extends PromiseType<ReturnType<typeof buildContext>> {}
+  interface MercuriusContext
+    extends PromiseType<ReturnType<typeof buildContext>> {}
 }
 
 export type PluginOpts = {
@@ -37,14 +41,14 @@ export const pluginOpts: PluginOpts = {
     AltairaPluginOpts: {
       path: '/altair',
       baseURL: '/altair/',
-      endpointURL: '/api',
+      endpointURL: '/api'
     },
     MercuriusPluginOpts: {
       schema,
       graphiql: false,
       ide: false,
       path: '/api',
-      context: buildContext                                                    // https://mercurius.dev/#/docs/typescript?id=manually-typing
+      context: buildContext // https://mercurius.dev/#/docs/typescript?id=manually-typing
     }
   }
 }

@@ -1,4 +1,4 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyRequest, FastifyReply } from 'fastify'
 import { PrismaClient } from '@prisma/client'
 
 export interface Context {
@@ -6,4 +6,3 @@ export interface Context {
   // (arg0: FastifyRequest, arg1: FastifyReply): PrismaClient
   prisma: PrismaClient
 }
-

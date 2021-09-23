@@ -1,8 +1,7 @@
 import 'reflect-metadata'
-import { FastifyReply, FastifyRequest } from 'fastify';
-import { FastifyCookieOptions } from 'fastify-cookie';
-import { GraphQLSchema } from 'graphql';
-
+import { FastifyReply, FastifyRequest } from 'fastify'
+import { FastifyCookieOptions } from 'fastify-cookie'
+import { GraphQLSchema } from 'graphql'
 
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
@@ -21,8 +20,8 @@ declare module 'fastify' {
 // auth
 export interface FastifySessionOpts {
   cookieName: string
-      secret: string
-      cookie: { secure: boolean }
+  secret: string
+  cookie: { secure: boolean }
 }
 
 // TODO AuthPluginOptions interface
@@ -34,10 +33,8 @@ export interface AuthOpts {
 
 // database
 export interface BuildContext {
-  (req: FastifyRequest, _reply: FastifyReply): Promise<
-    void
+  (req: FastifyRequest, _reply: FastifyReply): Promise<void>
   // { authorization: IncomingHttpHeaders }
-  >
 }
 
 export interface MercuriusPluginOpts {

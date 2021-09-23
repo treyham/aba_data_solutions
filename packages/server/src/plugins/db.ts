@@ -9,10 +9,10 @@ import { PluginOpts } from '../pluginConfig'
 export default fp(async (fastify: FastifyInstance, opts: PluginOpts) => {
   config.isProd && fastify.log.info
   return await fastify
-    .register(mercurius, {...opts.dbOpts.MercuriusPluginOpts})
+    .register(mercurius, { ...opts.dbOpts.MercuriusPluginOpts })
     .register(AltairFastify, { ...opts.dbOpts.AltairaPluginOpts })
 })
-    
+
 // })
 // When using .decorate you have to specify added properties for Typescript
 // declare module 'fastify' {
