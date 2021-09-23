@@ -41,7 +41,7 @@ export class CreateEmployeeResolver {
     const encryptedPass = await argon2.hash(createInput.password)
     // const encryptedPass = employeeInput.password
     console.log('encryptedPassword: ', encryptedPass)
-    const isCreated = await ctx.prisma.employee.create({
+    return !!(await ctx.prisma.employee.create({
       data: {
         fullName: createInput.fullName,
         displayName: createInput.displayName,
@@ -49,6 +49,5 @@ export class CreateEmployeeResolver {
         position: createInput.position
       }
     })
-    return !!isCreated
-  }
+  )}
 }
