@@ -1,4 +1,3 @@
-import closeWithGrace from 'close-with-grace';
 import 'reflect-metadata'
 import { Context } from '@app/api'
 import { FastifyReply, FastifyRequest } from 'fastify'
