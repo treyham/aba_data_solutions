@@ -11,22 +11,19 @@ declare module 'fastify' {
 
 async function main() {
   !config.isProd && console.log('in development mode') // noop if in
-  // delay is the number of milliseconds for the graceful close to finish
-  const closeListeners = closeWithGrace(
-    { delay: 500 },
-    async function (signal, err: Console['error']) {
-      if (err) server.log.error(err)
-      await server.close()
-    }
-  )
-
   return (
     server
       // register server plugin
       .register(plugin, pluginOpts)
       // add hooks
       .addHook('onClose', async (instance, done) => {
-        closeListeners.uninstall()
+        closeWithGrace(
+          { delay: 500 }, // delay is the number of milliseconds for the graceful close to finish
+          async function (signal, err: Console['error']) {
+            if (err) server.log.error(err)
+            await server.close()
+          }
+        ).uninstall()
         done()
       })
   )
