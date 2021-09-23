@@ -2,7 +2,7 @@ import { schema, prisma, Context } from '@app/api'
 import { config } from '@app/config'
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
-import { AuthOpts, BuildContext, DbOpts } from './types'
+import { AuthOpts, BuildContext, DbOpts } from './interfaces'
 
 const buildContext: BuildContext = async (
   req: FastifyRequest,
@@ -13,13 +13,6 @@ const buildContext: BuildContext = async (
     reply: _reply,
     prisma
   }
-}
-
-type PromiseType<T> = T extends PromiseLike<infer U> ? U : T
-
-declare module 'mercurius' {
-  interface MercuriusContext
-    extends PromiseType<ReturnType<typeof buildContext>> {}
 }
 
 export type PluginOpts = {
