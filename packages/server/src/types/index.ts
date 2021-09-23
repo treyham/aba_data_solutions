@@ -1,9 +1,10 @@
+import closeWithGrace from 'close-with-grace';
 import 'reflect-metadata'
 import { Context } from '@app/api'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { FastifyCookieOptions } from 'fastify-cookie'
 import { GraphQLSchema } from 'graphql'
-
+ 
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
   interface FastifyRequest {
@@ -53,11 +54,6 @@ export interface DbOpts {
   // Specify Support plugin options here
   MercuriusPluginOpts: MercuriusPluginOpts
   AltairaPluginOpts: AltairPluginOpts
-}
-
-// validation
-export interface ValidOpts {
-  // Specify Support plugin options here
 }
 
 // server
