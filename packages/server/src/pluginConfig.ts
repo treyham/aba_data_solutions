@@ -36,7 +36,7 @@ export const pluginOpts: PluginOpts = {
   dbOpts: {
     AltairaPluginOpts: {
       path: '/altair',
-      baseURL: '/altair',
+      baseURL: '/altair/',
       endpointURL: '/api',
     },
     MercuriusPluginOpts: {

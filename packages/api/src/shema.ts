@@ -52,67 +52,66 @@ import {
   TreatmentPlan_to_ProgramCrudResolver,
   TreatmentPlan_to_ProgramRelationsResolver
 } from '@generated/type-graphql'
+import { CreateEmployeeResolver } from './graphql/resolvers'
 import { buildSchema } from 'type-graphql'
 
 
 export const schema = await buildSchema({                                       // build TypeGraphQL executable schema
   resolvers: [
-    // AdministrationCrudResolver
     /**
      *                        G e n e r a t e d
      */
     // crud
-    // AdministrationCrudResolver, AdministrationRelationsResolver,
-    AdministrationCrudResolver,
-    BcbaCrudResolver,
-    BillingCrudResolver,
-    BillingObjectCrudResolver,
-    ClientCrudResolver,
-    EmployeeCrudResolver,
-    LoginCrudResolver,
-    PersonalInfoCrudResolver,
-    PlanCrudResolver,
-    ProgramCrudResolver,
-    ProviderCrudResolver,
-    RbtCrudResolver,
-    RecordCrudResolver,
-    SessionCrudResolver,
-    TreatmentPlanCrudResolver,
-    TreatmentPlan_to_ProgramCrudResolver,
-    // relations
-    AdministrationRelationsResolver,
-    BcbaRelationsResolver,
-    BillingRelationsResolver,
-    ClientRelationsResolver,
-    EmployeeRelationsResolver,
-    LoginRelationsResolver,
-    PlanRelationsResolver,
-    ProgramRelationsResolver,
-    ProviderRelationsResolver,
-    RbtRelationsResolver,
-    RecordRelationsResolver,
-    SessionRelationsResolver,
-    TreatmentPlanRelationsResolver,
-    TreatmentPlan_to_ProgramRelationsResolver,
-    // types
-    Administration,
-    Bcba,
-    Billing,
-    Client,
-    Employee,
-    Login,
-    PersonalInfo,
-    Plan,
-    Program,
-    Provider,
-    Rbt,
-    Record,
-    Session,
-    TreatmentPlan,
-    TreatmentPlan_to_Program
+    // AdministrationCrudResolver,
+    // BcbaCrudResolver,
+    // BillingCrudResolver,
+    // BillingObjectCrudResolver,
+    // ClientCrudResolver,
+    // EmployeeCrudResolver,
+    // LoginCrudResolver,
+    // PersonalInfoCrudResolver,
+    // PlanCrudResolver,
+    // ProgramCrudResolver,
+    // ProviderCrudResolver,
+    // RbtCrudResolver,
+    // RecordCrudResolver,
+    // SessionCrudResolver,
+    // TreatmentPlanCrudResolver,
+    // TreatmentPlan_to_ProgramCrudResolver,
+    // // relations
+    // AdministrationRelationsResolver,
+    // BcbaRelationsResolver,
+    // BillingRelationsResolver,
+    // ClientRelationsResolver,
+    // EmployeeRelationsResolver,
+    // LoginRelationsResolver,
+    // PlanRelationsResolver,
+    // ProgramRelationsResolver,
+    // ProviderRelationsResolver,
+    // RbtRelationsResolver,
+    // RecordRelationsResolver,
+    // SessionRelationsResolver,
+    // TreatmentPlanRelationsResolver,
+    // TreatmentPlan_to_ProgramRelationsResolver,
+    // // types
+    // Administration,
+    // Bcba,
+    // Billing,
+    // Client,
+    // Employee,
+    // Login,
+    // PersonalInfo,
+    // Plan,
+    // Program,
+    // Provider,
+    // Rbt,
+    // Record,
+    // Session,
+    // TreatmentPlan,
+    // TreatmentPlan_to_Program,
     /**
      *                          C u s t o m
      */
-    // CreateEmployeeResolver
+    CreateEmployeeResolver
   ]
 })
