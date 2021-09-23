@@ -41,7 +41,7 @@ export const pluginOpts: PluginOpts = {
     },
     MercuriusPluginOpts: {
       schema,
-      graphiql: true,
+      graphiql: false,
       ide: false,
       path: '/api',
       context: buildContext                                                    // https://mercurius.dev/#/docs/typescript?id=manually-typing
