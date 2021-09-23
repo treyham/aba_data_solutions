@@ -18,7 +18,7 @@ const {
 assert(NODE_ENV, 'NODE_ENV is required.')
 assert(VUE_APP_PORT, 'VUE_APP_PORT is required.')
 assert(SERVER_PORT, 'SERVER_PORT is required.')
-assert(DATABASE_URL, 'DATABASE_URL is required.')
+// assert(DATABASE_URL, 'DATABASE_URL is required.')
 assert(COOKIE_SECRET, 'COOKIE_SECRET is required.')
 assert(SESSION_SECRET, 'SESSION_SECRET is required.')
 // assert(CERTIFICATE_PATH, 'CERTIFICATE_PATH is required.')
@@ -27,7 +27,7 @@ export interface Env {
   nodeEnv: string
   vuePort: string
   serverPort: string
-  dbUrl: string
+  // dbUrl: string
   cookieSecret: string
   sessionSecret: string
 }
@@ -35,8 +35,10 @@ export interface Env {
 export interface Config {
   env: Env
   isProd: boolean
-  intro: (isProd: boolean) => boolean
   path: Path
+  myCookie: {
+    name: string
+  }
   // functions: Functions
 }
 
@@ -45,11 +47,13 @@ export const config: Config = {
     nodeEnv: NODE_ENV as string,
     vuePort: VUE_APP_PORT as string,
     serverPort: SERVER_PORT as string,
-    dbUrl: DATABASE_URL as string,
+    // dbUrl: DATABASE_URL as string,
     cookieSecret: DATABASE_URL as string,
     sessionSecret: SESSION_SECRET as string
   },
   isProd: NODE_ENV === 'production',
-  intro: constant.intro,
-  path
+  path,
+  myCookie: {
+    name: constant.cookieName
+  }
 }

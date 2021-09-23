@@ -2,21 +2,14 @@ import { schema } from '@app/api'
 import { config } from '@app/config'
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
-import { AuthOpts, BuildContext, DbOpts, ValidOpts } from './types'
+import { AuthOpts, BuildContext, DbOpts } from './types'
 
-export type PluginOpts = {
-  // Place your custom options for app below here.
-  authOpts: AuthOpts
-  dbOpts: DbOpts
-  validOpts: ValidOpts
-} & Partial<AutoloadPluginOptions>
+console.log('plugin')
 
 const buildContext: BuildContext = async (req: FastifyRequest, _reply: FastifyReply) => {
-  return {
-    authorization: req.headers//.authorization
-  }
+  console.log('build context')
+  // return { authorization: req.headers }
 }
-
 
 type PromiseType<T> = T extends PromiseLike<infer U> ? U : T
 
@@ -24,15 +17,20 @@ declare module 'mercurius' {
   interface MercuriusContext extends PromiseType<ReturnType<typeof buildContext>> {}
 }
 
+export type PluginOpts = {
+  // Place your custom options for app below here.
+  authOpts: AuthOpts
+  dbOpts: DbOpts
+  // validOpts: ValidOpts
+} & Partial<AutoloadPluginOptions>
+
 export const pluginOpts: PluginOpts = {
   authOpts: {
     cookie: {},
     session: {
-      saveUninitialized: true,
+      cookieName: config.myCookie.name,
       secret: config.env.sessionSecret,
-      cookie: {
-        secret: config.env.cookieSecret
-      }
+      cookie: { secure: config.isProd }
     }
   },
   dbOpts: {
@@ -43,25 +41,18 @@ export const pluginOpts: PluginOpts = {
     },
     MercuriusPluginOpts: {
       schema,
-      graphiql: false,
+      graphiql: true,
       ide: false,
       path: '/api',
-      context: buildContext,
-      // context: context
-      // https://mercurius.dev/#/docs/typescript?id=manually-typing
+      context: buildContext                                                    // https://mercurius.dev/#/docs/typescript?id=manually-typing
     }
-  },
-  validOpts: {
-
   }
 }
 
 const plugin = async (fastify: FastifyInstance, opts: PluginOpts) => {
   // Place here your custom code!
-  config.intro(config.isProd)
   fastify.decorate<AuthOpts>('auth', opts.authOpts)
   fastify.decorate<DbOpts>('db', opts.dbOpts)
-  fastify.decorate<ValidOpts>('validator', opts.validOpts)
   // fastify.decorate('cookie', opts.authOpts.cookie)
   // fastify.decorate('session', opts.authOpts.session)
 

@@ -23,6 +23,7 @@ async function main() {
   
   return (
     server
+    // register server plugin
     .register(plugin, pluginOpts)
     // add hooks
     .addHook('onRequest', (request, reply, done) => {
@@ -49,11 +50,13 @@ async function main() {
 
 main()
   .then(server =>
-    server.listen(config.env.serverPort, () => {
-      console.log(`
+    server.listen(config.env.serverPort, (err) => {
+      err? 
+        console.log(err) :
+        console.log(`
     🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
-    ⭐️ You rock!
-    `)
-    })
+    ⭐️ You rock!`
+        )
+      })
   )
   .catch(console.error)
