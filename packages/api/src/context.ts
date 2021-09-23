@@ -4,8 +4,6 @@ export const prisma = new PrismaClient()
 export const prismaContext = {
   prisma
 }
-
-// export const context: Context = (request, reply) => {return prisma}
 /**
  * ## exit hook
  * The ```beforeExit``` hook runs when Prisma is triggered externally

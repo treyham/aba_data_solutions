@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { PrismaContext } from '@app/api'
+import { Context } from '@app/api'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { FastifyCookieOptions } from 'fastify-cookie'
 import { GraphQLSchema } from 'graphql'
@@ -33,14 +33,8 @@ export interface AuthOpts {
 }
 
 // database
-export type Contex = {
-  req: FastifyRequest
-  reply: FastifyReply
-} & PrismaContext
-
 export interface BuildContext {
-  (req: FastifyRequest, _reply: FastifyReply): Promise<Contex> // TODO this is why, should be returning promise<context> i think
-  // { authorization: IncomingHttpHeaders }
+  (req: FastifyRequest, _reply: FastifyReply): Promise<Context>
 }
 
 export interface MercuriusPluginOpts {
@@ -72,11 +66,3 @@ export interface PluginOpts {
   authOpts: AuthOpts
   dbOpts: DbOpts
 }
-
-// export plugin using fastify-plugin
-// export default fp(async (fastify: FastifyInstance, options: pluginOpts): Promise<void> => {
-//   fastify.decorate('plugins', options)
-//   fastify.decorate('auth', options.AuthPluginOpts)
-//   fastify.decorate('db', options.DbPluginOpts)
-// },
-// '3.x')

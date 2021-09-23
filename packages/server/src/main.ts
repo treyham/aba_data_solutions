@@ -25,26 +25,6 @@ async function main() {
       // register server plugin
       .register(plugin, pluginOpts)
       // add hooks
-      .addHook('onRequest', (request, reply, done) => {
-        request.log.info(
-          `onRequest`,
-          { url: request.raw.url, id: request.id },
-          'received request'
-        )
-        console.log({ request })
-        done()
-      })
-      .addHook('onResponse', (req, reply, done) => {
-        req.log.info(
-          `Response`,
-          {
-            reqUrl: req.raw.url, // add url to response as well for simple correlating
-            replyStatusCode: reply.raw.statusCode
-          },
-          'response completed'
-        )
-        done()
-      })
       .addHook('onClose', async (instance, done) => {
         closeListeners.uninstall()
         done()

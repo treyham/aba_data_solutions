@@ -2,19 +2,17 @@ import { schema, prisma, Context } from '@app/api'
 import { config } from '@app/config'
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
-import { AuthOpts, BuildContext, DbOpts, Contex } from './types'
+import { AuthOpts, BuildContext, DbOpts } from './types'
 
 const buildContext: BuildContext = async (
   req: FastifyRequest,
-  _reply: FastifyReply,
-):Promise<Context> => {
-  // console.log('build context', _reply)
+  _reply: FastifyReply
+): Promise<Context> => {
   return {
     req,
     reply: _reply,
     prisma
   }
-  // return { authorization: req.headers }
 }
 
 type PromiseType<T> = T extends PromiseLike<infer U> ? U : T
@@ -60,8 +58,6 @@ const plugin = async (fastify: FastifyInstance, opts: PluginOpts) => {
   // Place here your custom code!
   fastify.decorate<AuthOpts>('auth', opts.authOpts)
   fastify.decorate<DbOpts>('db', opts.dbOpts)
-  // fastify.decorate('cookie', opts.authOpts.cookie)
-  // fastify.decorate('session', opts.authOpts.session)
 
   // Do not touch the following lines
   // This loads all plugins defined in plugins
