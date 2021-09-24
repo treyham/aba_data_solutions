@@ -20,8 +20,12 @@ export interface BuildContext {
     baseURL: string
     endpointURL: string
   }
-  export interface DbOpts {
+  export interface DbPlugOpts {
     // Specify Support plugin options here
     MercuriusPluginOpts: MercuriusPluginOpts
     AltairaPluginOpts: AltairPluginOpts
   }
+
+  export interface DbPropOpts {
+      
+}

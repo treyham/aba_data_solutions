@@ -3,7 +3,7 @@ import { FastifyInstance } from 'fastify'
 import cookie from 'fastify-cookie'
 import fp from 'fastify-plugin'
 import session from '@fastify/session'
-import { PluginOpts } from '../pluginConfig'
+import { PluginOpts } from '../interfaces'
 
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
 export default fp(async (fastify: FastifyInstance, opts: PluginOpts) => {
