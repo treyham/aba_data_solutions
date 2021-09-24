@@ -23,11 +23,18 @@ export type PluginOpts = {
 
 export const pluginOpts: PluginOpts = {
   authOpts: {
-    cookie: {},
+    //cookie: {},
     session: {
-      cookieName: config.myCookie.name,
+      cookieName: config.session.cookie.name,
       secret: config.env.sessionSecret,
-      cookie: { secure: config.isProd }
+      cookie: {
+        httpOnly: config.session.cookie.httpOnly,
+        secure: config.isProd,
+        expires: config.session.cookie.expires
+        
+      },
+      saveUninitialized: config.session.saveUninitialized
+      
     }
   },
   dbOpts: {
