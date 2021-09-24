@@ -1,8 +1,8 @@
 import { schema, prisma, Context } from '@app/api'
 import { config } from '@app/config'
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
-import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
-import { AuthOpts, BuildContext, DbOpts } from './interfaces'
+import AutoLoad from 'fastify-autoload'
+import { AuthPlugOpts, AuthPropOpts, BuildContext, DbPlugOpts, DbPropOpts, PluginOpts } from './interfaces'
 
 const buildContext: BuildContext = async (
   req: FastifyRequest,
@@ -19,12 +19,6 @@ const buildContext: BuildContext = async (
     prisma
   }
 }
-
-export type PluginOpts = {
-  // Place your custom options for app below here.
-  authOpts: AuthOpts
-  dbOpts: DbOpts
-} & Partial<AutoloadPluginOptions>
 
 export const pluginOpts: PluginOpts = {
   authOpts: {
@@ -57,8 +51,8 @@ export const pluginOpts: PluginOpts = {
 
 const plugin = async (fastify: FastifyInstance, opts: PluginOpts) => {
   // Place here your custom code!
-  fastify.decorate<AuthOpts>('auth', opts.authOpts)
-  fastify.decorate<DbOpts>('db', opts.dbOpts)
+  fastify.decorate<AuthPropOpts>('auth', opts.authOpts)
+  fastify.decorate<DbPropOpts>('db', opts.dbOpts)
 
   // load plugins 
   void fastify.register(AutoLoad, {

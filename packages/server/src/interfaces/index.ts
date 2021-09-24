@@ -1,24 +1,26 @@
-import { AuthOpts } from './Auth'
-import { BuildContext, DbOpts } from './Db'
-
-export { AuthOpts, BuildContext, DbOpts } 
+import { AuthPlugOpts, AuthPropOpts } from './Auth'
+import { BuildContext, DbPlugOpts, DbPropOpts } from './Db'
+import { AutoloadPluginOptions } from 'fastify-autoload'
 
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
   interface FastifyRequest {
     PluginProp: PluginOpts
-    AuthProp: AuthOpts
-    DbProp: DbOpts
+    AuthProp: AuthPropOpts
+    DbProp: DbPropOpts
   }
   interface FastifyReply {
     PluginProp: PluginOpts
-    AuthProp: AuthOpts
-    DbProp: DbOpts
+    AuthProp: AuthPropOpts
+    DbProp: DbPropOpts
   }
 }
 
-export interface PluginOpts {
+export type PluginOpts = {
   // Specify Support plugin options here
-  authOpts: AuthOpts
-  dbOpts: DbOpts
-}
+  authOpts: AuthPlugOpts
+  dbOpts: DbPlugOpts
+} & Partial<AutoloadPluginOptions>
+
+export * from './Auth'
+export * from './Db'
