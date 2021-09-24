@@ -15,7 +15,6 @@ export interface Path {
 
 export interface Constant {
   path: Path
-  cookieName: string
 }
 
 const apiPath = '/api'
@@ -37,6 +36,5 @@ export const path: Path = {
 
 export const constant: Constant = {
   path,
-  cookieName: 'COOKIEsessionId'
 }
 // TODO organize this
