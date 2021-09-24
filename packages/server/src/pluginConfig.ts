@@ -2,24 +2,22 @@ import { schema, prisma, Context } from '@app/api'
 import { config } from '@app/config'
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
 import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
-import { AuthOpts, BuildContext, DbOpts } from './types'
+import { AuthOpts, BuildContext, DbOpts } from './interfaces'
 
 const buildContext: BuildContext = async (
   req: FastifyRequest,
   _reply: FastifyReply
 ): Promise<Context> => {
+  try {
+    
+  } catch (err) {
+    console.warn('Auth Failed')
+  }
   return {
     req,
     reply: _reply,
     prisma
   }
-}
-
-type PromiseType<T> = T extends PromiseLike<infer U> ? U : T
-
-declare module 'mercurius' {
-  interface MercuriusContext
-    extends PromiseType<ReturnType<typeof buildContext>> {}
 }
 
 export type PluginOpts = {
@@ -30,11 +28,15 @@ export type PluginOpts = {
 
 export const pluginOpts: PluginOpts = {
   authOpts: {
-    cookie: {},
     session: {
-      cookieName: config.myCookie.name,
+      cookieName: config.session.cookie.name,
       secret: config.env.sessionSecret,
-      cookie: { secure: config.isProd }
+      cookie: {
+        httpOnly: config.session.cookie.httpOnly,
+        secure: config.isProd,
+        expires: config.session.cookie.expires
+      },
+      saveUninitialized: config.session.saveUninitialized
     }
   },
   dbOpts: {
@@ -58,16 +60,12 @@ const plugin = async (fastify: FastifyInstance, opts: PluginOpts) => {
   fastify.decorate<AuthOpts>('auth', opts.authOpts)
   fastify.decorate<DbOpts>('db', opts.dbOpts)
 
-  // Do not touch the following lines
-  // This loads all plugins defined in plugins
-  // those should be support plugins that are reused
-  // through your application
+  // load plugins 
   void fastify.register(AutoLoad, {
     dir: config.path.server.plugins,
     options: opts
   })
-  // This loads all plugins defined in routes
-  // define your routes in one of these
+  // load route plugins
   void fastify.register(AutoLoad, {
     dir: config.path.server.routes,
     options: opts

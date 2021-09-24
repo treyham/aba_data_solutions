@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import { assert } from 'console'
-import { constant, path, Path } from './constants'
+import { path, Path } from './constants'
 
 dotenv.config()
 
@@ -18,11 +18,9 @@ const {
 assert(NODE_ENV, 'NODE_ENV is required.')
 assert(VUE_APP_PORT, 'VUE_APP_PORT is required.')
 assert(SERVER_PORT, 'SERVER_PORT is required.')
-// assert(DATABASE_URL, 'DATABASE_URL is required.')
 assert(COOKIE_SECRET, 'COOKIE_SECRET is required.')
 assert(SESSION_SECRET, 'SESSION_SECRET is required.')
-// assert(CERTIFICATE_PATH, 'CERTIFICATE_PATH is required.')
-// assert(DECRYPTED_KEY_PATH, 'DECRYPTED_KEY_PATH is required.')
+
 export interface Env {
   nodeEnv: string
   vuePort: string
@@ -36,10 +34,14 @@ export interface Config {
   env: Env
   isProd: boolean
   path: Path
-  myCookie: {
-    name: string
+  session: {
+    cookie: {
+      name: string
+      httpOnly: boolean
+      expires: Date
+    }
+    saveUninitialized: boolean
   }
-  // functions: Functions
 }
 
 export const config: Config = {
@@ -47,13 +49,17 @@ export const config: Config = {
     nodeEnv: NODE_ENV as string,
     vuePort: VUE_APP_PORT as string,
     serverPort: SERVER_PORT as string,
-    // dbUrl: DATABASE_URL as string,
     cookieSecret: DATABASE_URL as string,
     sessionSecret: SESSION_SECRET as string
   },
   isProd: NODE_ENV === 'production',
   path,
-  myCookie: {
-    name: constant.cookieName
+  session: {
+    cookie: {
+      name: 'treyscookie',
+      httpOnly: true,
+      expires: new Date(Date.now() + 3600000 * 8),
+    },
+    saveUninitialized: false
   }
 }
