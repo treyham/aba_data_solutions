@@ -12,11 +12,3 @@ export default fp(async (fastify: FastifyInstance, opts: PluginOpts) => {
     .register(mercurius, { ...opts.dbOpts.MercuriusPluginOpts })
     .register(AltairFastify, { ...opts.dbOpts.AltairaPluginOpts })
 })
-
-// })
-// When using .decorate you have to specify added properties for Typescript
-// declare module 'fastify' {
-//   export interface FastifyInstance {
-//     someSupport(): string;
-//   }
-// }

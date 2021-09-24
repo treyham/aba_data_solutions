@@ -1,9 +1,8 @@
-import 'reflect-metadata'
-import { Context } from '@app/api'
-import { FastifyReply, FastifyRequest } from 'fastify'
-import { FastifyCookieOptions } from 'fastify-cookie'
-import { GraphQLSchema } from 'graphql'
- 
+import { AuthOpts } from './Auth'
+import { BuildContext, DbOpts } from './Db'
+
+export { AuthOpts, BuildContext, DbOpts } 
+
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
   interface FastifyRequest {
@@ -18,49 +17,6 @@ declare module 'fastify' {
   }
 }
 
-// auth
-export interface FastifySessionOpts {
-  cookieName: string
-  secret: string
-  cookie: {
-    httpOnly: boolean
-    secure: boolean,
-    expires: Date
-  }
-  saveUninitialized: boolean
-}
-
-// TODO AuthPluginOptions interface
-export interface AuthOpts {
-  // Specify Support plugin options here
-  session: FastifySessionOpts
-  //cookie: FastifyCookieOptions
-}
-
-// database
-export interface BuildContext {
-  (req: FastifyRequest, _reply: FastifyReply): Promise<Context>
-}
-
-export interface MercuriusPluginOpts {
-  schema: GraphQLSchema
-  graphiql: boolean
-  ide: boolean
-  path: string
-  context: BuildContext
-}
-export interface AltairPluginOpts {
-  path: string
-  baseURL: string
-  endpointURL: string
-}
-export interface DbOpts {
-  // Specify Support plugin options here
-  MercuriusPluginOpts: MercuriusPluginOpts
-  AltairaPluginOpts: AltairPluginOpts
-}
-
-// server
 export interface PluginOpts {
   // Specify Support plugin options here
   authOpts: AuthOpts

@@ -19,6 +19,5 @@ export default fp(async (fastify: FastifyInstance, opts: PluginOpts) => {
       expires: opts.authOpts.session.cookie.expires
     },
     saveUninitialized: opts.authOpts.session.saveUninitialized,
-
   })
 })
