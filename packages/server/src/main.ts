@@ -5,6 +5,7 @@ import { IncomingMessage, Server, ServerResponse } from 'http'
 import plugin, { pluginOpts } from './pluginConfig'
 
 const server = Fastify({ logger: !config.isProd })
+
 declare module 'fastify' {
   const server: FastifyInstance<Server, IncomingMessage, ServerResponse>
 }

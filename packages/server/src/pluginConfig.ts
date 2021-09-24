@@ -8,6 +8,11 @@ const buildContext: BuildContext = async (
   req: FastifyRequest,
   _reply: FastifyReply
 ): Promise<Context> => {
+  try {
+    
+  } catch (err) {
+    console.warn('Auth Failed')
+  }
   return {
     req,
     reply: _reply,
@@ -23,7 +28,6 @@ export type PluginOpts = {
 
 export const pluginOpts: PluginOpts = {
   authOpts: {
-    //cookie: {},
     session: {
       cookieName: config.session.cookie.name,
       secret: config.env.sessionSecret,
@@ -31,10 +35,8 @@ export const pluginOpts: PluginOpts = {
         httpOnly: config.session.cookie.httpOnly,
         secure: config.isProd,
         expires: config.session.cookie.expires
-        
       },
       saveUninitialized: config.session.saveUninitialized
-      
     }
   },
   dbOpts: {
