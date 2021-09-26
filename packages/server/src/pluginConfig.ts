@@ -1,6 +1,7 @@
 import { schema, prisma, Context } from '@app/api'
 import { config } from '@app/config'
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
+import fp from 'fastify-plugin'
 import AutoLoad from 'fastify-autoload'
 import { AuthPlugOpts, AuthPropOpts, BuildContext, DbPlugOpts, DbPropOpts, PluginOpts } from './interfaces'
 
@@ -49,22 +50,23 @@ export const pluginOpts: PluginOpts = {
   }
 }
 
-const plugin = async (fastify: FastifyInstance, opts: PluginOpts) => {
-  // Place here your custom code!
-  fastify.decorate<AuthPropOpts>('auth', opts.authOpts)
-  fastify.decorate<DbPropOpts>('db', opts.dbOpts)
-
+const plugin = fp(async (fastify: FastifyInstance, opts: PluginOpts):Promise<void> => {
+  // Place here your custom code!\
+  fastify.decorate('config', config)
   // load plugins 
-  void fastify.register(AutoLoad, {
-    dir: config.path.server.plugins,
-    options: opts
-  })
-  // load route plugins
-  void fastify.register(AutoLoad, {
-    dir: config.path.server.routes,
-    options: opts
-  })
-}
+  return await fastify
+    // .decorate('config', config)
+    .register(AutoLoad, {
+      dir: config.path.server.plugins,
+      options: opts,
+
+    })
+    // load route plugins
+    .register(AutoLoad, {
+      dir: config.path.server.routes,
+      options: opts
+    })
+})
 
 export default plugin
 export { plugin }
