@@ -50,21 +50,21 @@ export const pluginOpts: PluginOpts = {
   }
 }
 
-const plugin = fp(async (fastify: FastifyInstance, opts: PluginOpts):Promise<void> => {
+const plugin = fp(async (fastify: FastifyInstance, opts):Promise<void> => {
   // Place here your custom code!\
-  fastify.decorate('config', config)
+  // fastify.decorate('config', config)
   // load plugins 
   return await fastify
     // .decorate('config', config)
     .register(AutoLoad, {
       dir: config.path.server.plugins,
-      options: opts,
+      options: fastify.config,
 
     })
     // load route plugins
     .register(AutoLoad, {
       dir: config.path.server.routes,
-      options: opts
+      options: fastify.config
     })
 })
 

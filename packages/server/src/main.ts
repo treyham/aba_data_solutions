@@ -29,7 +29,7 @@ async function main() {
   !config.isProd && console.log('in development mode')
   return (
     server
-      .decorate('config', { ...pluginOpts })
+      .decorate('config', pluginOpts)
     // register server plugin
       .register(plugin, pluginOpts)
       // add hooks

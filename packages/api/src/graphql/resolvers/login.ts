@@ -13,7 +13,7 @@ import {
 } from 'type-graphql'
 
 @Resolver()
-export class CreateEmployeeResolver {
+export class CustomLoginResolver {
   @Query(() => String)
   async testing() {
     return 'attention pls'

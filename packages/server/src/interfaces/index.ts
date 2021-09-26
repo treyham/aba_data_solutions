@@ -4,6 +4,11 @@ import { AutoloadPluginOptions } from 'fastify-autoload'
 
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
+  export interface FastifyInstance {
+    config: PluginOpts
+  }
+  
+
   interface FastifyRequest {
     PluginProp: PluginOpts
     AuthProp: AuthPropOpts
