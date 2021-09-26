@@ -4,14 +4,20 @@ import Fastify from 'fastify'
 import { IncomingMessage, Server, ServerResponse } from 'http'
 import plugin, { pluginOpts } from './pluginConfig'
 
-const server = Fastify({ logger: !config.isProd })
+const server = Fastify({
+  logger: {
+    prettyPrint: {
+      colorize: true,
+      translateTime: true,
+    }
+  }
+})
 
 declare module 'fastify' {
   const server: FastifyInstance<Server, IncomingMessage, ServerResponse>
 }
 
 async function main() {
-  !config.isProd && console.log('in development mode') // noop if in
   const closeListeners = closeWithGrace(
     { delay: 500 }, // number of milliseconds for the graceful close to finish
     async function (signal, err: Console['error']) {
@@ -20,9 +26,11 @@ async function main() {
         : await server.close()
     }
   )
+  !config.isProd && console.log('in development mode')
   return (
     server
-      // register server plugin
+      .decorate('config', { ...pluginOpts })
+    // register server plugin
       .register(plugin, pluginOpts)
       // add hooks
       .addHook('onClose', async (instance, done) => {
@@ -33,7 +41,9 @@ async function main() {
 }
 main()
   .then(server =>
-    server.listen(config.env.serverPort, err => {
+    server
+    // .decorate('config', pluginOpts)
+    .listen(config.env.serverPort, err => {
       err
         ? console.log(err)
         : console.log(`
