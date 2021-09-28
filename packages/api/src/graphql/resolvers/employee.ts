@@ -1,8 +1,6 @@
 import 'reflect-metadata'
-import { EmployeeCreateInput } from '@generated/type-graphql'
-import { Context } from '../../interfaces'
+import { Employee, EmployeeCreateInput } from '@generated/type-graphql'
 import argon2 from 'argon2'
-
 import {
   Resolver,
   Query,
@@ -13,12 +11,18 @@ import {
   Root,
   Authorized
 } from 'type-graphql'
+import { Context } from '../../interfaces'
 
 @Resolver()
 export class CreateEmployeeResolver {
-  @Query(() => String)
-  async testing() {
-    return 'attention pls'
+  @Query(() => Employee)
+  // return current logged in employee
+  async me(@Ctx() ctx: Context):Promise<Employee | null> {
+    return await ctx.prisma.employee.findFirst({
+      where: {
+        
+      }
+    })
   }
 
   @Query(() => String)

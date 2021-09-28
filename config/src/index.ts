@@ -58,7 +58,7 @@ export const config: Config = {
     cookie: {
       name: 'treyscookie',
       httpOnly: true,
-      expires: new Date(Date.now() + 3600000 * 8),
+      expires: new Date(Date.now() + 3600000 * 8), // set cookie to expire in 8 hours
     },
     saveUninitialized: false
   }

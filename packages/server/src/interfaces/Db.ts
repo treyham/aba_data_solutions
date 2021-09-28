@@ -3,7 +3,6 @@ import { Context } from '@app/api'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { GraphQLSchema } from 'graphql'
 
-
 export interface BuildContext {
     (req: FastifyRequest, _reply: FastifyReply): Promise<Context>
   }
@@ -20,8 +19,12 @@ export interface BuildContext {
     baseURL: string
     endpointURL: string
   }
-  export interface DbOpts {
+  export interface DbPlugOpts {
     // Specify Support plugin options here
     MercuriusPluginOpts: MercuriusPluginOpts
     AltairaPluginOpts: AltairPluginOpts
   }
+
+  export interface DbPropOpts {
+      
+}

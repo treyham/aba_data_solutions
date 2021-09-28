@@ -1,17 +1,23 @@
+import { prismaContext } from '@app/api'
 import { config } from '@app/config'
 import closeWithGrace from 'close-with-grace'
 import Fastify from 'fastify'
 import { IncomingMessage, Server, ServerResponse } from 'http'
 import plugin, { pluginOpts } from './pluginConfig'
 
-const server = Fastify({ logger: !config.isProd })
-
 declare module 'fastify' {
   const server: FastifyInstance<Server, IncomingMessage, ServerResponse>
 }
 
 async function main() {
-  !config.isProd && console.log('in development mode') // noop if in
+  const server = Fastify({
+    logger: {
+      prettyPrint: {
+        colorize: true,
+        translateTime: true,
+      }
+    }
+  })
   const closeListeners = closeWithGrace(
     { delay: 500 }, // number of milliseconds for the graceful close to finish
     async function (signal, err: Console['error']) {
@@ -20,11 +26,15 @@ async function main() {
         : await server.close()
     }
   )
+  !config.isProd && console.log('in development mode')
   return (
     server
-      // register server plugin
-      .register(plugin, pluginOpts)
-      // add hooks
+      // decorators
+      .decorate('config', pluginOpts)
+      .decorate('prisma', prismaContext.prisma)
+      // plugins
+      .register(plugin)
+      // hooks
       .addHook('onClose', async (instance, done) => {
         closeListeners.uninstall()
         done()
@@ -33,7 +43,8 @@ async function main() {
 }
 main()
   .then(server =>
-    server.listen(config.env.serverPort, err => {
+    server
+    .listen(config.env.serverPort, err => {
       err
         ? console.log(err)
         : console.log(`

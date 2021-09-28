@@ -7,10 +7,14 @@ interface FastifySessionOpts {
       expires: Date
     }
     saveUninitialized: boolean
-  }
+}
   
   // TODO AuthPluginOptions interface
-  export interface AuthOpts {
+  export interface AuthPlugOpts {
     // Specify Support plugin options here
     session: FastifySessionOpts
+  }
+
+  export interface AuthPropOpts {
+    
   }
