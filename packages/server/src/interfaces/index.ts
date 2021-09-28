@@ -1,7 +1,7 @@
-import { AuthPlugOpts, AuthPropOpts } from './Auth'
-import { BuildContext, DbPlugOpts, DbPropOpts } from './Db'
 import { AutoloadPluginOptions } from 'fastify-autoload'
 import { prismaContext } from 'packages/api/src/context'
+import { AuthPlugOpts, AuthPropOpts } from './Auth'
+import { DbPlugOpts, DbPropOpts } from './Db'
 
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
