@@ -2,6 +2,7 @@ import { config } from '@app/config'
 import closeWithGrace from 'close-with-grace'
 import Fastify from 'fastify'
 import { IncomingMessage, Server, ServerResponse } from 'http'
+import { prismaContext } from 'packages/api/src/context'
 import plugin, { pluginOpts } from './pluginConfig'
 
 const server = Fastify({
@@ -30,8 +31,9 @@ async function main() {
   return (
     server
       .decorate('config', pluginOpts)
+      .decorate('prisma', prismaContext.prisma)
     // register server plugin
-      .register(plugin, pluginOpts)
+      .register(plugin)
       // add hooks
       .addHook('onClose', async (instance, done) => {
         closeListeners.uninstall()
