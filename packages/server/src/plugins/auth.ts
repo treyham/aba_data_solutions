@@ -1,5 +1,5 @@
 import { config } from '@app/config'
-import session from '@fastify/session'
+import session from '@mgcrea/fastify-session'
 import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import cookie from 'fastify-cookie'
 import fp from 'fastify-plugin'
@@ -10,9 +10,9 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
   return await fastify
     .register(cookie)
     .register(session, { ...fastify.config.authOpts.session })
-    .addHook('preHandler', (request, reply) => {
+    // .addHook('preHandler', (request, reply) => {
       
-    })
+    // })
 },
 {
   name: 'auth'
