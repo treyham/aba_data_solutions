@@ -23,7 +23,7 @@ export class CustomLoginResolver {
   async loginCount(@Ctx() ctx: Context): Promise<number> {
     return await ctx.prisma.login.count()
   }
-  @Mutation(() => Boolean) // TODO fix this; add Employee type to return
+  @Mutation(() => Boolean) // TODO fix this; add Employee type to return or FieldError
   async verifyLoginCreds(
     @Ctx() ctx: Context,
     @Arg('username', () => String) empUser: string,
@@ -36,7 +36,7 @@ export class CustomLoginResolver {
       })
       return await argon2.verify(emp ? emp.password : '', empPass)  
         ? this.createLogin(ctx, emp!.id)
-        : false
+        : false // TODO return error here probably 
   }
   /**
    * @param ctx Context
