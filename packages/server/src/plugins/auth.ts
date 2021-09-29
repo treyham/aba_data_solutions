@@ -12,7 +12,7 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
     .register(session, { ...fastify.config.authOpts.session })
     .addHook('preHandler', (request, reply, done) => {
       const sess = request.session
-        
+      console.log('preHandler', {sess})
       done()
     })
 },
