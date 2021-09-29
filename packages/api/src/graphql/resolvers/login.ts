@@ -15,14 +15,6 @@ import { Employee } from '.prisma/client'
 
 @Resolver()
 export class CustomLoginResolver {
-  @Query(() => String)
-  async testing() {
-    return 'attention pls'
-  }
-  @Query(() => String)
-  async loginCount(@Ctx() ctx: Context): Promise<number> {
-    return await ctx.prisma.login.count()
-  }
   @Mutation(() => Boolean) // TODO fix this; add Employee type to return or FieldError
   async verifyLoginCreds(
     @Ctx() ctx: Context,
@@ -48,7 +40,6 @@ export class CustomLoginResolver {
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string
   ): Promise<boolean> {
-    console.log('logged in')
     return !!(await ctx.prisma.login.create({
       data: {
         employee: {
