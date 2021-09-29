@@ -10,9 +10,11 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
   return await fastify
     .register(cookie)
     .register(session, { ...fastify.config.authOpts.session })
-    // .addHook('preHandler', (request, reply) => {
-      
-    // })
+    .addHook('preHandler', (request, reply, done) => {
+      const sess = request.session
+        
+      done()
+    })
 },
 {
   name: 'auth'
