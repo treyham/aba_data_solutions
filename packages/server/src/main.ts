@@ -1,8 +1,8 @@
+import { prismaContext } from '@app/api'
 import { config } from '@app/config'
 import closeWithGrace from 'close-with-grace'
 import Fastify from 'fastify'
 import { IncomingMessage, Server, ServerResponse } from 'http'
-import { prismaContext } from '@app/api'
 import plugin, { pluginOpts } from './pluginConfig'
 
 declare module 'fastify' {

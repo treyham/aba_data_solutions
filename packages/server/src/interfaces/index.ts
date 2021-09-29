@@ -1,5 +1,5 @@
 import { AutoloadPluginOptions } from 'fastify-autoload'
-import { prismaContext } from 'packages/api/src/context'
+import { prismaContext } from '@app/api'
 import { AuthPlugOpts, AuthPropOpts } from './Auth'
 import { DbPlugOpts, DbPropOpts } from './Db'
 

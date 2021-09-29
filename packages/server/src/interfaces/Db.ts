@@ -3,7 +3,6 @@ import { Context } from '@app/api'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { GraphQLSchema } from 'graphql'
 
-
 export interface BuildContext {
     (req: FastifyRequest, _reply: FastifyReply): Promise<Context>
   }

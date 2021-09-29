@@ -1,6 +1,5 @@
 import 'reflect-metadata'
 import { Employee, EmployeeCreateInput } from '@generated/type-graphql'
-import { Context } from '../../interfaces'
 import argon2 from 'argon2'
 import {
   Resolver,
@@ -12,6 +11,7 @@ import {
   Root,
   Authorized
 } from 'type-graphql'
+import { Context } from '../../interfaces'
 
 @Resolver()
 export class CreateEmployeeResolver {
