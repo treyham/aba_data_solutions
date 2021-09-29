@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import { LoginCreateInput } from '@generated/type-graphql'
+import argon2 from 'argon2'
 import { Context } from '../../interfaces'
 import {
   Resolver,
@@ -25,17 +26,16 @@ export class CustomLoginResolver {
   }
   @Query(() => Boolean) // TODO fix this; add Employee type to return
   async verifyLoginCreds(
-    @Ctx() ctx: Context,
+    @Ctx() {req, reply, prisma}: Context,
     @Arg('username', () => String) empUser: string,
     @Arg('password') empPass: string
     ): Promise<boolean> {
-    const emp = await ctx.prisma.employee.findFirst({
-      where: {
-        displayName: empUser,
-        password: empPass // TODO encrypt pass
-      }
-    })
-    return !!emp
+      const emp = await prisma.employee.findUnique({
+        where: {
+          displayName: empUser,
+        }
+      })
+      return await argon2.verify(emp ? emp.password : '', empPass)
   }
 
   /**
