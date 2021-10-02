@@ -9,45 +9,66 @@ import {
   FieldResolver,
   Ctx,
   Root,
-  Authorized
+  Authorized,
+  ObjectType,
+  Field
 } from 'type-graphql'
-import { Employee } from '.prisma/client'
+
 
 @Resolver()
-export class CustomLoginResolver {
-  @Mutation(() => Boolean) // TODO fix this; add Employee type to return or FieldError
-  async verifyLoginCreds(
+export class MyLoginResolver {
+  @Mutation(() => String) // TODO fix this; add Employee type to return or FieldError
+  async verifyCredsLogin(
     @Ctx() ctx: Context,
-    @Arg('username', () => String) empUser: string,
+    @Arg('displayName', () => String) empDispName: string,
     @Arg('password') empPass: string
-    ): Promise<boolean> {
+    ): Promise<string | undefined> {
       const emp = await ctx.prisma.employee.findUnique({
         where: {
-          displayName: empUser,
+          displayName: empDispName,
         }
       })
+      // TODO check if employee is already logged in
+      // TODO set cookie to sessionId
       return await argon2.verify(emp ? emp.password : '', empPass)  
         ? this.createLogin(ctx, emp!.id)
-        : false // TODO return error here probably 
+        : undefined // TODO return error here probably 
   }
   /**
    * @param ctx Context
    * @param createInput LoginCreateInput
    * @returns ```true | false```
    */
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   async createLogin(
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string
-  ): Promise<boolean> {
-    return !!(await ctx.prisma.login.create({
+  ): Promise<string> {
+    
+    const loginId = await ctx.prisma.login.create({
       data: {
         employee: {
           connect: {
             id: employeeId
           }
         }
+      },
+      select: {
+        id: true
       }
-    }))
+    })
+    const sessId = await ctx.prisma.loggedIn.create({
+      data: {
+        login: {
+          connect: {
+            ...loginId
+          }
+        }
+      },
+      select: {
+        id: true
+      }
+    })
+    return sessId.id
   }
 }
