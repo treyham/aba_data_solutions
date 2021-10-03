@@ -9,54 +9,77 @@ import {
   FieldResolver,
   Ctx,
   Root,
-  Authorized
+  Authorized,
+  ObjectType,
+  Field
 } from 'type-graphql'
-import { Employee } from '.prisma/client'
+
 
 @Resolver()
-export class CustomLoginResolver {
-  @Query(() => String)
-  async testing() {
-    return 'attention pls'
-  }
-  @Query(() => String)
-  async loginCount(@Ctx() ctx: Context): Promise<number> {
-    return await ctx.prisma.login.count()
-  }
-  @Mutation(() => Boolean) // TODO fix this; add Employee type to return
-  async verifyLoginCreds(
+export class MyLoginResolver {
+  @Query(() => Number)
+  async isAlreadyLoggedIn(
     @Ctx() ctx: Context,
-    @Arg('username', () => String) empUser: string,
+    @Arg('employeeId') employeeId: string,
+    @Arg('sessionId') sessionId: string
+  ): Promise<number> { 
+    return await ctx.prisma.loggedIn.count({
+      where: {
+        id: sessionId,
+        login: {
+          employeeId: employeeId,
+        }
+      }
+    })
+  }
+
+  @Mutation(() => String) // TODO fix this; add Employee type to return or FieldError
+  async doLogin(
+    @Ctx() ctx: Context,
+    @Arg('displayName', () => String) empDispName: string,
     @Arg('password') empPass: string
-    ): Promise<boolean> {
+    ): Promise<string | undefined> {
       const emp = await ctx.prisma.employee.findUnique({
         where: {
-          displayName: empUser,
+          displayName: empDispName,
         }
       })
+      // TODO check if employee is already logged in
+      // TODO set cookie to sessionId
+      
       return await argon2.verify(emp ? emp.password : '', empPass)  
         ? this.createLogin(ctx, emp!.id)
-        : false
+        : undefined // TODO return error here probably 
   }
+
   /**
    * @param ctx Context
    * @param createInput LoginCreateInput
    * @returns ```true | false```
    */
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   async createLogin(
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string
-  ): Promise<boolean> {
-    console.log('logged in')
-    return !!(await ctx.prisma.login.create({
+  ): Promise<string> {
+    const loginId = await ctx.prisma.login.create({
       data: {
         employee: {
           connect: {
             id: employeeId
           }
         }
-      }
-    }))
+      },
+      select: { id: true }
+    })
+    const sessId = await ctx.prisma.loggedIn.create({
+      data: {
+        login: {
+          connect: { ...loginId }
+        }
+      },
+      select: { id: true }
+    })
+    return sessId.id
   }
 }

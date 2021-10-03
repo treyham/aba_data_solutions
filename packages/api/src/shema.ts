@@ -52,7 +52,7 @@ import {
   TreatmentPlan_to_ProgramCrudResolver,
   TreatmentPlan_to_ProgramRelationsResolver
 } from '@generated/type-graphql'
-import { CreateEmployeeResolver, CustomLoginResolver } from './graphql/resolvers'
+import { CreateEmployeeResolver, MyLoginResolver } from './graphql/resolvers'
 import { buildSchema } from 'type-graphql'
 
 export const schema = await buildSchema({
@@ -113,6 +113,6 @@ export const schema = await buildSchema({
      *                          C u s t o m
      */
     CreateEmployeeResolver,
-    CustomLoginResolver
+    MyLoginResolver
   ]
 })

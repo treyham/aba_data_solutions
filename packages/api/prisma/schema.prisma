@@ -83,9 +83,15 @@ model Login {
   logoutTime DateTime?
   employee   Employee  @relation(fields: [employeeId], references: [id])
   employeeId String
-
+  loggedIn   LoggedIn?
   @@index([employeeId], name: "employeeId")
   @@map("login")
+}
+
+model LoggedIn {
+  id         String    @id @default(uuid())
+  login     Login      @relation(fields: [loginId], references: [id])
+  loginId   String
 }
 
 model Administration {

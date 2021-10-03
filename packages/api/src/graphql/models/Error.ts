@@ -1,4 +1,4 @@
-import { Employee } from '@generated/type-graphql';
+import { Employee } from '@generated/type-graphql'
 import {
   Resolver,
   Query,
@@ -14,7 +14,7 @@ import {
 
 
 @ObjectType()
-class FieldError {
+export class FieldError {
   @Field()
   field?: string
   @Field()
@@ -22,7 +22,7 @@ class FieldError {
 }
 
 @ObjectType()
-class LoginResponse {
+export class LoginResponse {
   @Field(() => [FieldError], {nullable: true})
   errors?: FieldError[]
   @Field(() => Employee, {nullable: true})
