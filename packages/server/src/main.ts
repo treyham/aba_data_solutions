@@ -31,6 +31,7 @@ async function main() {
     server
       // decorators
       .decorate('config', pluginOpts)
+      // TODO could turn prisma into a plugin https://www.prisma.io/blog/backend-prisma-typescript-orm-with-postgresql-rest-api-validation-dcba1ps7kip3
       .decorate('prisma', prismaContext.prisma)
       // plugins
       .register(plugin)
