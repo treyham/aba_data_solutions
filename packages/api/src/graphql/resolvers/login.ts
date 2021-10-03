@@ -82,4 +82,12 @@ export class MyLoginResolver {
     })
     return sessId.id
   }
+
+  @Mutation(() => Boolean)
+  async logout(
+    @Ctx() ctx: Context,
+    @Arg('employeeId') employeeId: string
+  ): Promise<boolean> {
+    return true
+  }  
 }
