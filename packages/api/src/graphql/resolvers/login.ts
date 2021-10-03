@@ -17,24 +17,20 @@ import {
 
 @Resolver()
 export class MyLoginResolver {
-  @Query(() => Number)
-  async isAlreadyLoggedIn(
+  @Query(() => Boolean)
+  async isLoggedIn(
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string,
-    @Arg('sessionId') sessionId: string
-  ): Promise<number> { 
+  ): Promise<boolean> { 
     return await ctx.prisma.loggedIn.count({
       where: {
-        id: sessionId,
-        login: {
-          employeeId: employeeId,
-        }
+        login: { employeeId: employeeId }
       }
-    })
+    }) !== 0 ? true : false
   }
 
   @Mutation(() => String) // TODO fix this; add Employee type to return or FieldError
-  async doLogin(
+  async employeeLogin(
     @Ctx() ctx: Context,
     @Arg('displayName', () => String) empDispName: string,
     @Arg('password') empPass: string
@@ -46,10 +42,10 @@ export class MyLoginResolver {
       })
       // TODO check if employee is already logged in
       // TODO set cookie to sessionId
-      
+
       return await argon2.verify(emp ? emp.password : '', empPass)  
         ? this.createLogin(ctx, emp!.id)
-        : undefined // TODO return error here probably 
+        : undefined // TODO return error here 
   }
 
   /**
@@ -61,7 +57,11 @@ export class MyLoginResolver {
   async createLogin(
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string
-  ): Promise<string> {
+  ): Promise<string | undefined> {
+    if (await this.isLoggedIn(ctx, employeeId)) {
+      console.log('this person is already loggedin!!')
+      return undefined
+    }
     const loginId = await ctx.prisma.login.create({
       data: {
         employee: {
