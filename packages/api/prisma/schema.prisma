@@ -90,11 +90,13 @@ model Login {
 }
 
 model LoggedIn {
-  id         String   @id @default(uuid())
-  employeeId String
+  id         String   @default(uuid())
+  employeeId String   @unique
   loginId    String
-  login      Login    @relation(fields: [loginId], references: [id])
-
+  login      Login    @relation(fields: [loginId, employeeId], references: [id, employeeId])
+  
+  @@index([employeeId, loginId], name: "id")
+  @@map("loggedIn")
 }
 
 model Administration {
