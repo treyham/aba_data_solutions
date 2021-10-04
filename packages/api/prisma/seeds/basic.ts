@@ -1,3 +1,3 @@
-import { context } from '../../src'
+import { prismaContext } from '../../src'
 
 console.log('Database Seeded!')

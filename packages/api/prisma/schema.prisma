@@ -80,18 +80,23 @@ model Employee {
 model Login {
   id         String    @id @default(uuid())
   loginTime  DateTime  @default(now())
-  logoutTime DateTime?
+  logoutTime DateTime? @updatedAt
   employee   Employee  @relation(fields: [employeeId], references: [id])
   employeeId String
   loggedIn   LoggedIn?
-  @@index([employeeId], name: "employeeId")
+  
+  @@unique([id, employeeId])
   @@map("login")
 }
 
 model LoggedIn {
-  id         String    @id @default(uuid())
-  login     Login      @relation(fields: [loginId], references: [id])
-  loginId   String
+  id         String   @default(uuid())
+  employeeId String   @unique
+  loginId    String
+  login      Login    @relation(fields: [loginId, employeeId], references: [id, employeeId])
+  
+  @@index([employeeId, loginId], name: "id")
+  @@map("loggedIn")
 }
 
 model Administration {
