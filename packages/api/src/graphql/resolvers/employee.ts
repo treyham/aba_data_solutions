@@ -13,7 +13,6 @@ import {
 } from 'type-graphql'
 import {v4 as uuid} from 'uuid'
 import { Context } from '../../interfaces'
-import { Bcba } from '.prisma/client'
 
 @Resolver()
 export class CreateEmployeeResolver {
