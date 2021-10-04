@@ -8,18 +8,18 @@
 ```
 // clone the repo 
 ```
-### Server
+## Server
 ```
 yarn start:server       // run server from dist folder 
 ```
 ```
 yarn build:server       // compile server 
 ```
-### Api
+## Api
 ```
 yarn generate           // generates prisma client and correspondiong types
 ```
-### Client
+## Client
 ```
 yarn start:client       // run client from dist folder 
 ```
@@ -27,7 +27,7 @@ yarn start:client       // run client from dist folder
 yarn build:client       // compile client 
 ```
 
-## Recommended IDE Setup
+#### Recommended IDE Setup
 
 * [VSCode](https://code.visualstudio.com/) 
     * [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur) Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
