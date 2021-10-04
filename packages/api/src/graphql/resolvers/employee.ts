@@ -18,7 +18,7 @@ import { Bcba } from '.prisma/client'
 @Resolver()
 export class CreateEmployeeResolver {
   @Query(() => Employee)
-  // return current logged in employee
+  // TODO return current logged in employee
   async me(@Ctx() ctx: Context):Promise<Employee | null> {
     ctx.req.session
     return await ctx.prisma.employee.findFirst({
