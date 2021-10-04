@@ -44,10 +44,5 @@ yarn build:client       // compile client
 * [Jay Wolfe's](https://www.youtube.com/watch?v=xRjEXeAKGxg&list=PLU_22oKqONimKqe-https://www.youtube.com/c/JayWolfe) 
     * [Twitter Bot](walk-trhough)
     * [Getting started w/ Fastify & TS](https://www.youtube.com/watch?v=WHV57q6p3Lk&t=381s)
-* bytefish's 
-    * [Writeup](https://javascript.plainenglish.io/set-up-vue3-enterprise-level-development-environments-with-vite-step-by-step-guide-32964d1df60e)
-    * [github](https://github.com/BytefishMedium/vite-vue3-starter)
-* Tomasz Waraksa's
-    * [Writeup](https://letsdebug.it/post/12-monorepo-with-vue-vite-lerna/)
 
 
