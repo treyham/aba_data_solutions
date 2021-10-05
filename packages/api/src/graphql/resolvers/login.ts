@@ -29,7 +29,7 @@ export class EmployeeLoginResolver {
       }
     }) !== 0 ? true : false
   }
-
+// login
   @Mutation(() => String) // TODO fix this, retunr error instead of undefined
   async employeeLogin(
   @Ctx() ctx: Context,
@@ -46,28 +46,10 @@ export class EmployeeLoginResolver {
     sess.set('key', 'value')
     console.log('key', sess.get('key'))
     console.log({sess})
-    // {
-    //   sess: Session {
-    //     created: true,
-    //     rotated: false,
-    //     changed: true,
-    //     deleted: false,
-    //     id: 'SsLAJi_Le1M-N4dOtPrHM',
-    //     [Symbol(kSessionData)]: { key: 'value' },
-    //     [Symbol(kCookieOptions)]: {
-    //       httpOnly: true,
-    //       secure: false,
-    //       expires: 2021-10-05T05:20:56.517Z,
-    //       path: '/'
-    //     },
-    //     [Symbol(kExpiry)]: 1633411256517
-    //   }
-    // }
     return await argon2.verify(emp ? emp.password : '', empPass)  
       ? this.createLogin(ctx, emp!.id)
       : undefined // TODO return error here 
   }
-
   /**
    * @param ctx Context
    * @param createInput LoginCreateInput
@@ -105,18 +87,18 @@ export class EmployeeLoginResolver {
   // TODO sort out returns
   return loginId
   }
-
+// logout
   @Mutation(() => String)
   async logout(
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string
   ): Promise<string | undefined> {
-    // delete from LoggedIn
+    // delete from loggedIn table
   const { loginId } = await ctx.prisma.loggedIn.delete({
     where: { employeeId },
     select: { loginId: true }
   })
-  // update logged out time on login
+  // update logged out time on login table
   const { loginTime, logoutTime } = await ctx.prisma.login.update({
     where: {
       id: loginId
@@ -130,6 +112,8 @@ export class EmployeeLoginResolver {
     }
   })
   // return amount of seconds logged in
-  return logoutTime ? `Login time: ${( new Date( (86400 - (logoutTime.getSeconds() - loginTime.getSeconds())) * 1000 ) ).toISOString().substr(11, 8)} seconds` : undefined
+  return logoutTime 
+    ? `Login time: ${( new Date( (86400 - (logoutTime.getSeconds() - loginTime.getSeconds())) * 1000 ) ).toISOString().substr(11, 8)} seconds`
+    : undefined
   }
 }
