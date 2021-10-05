@@ -1,6 +1,7 @@
 import { PrismaClient } from '.prisma/client'
 export const prisma = new PrismaClient()
 
+// TODO could turn prisma into a plugin https://www.prisma.io/blog/backend-prisma-typescript-orm-with-postgresql-rest-api-validation-dcba1ps7kip3
 export const prismaContext = {
   prisma
 }
