@@ -3,7 +3,7 @@ import { config } from '@app/config'
 import closeWithGrace from 'close-with-grace'
 import Fastify from 'fastify'
 import { IncomingMessage, Server, ServerResponse } from 'http'
-import plugin, { pluginOpts } from './pluginConfig'
+import plugin, { opts } from './pluginConfig'
 
 declare module 'fastify' {
   const server: FastifyInstance<Server, IncomingMessage, ServerResponse>
@@ -30,7 +30,7 @@ async function main() {
   return (
     server
       // decorators
-      .decorate('config', pluginOpts)
+      .decorate('config', opts)
       .decorate('prisma', prisma)
       // plugins
       .register(plugin)

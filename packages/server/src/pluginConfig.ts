@@ -21,7 +21,7 @@ const buildContext: BuildContext = async (
   }
 }
 
-export const pluginOpts: PluginOpts = {
+export const opts: PluginOpts = {
   authOpts: {
     session: {
       cookieName: config.session.cookie.name,
@@ -49,6 +49,7 @@ export const pluginOpts: PluginOpts = {
     }
   }
 }
+
 
 const plugin = fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions):Promise<void> => {
   // Place here your custom code!\
