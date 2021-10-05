@@ -17,7 +17,7 @@ const buildContext: BuildContext = async (
   return {
     req,
     reply: _reply,
-    prisma
+    prisma: prisma.context
   }
 }
 

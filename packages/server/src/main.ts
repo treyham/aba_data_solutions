@@ -1,4 +1,4 @@
-import { prismaContext } from '@app/api'
+import { prisma } from '@app/api'
 import { config } from '@app/config'
 import closeWithGrace from 'close-with-grace'
 import Fastify from 'fastify'
@@ -31,8 +31,7 @@ async function main() {
     server
       // decorators
       .decorate('config', pluginOpts)
-      // TODO could turn prisma into a plugin https://www.prisma.io/blog/backend-prisma-typescript-orm-with-postgresql-rest-api-validation-dcba1ps7kip3
-      .decorate('prisma', prismaContext.prisma)
+      .decorate('prisma', prisma)
       // plugins
       .register(plugin)
       // hooks

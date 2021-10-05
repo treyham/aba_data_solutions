@@ -1,5 +1,5 @@
 import { AutoloadPluginOptions } from 'fastify-autoload'
-import { prismaContext } from '@app/api'
+import { prisma } from '@app/api'
 import { AuthPlugOpts, AuthPropOpts } from './Auth'
 import { DbPlugOpts, DbPropOpts } from './Db'
 
@@ -7,7 +7,7 @@ import { DbPlugOpts, DbPropOpts } from './Db'
 declare module 'fastify' {
   export interface FastifyInstance {
     config: PluginOpts
-    prisma: typeof prismaContext.prisma
+    prisma: typeof prisma.context
   }
 
   interface FastifyRequest {
