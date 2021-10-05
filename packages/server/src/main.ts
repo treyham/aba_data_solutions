@@ -1,4 +1,4 @@
-import { prismaContext } from '@app/api'
+import { prisma } from '@app/api'
 import { config } from '@app/config'
 import closeWithGrace from 'close-with-grace'
 import Fastify from 'fastify'
@@ -31,7 +31,7 @@ async function main() {
     server
       // decorators
       .decorate('config', pluginOpts)
-      .decorate('prisma', prismaContext.prisma)
+      .decorate('prisma', prisma)
       // plugins
       .register(plugin)
       // hooks
