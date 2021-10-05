@@ -16,34 +16,34 @@ import { Context } from '../../interfaces'
 
 // TODO put this in prisma schema above password in employee
 /// @TypeGraphQL.omit(output: true)
-
 @Resolver()
 export class CreateEmployeeResolver {
+// TODO return current logged in employee
   @Query(() => Employee)
-  // TODO return current logged in employee
   async me(@Ctx() ctx: Context):Promise<Employee | null> {
     console.log('session: ', ctx.req.session.get('key'))
     return await ctx.prisma.employee.findFirst({
     })
   }
 // administration
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   async createAdminEncryptPass(
     @Ctx() ctx: Context,
     @Arg('createInput') createInput: EmployeeCreateInput
-  ): Promise<boolean> {
-    const encryptedPass = await argon2.hash(createInput.password)
-    return !!(await ctx.prisma.employee.create({
+  ): Promise<string | undefined> {
+    createInput.password = await argon2.hash(createInput.password)
+    const { Administration } = await ctx.prisma.employee.create({
       data: {
         ...createInput,
-        password: encryptedPass,
         Administration: {
           create: {
             PermissionLevel: createInput.Administration?.create?.PermissionLevel
           }
         }
-      }
-    }))
+      },
+      select: { Administration: true }
+    })
+    return Administration?.id
   }
 //billing
 @Mutation(() => String)
@@ -51,11 +51,10 @@ export class CreateEmployeeResolver {
     @Ctx() ctx: Context,
     @Arg('createInput') createInput: EmployeeCreateInput
   ): Promise<string | undefined> {
-    const encryptedPass = await argon2.hash(createInput.password)
+    createInput.password = await argon2.hash(createInput.password)
     const { Billing } = await ctx.prisma.employee.create({
       data: {
         ...createInput,
-        password: encryptedPass,
         Billing: {
           create: { id: uuid() } 
         }
@@ -70,11 +69,10 @@ export class CreateEmployeeResolver {
     @Ctx() ctx: Context,
     @Arg('createInput') createInput: EmployeeCreateInput
   ): Promise<string | undefined> {
-    const encryptedPass = await argon2.hash(createInput.password)
+    createInput.password = await argon2.hash(createInput.password)
     const { Bcba } = await ctx.prisma.employee.create({
       data: {
         ...createInput,
-        password: encryptedPass,
         Bcba: {
           create: { id: uuid() } 
         }
@@ -89,12 +87,10 @@ export class CreateEmployeeResolver {
     @Ctx() ctx: Context,
     @Arg('createInput') createInput: EmployeeCreateInput
   ): Promise<string| undefined> {
-    console.log('password: ', createInput.password)
-    const encryptedPass = await argon2.hash(createInput.password)
+    createInput.password = await argon2.hash(createInput.password)
     const { Rbt } = await ctx.prisma.employee.create({
       data: {
         ...createInput,
-        password: encryptedPass,
         Rbt: {
           create: { id: uuid() }
         }
