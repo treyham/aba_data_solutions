@@ -14,12 +14,15 @@ import {
 import {v4 as uuid} from 'uuid'
 import { Context } from '../../interfaces'
 
+// TODO put this in prisma schema above password in employee
+/// @TypeGraphQL.omit(output: true)
+
 @Resolver()
 export class CreateEmployeeResolver {
   @Query(() => Employee)
   // TODO return current logged in employee
   async me(@Ctx() ctx: Context):Promise<Employee | null> {
-    ctx.req.session
+    console.log('session: ', ctx.req.session.get('key'))
     return await ctx.prisma.employee.findFirst({
     })
   }
@@ -32,10 +35,8 @@ export class CreateEmployeeResolver {
     const encryptedPass = await argon2.hash(createInput.password)
     return !!(await ctx.prisma.employee.create({
       data: {
-        fullName: createInput.fullName,
-        displayName: createInput.displayName,
+        ...createInput,
         password: encryptedPass,
-        position: createInput.position,
         Administration: {
           create: {
             PermissionLevel: createInput.Administration?.create?.PermissionLevel
@@ -53,19 +54,13 @@ export class CreateEmployeeResolver {
     const encryptedPass = await argon2.hash(createInput.password)
     const { Billing } = await ctx.prisma.employee.create({
       data: {
-        fullName: createInput.fullName,
-        displayName: createInput.displayName,
+        ...createInput,
         password: encryptedPass,
-        position: createInput.position,
         Billing: {
-          create: {
-            id: uuid()
-          } 
+          create: { id: uuid() } 
         }
       },
-      select: {
-        Billing: true
-      }
+      select: { Billing: true }
     })
     return Billing?.id
   }
@@ -78,19 +73,13 @@ export class CreateEmployeeResolver {
     const encryptedPass = await argon2.hash(createInput.password)
     const { Bcba } = await ctx.prisma.employee.create({
       data: {
-        fullName: createInput.fullName,
-        displayName: createInput.displayName,
+        ...createInput,
         password: encryptedPass,
-        position: createInput.position,
         Bcba: {
-          create: {
-            id: uuid()
-          } 
+          create: { id: uuid() } 
         }
       },
-      select: {
-        Bcba: true
-      }
+      select: { Bcba: true }
     })
     return Bcba?.id
   }
@@ -104,19 +93,13 @@ export class CreateEmployeeResolver {
     const encryptedPass = await argon2.hash(createInput.password)
     const { Rbt } = await ctx.prisma.employee.create({
       data: {
-        fullName: createInput.fullName,
-        displayName: createInput.displayName,
+        ...createInput,
         password: encryptedPass,
-        position: createInput.position,
         Rbt: {
-          create: {
-            id: uuid()
-          }
+          create: { id: uuid() }
         }
       },
-      select: {
-        Rbt: true
-      }
+      select: { Rbt: true }
     })
     return Rbt?.id
   }
