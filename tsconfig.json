@@ -15,6 +15,6 @@
     "**/node_modules",
     "**/example",
     "packages/vueApp",
-    "**/Tests"
+    "**/tests"
   ]
 }
