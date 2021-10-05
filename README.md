@@ -1,5 +1,5 @@
 # ABA Data Solutions MonoRepo or:
-###### *how I learned to stop worrying and love webdev\n\n*
+###### *how I learned to stop worrying and love webdev*
 
 *All commands can be run directly from the project root like:*
 

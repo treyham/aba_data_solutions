@@ -41,6 +41,26 @@ export class EmployeeLoginResolver {
         }
       })
       // TODO set cookie to sessionId
+      const sess =  ctx.req.session
+      sess.set('key', 'value')
+      console.log({sess})
+      // {
+      //   sess: Session {
+      //     created: true,
+      //     rotated: false,
+      //     changed: true,
+      //     deleted: false,
+      //     id: 'SsLAJi_Le1M-N4dOtPrHM',
+      //     [Symbol(kSessionData)]: { key: 'value' },
+      //     [Symbol(kCookieOptions)]: {
+      //       httpOnly: true,
+      //       secure: false,
+      //       expires: 2021-10-05T05:20:56.517Z,
+      //       path: '/'
+      //     },
+      //     [Symbol(kExpiry)]: 1633411256517
+      //   }
+      // }
       return await argon2.verify(emp ? emp.password : '', empPass)  
         ? this.createLogin(ctx, emp!.id)
         : undefined // TODO return error here 
@@ -60,7 +80,7 @@ export class EmployeeLoginResolver {
       console.warn('this person is already loggedin!!')
       return undefined
     }
-    const loginId = await ctx.prisma.login.create({
+    const { id } = await ctx.prisma.login.create({
       data: {
         employee: {
           connect: {
@@ -70,31 +90,16 @@ export class EmployeeLoginResolver {
       },
       select: { id: true }
     })
-    const sessId = await ctx.prisma.loggedIn.create({
+    const { loginId } = await ctx.prisma.loggedIn.create({
       data: {
         login: {
-          connect: { ...loginId }
+          connect: { id }
         }
       },
       select: { loginId: true }
     })
-    return sessId.loginId
-    // const { loggedIn } = await ctx.prisma.login.create({
-    //   data: {
-    //     employee: {
-    //       connect: {
-    //         id: employeeId
-    //       },
-    //     },
-    //     loggedIn: {
-    //       create: {
-    //         employeeId,
-    //         id: 
-    //       }
-    //     }
-    //   },
-    //   select: { loggedIn: true }
-    // })
+    // TODO sort out returns
+    return loginId
 }
 
   @Mutation(() => Boolean)
@@ -105,7 +110,7 @@ export class EmployeeLoginResolver {
      // update logged out time on login
      await ctx.prisma.login.update({
       where: {
-        //employeeId: {  }
+        
       },
       data: {
         logoutTime: new Date()

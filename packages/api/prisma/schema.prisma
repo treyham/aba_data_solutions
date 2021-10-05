@@ -80,7 +80,7 @@ model Employee {
 model Login {
   id         String    @id @default(uuid())
   loginTime  DateTime  @default(now())
-  logoutTime DateTime? @updatedAt
+  logoutTime DateTime? 
   employee   Employee  @relation(fields: [employeeId], references: [id])
   employeeId String
   loggedIn   LoggedIn?
