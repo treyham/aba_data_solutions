@@ -11,7 +11,8 @@ import {
   Root,
   Authorized,
   ObjectType,
-  Field
+  Field,
+  Int
 } from 'type-graphql'
 
 
@@ -31,39 +32,40 @@ export class EmployeeLoginResolver {
 
   @Mutation(() => String) // TODO fix this, retunr error instead of undefined
   async employeeLogin(
-    @Ctx() ctx: Context,
-    @Arg('displayName', () => String) empDispName: string,
-    @Arg('password') empPass: string
-    ): Promise<string | undefined> {
-      const emp = await ctx.prisma.employee.findUnique({
-        where: {
-          displayName: empDispName,
-        }
-      })
-      // TODO set cookie to sessionId
-      const sess =  ctx.req.session
-      sess.set('key', 'value')
-      console.log({sess})
-      // {
-      //   sess: Session {
-      //     created: true,
-      //     rotated: false,
-      //     changed: true,
-      //     deleted: false,
-      //     id: 'SsLAJi_Le1M-N4dOtPrHM',
-      //     [Symbol(kSessionData)]: { key: 'value' },
-      //     [Symbol(kCookieOptions)]: {
-      //       httpOnly: true,
-      //       secure: false,
-      //       expires: 2021-10-05T05:20:56.517Z,
-      //       path: '/'
-      //     },
-      //     [Symbol(kExpiry)]: 1633411256517
-      //   }
-      // }
-      return await argon2.verify(emp ? emp.password : '', empPass)  
-        ? this.createLogin(ctx, emp!.id)
-        : undefined // TODO return error here 
+  @Ctx() ctx: Context,
+  @Arg('displayName', () => String) empDispName: string,
+  @Arg('password') empPass: string
+  ): Promise<string | undefined> {
+    const emp = await ctx.prisma.employee.findUnique({
+      where: {
+        displayName: empDispName,
+      }
+    })
+    // TODO set cookie to sessionId
+    const sess =  ctx.req.session
+    sess.set('key', 'value')
+    console.log('key', sess.get('key'))
+    console.log({sess})
+    // {
+    //   sess: Session {
+    //     created: true,
+    //     rotated: false,
+    //     changed: true,
+    //     deleted: false,
+    //     id: 'SsLAJi_Le1M-N4dOtPrHM',
+    //     [Symbol(kSessionData)]: { key: 'value' },
+    //     [Symbol(kCookieOptions)]: {
+    //       httpOnly: true,
+    //       secure: false,
+    //       expires: 2021-10-05T05:20:56.517Z,
+    //       path: '/'
+    //     },
+    //     [Symbol(kExpiry)]: 1633411256517
+    //   }
+    // }
+    return await argon2.verify(emp ? emp.password : '', empPass)  
+      ? this.createLogin(ctx, emp!.id)
+      : undefined // TODO return error here 
   }
 
   /**
@@ -76,51 +78,58 @@ export class EmployeeLoginResolver {
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string
   ): Promise<string | undefined> {
-    if (await this.isLoggedIn(ctx, employeeId)) {
-      console.warn('this person is already loggedin!!')
-      return undefined
-    }
-    const { id } = await ctx.prisma.login.create({
-      data: {
-        employee: {
-          connect: {
-            id: employeeId
-          }
+  if (await this.isLoggedIn(ctx, employeeId)) {
+    console.warn('this person is already loggedin!!')
+    return undefined
+  }
+  // login table
+  const { id } = await ctx.prisma.login.create({
+    data: {
+      employee: {
+        connect: {
+          id: employeeId
         }
-      },
-      select: { id: true }
-    })
-    const { loginId } = await ctx.prisma.loggedIn.create({
-      data: {
-        login: {
-          connect: { id }
-        }
-      },
-      select: { loginId: true }
-    })
-    // TODO sort out returns
-    return loginId
-}
+      }
+    },
+    select: { id: true }
+  })
+  // loggedIn table
+  const { loginId } = await ctx.prisma.loggedIn.create({
+    data: {
+      login: {
+        connect: { id }
+      }
+    },
+    select: { loginId: true }
+  })
+  // TODO sort out returns
+  return loginId
+  }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => String)
   async logout(
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string
-  ): Promise<boolean> {
-     // update logged out time on login
-     await ctx.prisma.login.update({
-      where: {
-        
-      },
-      data: {
-        logoutTime: new Date()
-      }
-    })
+  ): Promise<string | undefined> {
     // delete from LoggedIn
-    const login = await ctx.prisma.loggedIn.delete({
-      where: { employeeId },
-      select: {loginId: true}
-    })
-    return true
+  const { loginId } = await ctx.prisma.loggedIn.delete({
+    where: { employeeId },
+    select: { loginId: true }
+  })
+  // update logged out time on login
+  const { loginTime, logoutTime } = await ctx.prisma.login.update({
+    where: {
+      id: loginId
+    },
+    data: {
+      logoutTime: new Date()
+    },
+    select: {
+      loginTime: true,
+      logoutTime: true
+    }
+  })
+  // return amount of seconds logged in
+  return logoutTime ? `Login time: ${( new Date( (86400 - (logoutTime.getSeconds() - loginTime.getSeconds())) * 1000 ) ).toISOString().substr(11, 8)} seconds` : undefined
   }
 }
