@@ -9,16 +9,15 @@
     "build:web": "vite build packages/vueApp",
     "start:web": "vite packages/vueApp",
     "preview": "vite serve packages/vueApp",
-    "generate": "cd packages/api && npx prisma generate",
+    "generate": "cd packages/db && npx prisma generate",
     "prettify": "prettier --config .prettierrc '**/src/**/*.ts' --write",
     "prettify:debug": "prettier --config .prettierrc '**/src/**/*.ts' --write --loglevel debug",
     "prettify:check": "prettier --config .prettierrc '**/src/**/*.ts' --check",
-    "seed:basic": "cd packages/api && npx prisma db seed",
+    "seed:basic": "cd packages/db && npx prisma db seed",
     "start:server": "node --experimental-specifier-resolution=node packages/server/dist/main.js",
     "warn:server": "node --trace-warnings --experimental-specifier-resolution=node packages/server/dist/main.js",
     "clean:server": "rm -rf packages/server/dist && mkdir packages/server/dist",
     "build:server": "yarn clean:server && cd packages/server && yarn force",
-    "build": "yarn build:server && yarn build:vueApp && yarn build:common",
     "clean:all": "rm -rf **/dist/*.* **/dist/**/*.*"
   },
   "devDependencies": {

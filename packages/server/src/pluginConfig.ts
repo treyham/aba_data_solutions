@@ -1,5 +1,6 @@
-import { BuildContext, Context, prisma, schema } from '@app/api'
+import { BuildContext, Context, schema } from '@app/api'
 import { config } from '@app/config'
+import { prisma, store } from '@app/db'
 import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } from 'fastify'
 import AutoLoad from 'fastify-autoload'
 import fp from 'fastify-plugin'
@@ -9,13 +10,6 @@ const buildContext: BuildContext = async (
   req: FastifyRequest,
   _reply: FastifyReply
 ): Promise<Context> => {
-
-  try {
-    
-  } catch (err) {
-    console.warn('Auth Failed')
-  }
-  console.log('inserting session into context')
   return {
     req,
     reply: _reply,
@@ -34,8 +28,7 @@ export const opts: PluginOpts = {
         secure: config.isProd,
         expires: config.session.cookie.expires
       },
-      saveUninitialized: config.session.saveUninitialized,
-      // store
+      saveUninitialized: config.session.saveUninitialized
     }
   },
   dbOpts: {

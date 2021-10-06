@@ -8,8 +8,7 @@ interface FastifySessionOpts {
       secure: boolean,
       expires: Date
     }
-    saveUninitialized: boolean,
-    // store: PrismaSession
+    saveUninitialized: boolean
 }
   
   // TODO AuthPluginOptions interface

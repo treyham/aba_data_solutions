@@ -10,7 +10,7 @@ generator client {
 
 generator typegraphql {
   provider = "typegraphql-prisma"
-  // output = "../src/graphql/generated"
+  output = "../../api/node_modules/@generated/type-graphql"
 }
 
 // table for prisma session store

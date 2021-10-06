@@ -5,7 +5,7 @@ import fp from 'fastify-plugin'
 import mercurius from 'mercurius'
 
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
-export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) => {
+export const db = fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) => {
   config.isProd && fastify.log.info
   return await fastify
     .register(mercurius, { ...fastify.config.dbOpts.MercuriusPluginOpts })

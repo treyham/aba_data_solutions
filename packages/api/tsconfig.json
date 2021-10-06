@@ -19,6 +19,7 @@
         "types"
     ],
     "references": [
-        { "path": "../../config" }
+        { "path": "../../config" },
+        { "path": "../db" }
     ]
 }

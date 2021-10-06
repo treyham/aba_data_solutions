@@ -2,8 +2,9 @@
   "references": [
     { "path": "./config" },
     { "path": "./packages/api" },
+    { "path": "./packages/db" },
     { "path": "./packages/server" },
-    //{ "path": "./packages/vueApp" },
+    //{ "path": "./packages/web" },
   ],
   "files": [
 
