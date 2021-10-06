@@ -41,7 +41,7 @@ import {
   RecordRelationsResolver,
   Session,
   // SessionCrudResolver,
-  SessionRelationsResolver,
+  ClientSessionRelationsResolver,
   TreatmentPlan,
   // TreatmentPlanCrudResolver,
   TreatmentPlanRelationsResolver,
@@ -72,7 +72,7 @@ export const schema = await buildSchema({
     ProviderRelationsResolver,
     RbtRelationsResolver,
     RecordRelationsResolver,
-    SessionRelationsResolver,
+    ClientSessionRelationsResolver,
     TreatmentPlanRelationsResolver,
     TreatmentPlan_to_ProgramRelationsResolver,
     // types

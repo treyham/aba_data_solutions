@@ -1,3 +1,5 @@
+import { PrismaSession } from '@app/api'
+
 interface FastifySessionOpts {
     cookieName: string
     secret: string
@@ -7,7 +9,7 @@ interface FastifySessionOpts {
       expires: Date
     }
     saveUninitialized: boolean,
-    // store: 
+    // store: PrismaSession
 }
   
   // TODO AuthPluginOptions interface
