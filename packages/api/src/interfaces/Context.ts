@@ -1,16 +1,27 @@
-import { Session } from '@mgcrea/fastify-session'
-import { FastifyRequest, FastifyReply } from 'fastify'
+import { Session, SessionData} from '@mgcrea/fastify-session'
+import { FastifyReply, FastifyRequest } from 'fastify'
 import { PrismaClient } from '.prisma/client'
+
+export interface BuildContext {
+  (
+    req: FastifyRequest & {
+      session: Session<SessionData>
+    },
+    _reply: FastifyReply,
+  ): Promise<Context>
+}
+  
 
 // configure fastify context
 export type Context = {
   // add properties to fastify request
-  req: FastifyRequest & {session: Session}
+  req: FastifyRequest & {session: Session<SessionData>}
     // add properties to fastify response
   reply: FastifyReply
 // add properties to fastify context
 } & PrismaContext
 
 export interface PrismaContext {
-  prisma: PrismaClient
+  prisma: PrismaClient,
+  session: Session<SessionData>
 }

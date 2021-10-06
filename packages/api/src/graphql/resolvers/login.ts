@@ -16,7 +16,6 @@ import {
 } from 'type-graphql'
 
   // TODO sort out returns
-
 @Resolver()
 export class EmployeeLoginResolver {
   @Query(() => Boolean)
@@ -32,7 +31,7 @@ export class EmployeeLoginResolver {
   }
 // login
   @Mutation(() => String)
-  async employeeLogin(
+  async login(
   @Ctx() ctx: Context,
   @Arg('displayName', () => String) empDispName: string,
   @Arg('password') empPass: string
@@ -52,9 +51,9 @@ export class EmployeeLoginResolver {
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string
   ): Promise<string | undefined> {
-  if (await this.isLoggedIn(ctx, employeeId)) {
-    console.warn('this person is already loggedin!!')
-    return undefined
+    if (await this.isLoggedIn(ctx, employeeId)) {
+      console.warn('this person is already loggedin!!')
+      return undefined
   }
   // login table
   const { id } = await ctx.prisma.login.create({
@@ -103,6 +102,7 @@ export class EmployeeLoginResolver {
       logoutTime: true
     }
   })
+  loginTime && logoutTime && ctx.req.destroySession()
   // return amount of seconds logged in
   return logoutTime
     ? `Login time: ${(new Date( (logoutTime.getSeconds() - loginTime.getSeconds()) * 1000 )).toISOString().substr(11, 8)} seconds` 

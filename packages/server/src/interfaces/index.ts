@@ -7,7 +7,7 @@ import { DbPlugOpts, DbPropOpts } from './Db'
 declare module 'fastify' {
   export interface FastifyInstance {
     config: PluginOpts
-    prisma: typeof prisma.context
+    prisma: typeof prisma
   }
 
   interface FastifyRequest {

@@ -1,23 +1,27 @@
-import { Context, prisma, schema } from '@app/api'
+import { BuildContext, Context, prisma, schema } from '@app/api'
 import { config } from '@app/config'
 import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } from 'fastify'
 import AutoLoad from 'fastify-autoload'
 import fp from 'fastify-plugin'
-import { BuildContext, PluginOpts } from './interfaces'
+import session from '@mgcrea/fastify-session'
+import { PluginOpts } from './interfaces'
 
 const buildContext: BuildContext = async (
   req: FastifyRequest,
   _reply: FastifyReply
 ): Promise<Context> => {
+
   try {
     
   } catch (err) {
     console.warn('Auth Failed')
   }
+  console.log('inserting session into context')
   return {
     req,
     reply: _reply,
-    prisma: prisma.context
+    prisma,
+    session: req.session
   }
 }
 
@@ -31,7 +35,7 @@ export const opts: PluginOpts = {
         secure: config.isProd,
         expires: config.session.cookie.expires
       },
-      saveUninitialized: config.session.saveUninitialized
+      saveUninitialized: config.session.saveUninitialized,
     }
   },
   dbOpts: {

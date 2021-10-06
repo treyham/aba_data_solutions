@@ -6,7 +6,8 @@ interface FastifySessionOpts {
       secure: boolean,
       expires: Date
     }
-    saveUninitialized: boolean
+    saveUninitialized: boolean,
+    // store: 
 }
   
   // TODO AuthPluginOptions interface
