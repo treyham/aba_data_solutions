@@ -15,7 +15,7 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
       console.log('preHandler', {sess})
       done()
     })
-},
+ },
 {
   name: 'auth'
 })
