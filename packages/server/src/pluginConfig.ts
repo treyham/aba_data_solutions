@@ -3,7 +3,6 @@ import { config } from '@app/config'
 import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } from 'fastify'
 import AutoLoad from 'fastify-autoload'
 import fp from 'fastify-plugin'
-import session from '@mgcrea/fastify-session'
 import { PluginOpts } from './interfaces'
 
 const buildContext: BuildContext = async (
@@ -36,6 +35,7 @@ export const opts: PluginOpts = {
         expires: config.session.cookie.expires
       },
       saveUninitialized: config.session.saveUninitialized,
+      // store
     }
   },
   dbOpts: {

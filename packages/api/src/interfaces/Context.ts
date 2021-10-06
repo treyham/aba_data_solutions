@@ -25,3 +25,5 @@ export interface PrismaContext {
   prisma: PrismaClient,
   session: Session<SessionData>
 }
+
+export type PrismaSession = Session<SessionData>

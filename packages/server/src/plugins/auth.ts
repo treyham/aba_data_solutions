@@ -9,6 +9,7 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
   config.isProd && fastify.log.info
   return await fastify
     .register(cookie)
+    // types store.set are incompatable
     .register(session, { ...fastify.config.authOpts.session })
     .addHook('preHandler', (request, reply, done) => {
       const sess = request.session
