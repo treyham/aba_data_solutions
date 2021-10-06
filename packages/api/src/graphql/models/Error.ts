@@ -16,15 +16,15 @@ import {
 @ObjectType()
 export class FieldError {
   @Field()
-  field?: string
+  field?: string            // which field has error
   @Field()
-  message?: string
+  message?: string          // what that error is
 }
 
 @ObjectType()
 export class LoginResponse {
   @Field(() => [FieldError], {nullable: true})
   errors?: FieldError[]
-  @Field(() => Employee, {nullable: true})
-  employee?: Employee
+  @Field(() => String, {nullable: true})
+  data?: String
 }
