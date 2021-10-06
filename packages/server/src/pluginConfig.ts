@@ -1,9 +1,9 @@
-import { schema, prisma, Context } from '@app/api'
+import { Context, prisma, schema } from '@app/api'
 import { config } from '@app/config'
-import { FastifyInstance, FastifyRequest, FastifyReply, FastifyPluginOptions } from 'fastify'
-import fp from 'fastify-plugin'
+import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } from 'fastify'
 import AutoLoad from 'fastify-autoload'
-import { AuthPlugOpts, AuthPropOpts, BuildContext, DbPlugOpts, DbPropOpts, PluginOpts } from './interfaces'
+import fp from 'fastify-plugin'
+import { BuildContext, PluginOpts } from './interfaces'
 
 const buildContext: BuildContext = async (
   req: FastifyRequest,

@@ -48,8 +48,8 @@ main()
       err
         ? console.log(err)
         : console.log(`
-          \t\t🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
-          \t\t⭐️ You rock!\n\n`)
+          🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
+          ⭐️ You rock!\n\n`)
     })
   )
   .catch(console.error)

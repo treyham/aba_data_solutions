@@ -23,6 +23,7 @@ export class CreateEmployeeResolver {
   async me(@Ctx() ctx: Context):Promise<Employee | null> {
     console.log('session: ', ctx.req.session.get('key'))
     return await ctx.prisma.employee.findFirst({
+      
     })
   }
 // administration
@@ -46,7 +47,7 @@ export class CreateEmployeeResolver {
     return Administration?.id
   }
 //billing
-@Mutation(() => String)
+  @Mutation(() => String)
   async createBillingEncryptPass(
     @Ctx() ctx: Context,
     @Arg('createInput') createInput: EmployeeCreateInput
@@ -64,7 +65,7 @@ export class CreateEmployeeResolver {
     return Billing?.id
   }
 //bcba
-@Mutation(() => String)
+  @Mutation(() => String)
   async createBcbaEncryptPass(
     @Ctx() ctx: Context,
     @Arg('createInput') createInput: EmployeeCreateInput
@@ -82,7 +83,7 @@ export class CreateEmployeeResolver {
     return Bcba?.id
   }
 //rbt
-@Mutation(() => String)
+  @Mutation(() => String)
   async createRbtEncryptPass(
     @Ctx() ctx: Context,
     @Arg('createInput') createInput: EmployeeCreateInput

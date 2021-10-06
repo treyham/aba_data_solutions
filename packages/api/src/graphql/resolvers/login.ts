@@ -15,6 +15,7 @@ import {
   Int
 } from 'type-graphql'
 
+  // TODO sort out returns
 
 @Resolver()
 export class EmployeeLoginResolver {
@@ -30,7 +31,7 @@ export class EmployeeLoginResolver {
     }) !== 0 ? true : false
   }
 // login
-  @Mutation(() => String) // TODO fix this, retunr error instead of undefined
+  @Mutation(() => String)
   async employeeLogin(
   @Ctx() ctx: Context,
   @Arg('displayName', () => String) empDispName: string,
@@ -41,20 +42,11 @@ export class EmployeeLoginResolver {
         displayName: empDispName,
       }
     })
-    // TODO set cookie to sessionId
-    const sess =  ctx.req.session
-    sess.set('key', 'value')
-    console.log('key', sess.get('key'))
-    console.log({sess})
-    return await argon2.verify(emp ? emp.password : '', empPass)  
+    ctx.req.session.set('employeeId', emp?.id)
+    return await argon2.verify(emp ? emp.password : '', empPass)
       ? this.createLogin(ctx, emp!.id)
-      : undefined // TODO return error here 
+      : undefined
   }
-  /**
-   * @param ctx Context
-   * @param createInput LoginCreateInput
-   * @returns ```true | false```
-   */
   @Mutation(() => String)
   async createLogin(
     @Ctx() ctx: Context,
@@ -84,7 +76,7 @@ export class EmployeeLoginResolver {
     },
     select: { loginId: true }
   })
-  // TODO sort out returns
+  // ctx.req.session.
   return loginId
   }
 // logout
@@ -93,7 +85,7 @@ export class EmployeeLoginResolver {
     @Ctx() ctx: Context,
     @Arg('employeeId') employeeId: string
   ): Promise<string | undefined> {
-    // delete from loggedIn table
+  // delete from loggedIn table
   const { loginId } = await ctx.prisma.loggedIn.delete({
     where: { employeeId },
     select: { loginId: true }
@@ -112,8 +104,8 @@ export class EmployeeLoginResolver {
     }
   })
   // return amount of seconds logged in
-  return logoutTime 
-    ? `Login time: ${( new Date( (86400 - (logoutTime.getSeconds() - loginTime.getSeconds())) * 1000 ) ).toISOString().substr(11, 8)} seconds`
+  return logoutTime
+    ? `Login time: ${(new Date( (logoutTime.getSeconds() - loginTime.getSeconds()) * 1000 )).toISOString().substr(11, 8)} seconds` 
     : undefined
   }
 }

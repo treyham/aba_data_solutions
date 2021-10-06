@@ -1,0 +1,190 @@
+# create employees
+mutation {
+  createAdminEncryptPass(
+    createInput: {
+      fullName: "Example Admin 1"
+      displayName: "Ex1Admin"
+      password: "1admin123"
+      email: "admin1@exmail.com"
+      position: ADMIN
+      Administration: {
+        create: {
+          PermissionLevel: SERVER_ADMIN_ALL
+        }
+      }
+    }
+  )
+}
+mutation {
+  createAdminEncryptPass(
+    createInput: {
+      fullName: "Example Admin 2"
+      displayName: "Ex2Admin"
+      password: "2admin123"
+      email: "admin2@exmail.com"
+      position: ADMIN
+      Administration: {
+        create: {
+          PermissionLevel: BUSINESS_ALL
+        }
+      }
+    }
+  )
+}
+mutation {
+  createAdminEncryptPass(
+    createInput: {
+      fullName: "Example Admin 3"
+      displayName: "Ex3Admin"
+      password: "3admin123"
+      email: "admin3@exmail.com"
+      position: ADMIN
+      Administration: {
+        create: {
+          PermissionLevel: LIMITED
+        }
+      }
+    }
+  )
+}
+mutation {
+  createAdminEncryptPass(
+    createInput: {
+      fullName: "Example Admin 4"
+      displayName: "Ex4Admin"
+      password: "4admin123"
+      email: "admin4@exmail.com"
+      position: ADMIN
+      Administration: {
+        create: {
+          PermissionLevel: LIMITED
+        }
+      }
+    }
+  )
+}
+mutation {
+  createBillingEncryptPass(
+    createInput: {
+      fullName: "Example Billing"
+      displayName: "ExBilling"
+      password: "billing123"
+      email: "billing@exmail.com"
+      position: BILLING
+    }
+  )
+}
+mutation {
+  createBcbaEncryptPass(
+    createInput: {
+      fullName: "Example Bcba"
+      displayName: "ExBcba"
+      password: "bcba123"
+      email: "bcba@exmail.com"
+      position: BCBA
+    }
+  )
+}
+mutation {
+  createRbtEncryptPass(
+    createInput: {
+      fullName: "Example Rbt"
+      displayName: "ExRbt"
+      password: "rbt123"
+      email: "rbt@exmail.com"
+      position: RBT
+    }
+  )
+}
+
+# login employees
+mutation {
+  employeeLogin(
+    displayName: "Ex1Admin"
+    password: "1admin123"
+  )
+}
+mutation {
+  employeeLogin(
+    displayName: "Ex2Admin"
+    password: "2admin123"
+  )
+}
+mutation {
+  employeeLogin(
+    displayName: "Ex3Admin"
+    password: "3admin123"
+  )
+}
+mutation {
+  employeeLogin(
+    displayName: "Ex4Admin"
+    password: "4admin123"
+  )
+}
+mutation {
+  employeeLogin(
+    displayName: "ExBilling"
+    password: "billing123"
+  )
+}
+mutation {
+  employeeLogin(
+    displayName: "ExBcba"
+    password: "bcba123"
+  )
+}
+mutation {
+  employeeLogin(
+    displayName: "ExRbt"
+    password: "rbt123"
+  )
+}
+
+# logout employees
+mutation {
+  logout(
+    employeeId: "67a71113-52ef-48f1-96a4-8c236f73ef71"
+  )
+}
+mutation {
+  logout(
+    employeeId: "e8b86cd2-6053-4bef-94a3-5083f0b46678"
+  )
+}
+mutation {
+  logout(
+    employeeId: "2da6686c-8859-4b57-9df7-c8715b9090a5"
+  )
+}
+mutation {
+  logout(
+    employeeId: "cf58c56f-4dd9-4e6f-9945-434f852ce4a3"
+  )
+}
+mutation {
+  logout(
+    employeeId: "de48f8bf-bcc0-4c5d-b6b6-5c2fdff96408"
+  )
+}
+mutation {
+  logout(
+    employeeId: "555585fd-7a3c-4392-8e6f-57f38aa20915"
+  )
+}
+mutation {
+  logout(5
+    employeeId: "24e9b23a-fb3b-4c5a-b9c3-399af7ef06dc"
+  )
+}
+
+# all employee access
+
+# admin
+
+
+# billing
+
+# bcba
+
+# rbt
