@@ -5,11 +5,22 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  // output = "../node_modules/"
 }
 
 generator typegraphql {
   provider = "typegraphql-prisma"
+  // output = "../src/graphql/generated"
 }
+
+// table for prisma session store
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt   DateTime
+}
+
 
 model PersonalInfo {
   id          String           @id @default(uuid())
@@ -78,12 +89,23 @@ model Employee {
 model Login {
   id         String    @id @default(uuid())
   loginTime  DateTime  @default(now())
-  logoutTime DateTime?
+  logoutTime DateTime? 
   employee   Employee  @relation(fields: [employeeId], references: [id])
   employeeId String
-
-  @@index([employeeId], name: "employeeId")
+  loggedIn   LoggedIn?
+  
+  @@unique([id, employeeId])
   @@map("login")
+}
+
+model LoggedIn {
+  id         String   @default(uuid())
+  employeeId String   @unique
+  loginId    String
+  login      Login    @relation(fields: [loginId, employeeId], references: [id, employeeId])
+  
+  @@index([employeeId, loginId], name: "id")
+  @@map("loggedIn")
 }
 
 model Administration {
@@ -123,7 +145,7 @@ model Rbt {
   employeeId String
   bcba       Bcba?     @relation(fields: [bcbaId], references: [id])
   bcbaId     String?
-  sessions   Session[]
+  sessions   ClientSession[]
 
   @@index([employeeId], name: "employeeId")
   @@map("rbt")
@@ -137,7 +159,7 @@ model Bcba {
   clients       Client[]
   treatmentPlan TreatmentPlan[]
   programs      Program[]
-  sessions      Session[]
+  sessions      ClientSession[]
 
   @@index([employeeId], name: "employeeId")
   @@map("bcba")
@@ -173,13 +195,13 @@ model Client {
   bcba           Bcba?           @relation(fields: [bcbaId], references: [id])
   bcbaId         String?
   treatmentPlans TreatmentPlan[]
-  sessions       Session[]
+  sessions       ClientSession[]
   // @@index([providerId], name: "providerId")
 
   @@map("client")
 }
 
-model Session {
+model ClientSession {
   id         Int          @id @default(autoincrement())
   notes      String       @db.VarChar(510)
   start_time DateTime
@@ -230,7 +252,7 @@ model TreatmentPlan_to_Program {
 
 model Record {
   id        Int     @id @default(autoincrement())
-  session   Session @relation(fields: [sessionId], references: [id])
+  session   ClientSession @relation(fields: [sessionId], references: [id])
   sessionId Int
   program   Program @relation(fields: [programId], references: [id])
   programId Int

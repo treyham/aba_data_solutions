@@ -1,16 +1,23 @@
+import { prisma } from '@app/api'
 import { config } from '@app/config'
 import closeWithGrace from 'close-with-grace'
 import Fastify from 'fastify'
 import { IncomingMessage, Server, ServerResponse } from 'http'
-import { root, pluginOpts } from './pluginConfig'
+import plugin, { opts } from './pluginConfig'
 
-const server = Fastify({ logger: !config.isProd })
 declare module 'fastify' {
   const server: FastifyInstance<Server, IncomingMessage, ServerResponse>
 }
 
 async function main() {
-  !config.isProd && console.log('in development mode')
+  const server = Fastify({
+    logger: {
+      prettyPrint: {
+        colorize: true,
+        translateTime: true,
+      }
+    }
+  })
   const closeListeners = closeWithGrace(
     { delay: 500 }, // number of milliseconds for the graceful close to finish
     async function (signal, err: Console['error']) {
@@ -19,26 +26,30 @@ async function main() {
         : await server.close()
     }
   )
+  !config.isProd && console.log('in development mode')
   return (
     server
-      // register server plugin
-      .register(root, pluginOpts)
-      // add hooks
+      // decorators
+      .decorate('config', opts)
+      .decorate('prisma', prisma)
+      // plugins
+      .register(plugin)
+      // hooks
       .addHook('onClose', async (instance, done) => {
         closeListeners.uninstall()
         done()
       })
   )
 }
-
 main()
   .then(server =>
-    server.listen(config.env.serverPort, err => {
+    server
+    .listen(config.env.serverPort, err => {
       err
         ? console.log(err)
         : console.log(`
           🚀 Dev Server ready at: http://localhost:${config.env.serverPort}/altair
-          ⭐️ You rock!`)
+          ⭐️ You rock!\n\n`)
     })
   )
   .catch(console.error)

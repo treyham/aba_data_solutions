@@ -1,8 +1,6 @@
 import 'reflect-metadata'
-import { EmployeeCreateInput } from '@generated/type-graphql'
-import { Context } from '../../interfaces'
+import { Employee, EmployeeCreateInput } from '@generated/type-graphql'
 import argon2 from 'argon2'
-
 import {
   Resolver,
   Query,
@@ -13,41 +11,93 @@ import {
   Root,
   Authorized
 } from 'type-graphql'
+import {v4 as uuid} from 'uuid'
+import { Context } from '../../interfaces'
 
+// TODO put this in prisma schema above password in employee
+/// @TypeGraphQL.omit(output: true)
 @Resolver()
 export class CreateEmployeeResolver {
-  @Query(() => String)
-  async testing() {
-    return 'attention pls'
+// TODO return current logged in employee
+  @Query(() => Employee)
+  async me(@Ctx() ctx: Context):Promise<Employee | null> {
+    console.log('session: ', ctx.req.session.get('key'))
+    return await ctx.prisma.employee.findFirst({
+      
+    })
   }
-
-  @Query(() => String)
-  async employeeCount(@Ctx() ctx: Context): Promise<number> {
-    return await ctx.prisma.employee.count()
-  }
-
-  /**
-   * @param ctx Context
-   * @param createInput
-   * @returns ```true | false```
-   */
-  @Mutation(() => Boolean)
-  async createEmployeeEncryptPass(
+// administration
+  @Mutation(() => String)
+  async createAdminEncryptPass(
     @Ctx() ctx: Context,
     @Arg('createInput') createInput: EmployeeCreateInput
-  ): Promise<boolean> {
-    console.log('password: ', createInput.password)
-    // temporarally encrypt password here until we can do it sooner
-    const encryptedPass = await argon2.hash(createInput.password)
-    // const encryptedPass = employeeInput.password
-    console.log('encryptedPassword: ', encryptedPass)
-    return !!(await ctx.prisma.employee.create({
+  ): Promise<string | undefined> {
+    createInput.password = await argon2.hash(createInput.password)
+    const { Administration } = await ctx.prisma.employee.create({
       data: {
-        fullName: createInput.fullName,
-        displayName: createInput.displayName,
-        password: encryptedPass,
-        position: createInput.position
-      }
-    }))
+        ...createInput,
+        Administration: {
+          create: {
+            PermissionLevel: createInput.Administration?.create?.PermissionLevel
+          }
+        }
+      },
+      select: { Administration: true }
+    })
+    return Administration?.id
+  }
+//billing
+  @Mutation(() => String)
+  async createBillingEncryptPass(
+    @Ctx() ctx: Context,
+    @Arg('createInput') createInput: EmployeeCreateInput
+  ): Promise<string | undefined> {
+    createInput.password = await argon2.hash(createInput.password)
+    const { Billing } = await ctx.prisma.employee.create({
+      data: {
+        ...createInput,
+        Billing: {
+          create: { id: uuid() } 
+        }
+      },
+      select: { Billing: true }
+    })
+    return Billing?.id
+  }
+//bcba
+  @Mutation(() => String)
+  async createBcbaEncryptPass(
+    @Ctx() ctx: Context,
+    @Arg('createInput') createInput: EmployeeCreateInput
+  ): Promise<string | undefined> {
+    createInput.password = await argon2.hash(createInput.password)
+    const { Bcba } = await ctx.prisma.employee.create({
+      data: {
+        ...createInput,
+        Bcba: {
+          create: { id: uuid() } 
+        }
+      },
+      select: { Bcba: true }
+    })
+    return Bcba?.id
+  }
+//rbt
+  @Mutation(() => String)
+  async createRbtEncryptPass(
+    @Ctx() ctx: Context,
+    @Arg('createInput') createInput: EmployeeCreateInput
+  ): Promise<string| undefined> {
+    createInput.password = await argon2.hash(createInput.password)
+    const { Rbt } = await ctx.prisma.employee.create({
+      data: {
+        ...createInput,
+        Rbt: {
+          create: { id: uuid() }
+        }
+      },
+      select: { Rbt: true }
+    })
+    return Rbt?.id
   }
 }

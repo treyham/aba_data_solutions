@@ -1,64 +1,32 @@
-import closeWithGrace from 'close-with-grace';
-import 'reflect-metadata'
-import { Context } from '@app/api'
-import { FastifyReply, FastifyRequest } from 'fastify'
-import { FastifyCookieOptions } from 'fastify-cookie'
-import { GraphQLSchema } from 'graphql'
- 
+import { AutoloadPluginOptions } from 'fastify-autoload'
+import { prisma } from '@app/api'
+import { AuthPlugOpts, AuthPropOpts } from './Auth'
+import { DbPlugOpts, DbPropOpts } from './Db'
+
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
 declare module 'fastify' {
+  export interface FastifyInstance {
+    config: PluginOpts
+    prisma: typeof prisma
+  }
+
   interface FastifyRequest {
     PluginProp: PluginOpts
-    AuthProp: AuthOpts
-    DbProp: DbOpts
+    AuthProp: AuthPropOpts
+    DbProp: DbPropOpts
   }
   interface FastifyReply {
     PluginProp: PluginOpts
-    AuthProp: AuthOpts
-    DbProp: DbOpts
-  }
+    AuthProp: AuthPropOpts
+    DbProp: DbPropOpts
+  } 
 }
 
-// auth
-export interface FastifySessionOpts {
-  cookieName: string
-  secret: string
-  cookie: { secure: boolean }
-}
-
-// TODO AuthPluginOptions interface
-export interface AuthOpts {
+export type PluginOpts = {
   // Specify Support plugin options here
-  session: FastifySessionOpts
-  cookie: FastifyCookieOptions
-}
+  authOpts: AuthPlugOpts
+  dbOpts: DbPlugOpts
+} & Partial<AutoloadPluginOptions>
 
-// database
-export interface BuildContext {
-  (req: FastifyRequest, _reply: FastifyReply): Promise<Context>
-}
-
-export interface MercuriusPluginOpts {
-  schema: GraphQLSchema
-  graphiql: boolean
-  ide: boolean
-  path: string
-  context: BuildContext
-}
-export interface AltairPluginOpts {
-  path: string
-  baseURL: string
-  endpointURL: string
-}
-export interface DbOpts {
-  // Specify Support plugin options here
-  MercuriusPluginOpts: MercuriusPluginOpts
-  AltairaPluginOpts: AltairPluginOpts
-}
-
-// server
-export interface PluginOpts {
-  // Specify Support plugin options here
-  authOpts: AuthOpts
-  dbOpts: DbOpts
-}
+export * from './Auth'
+export * from './Db'

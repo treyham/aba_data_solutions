@@ -1,58 +1,55 @@
 import 'reflect-metadata'
 // generated
 import {
-  //types
   Administration,
-  // crud
-  AdministrationCrudResolver,
-  // relations
+  // AdministrationCrudResolver,
   AdministrationRelationsResolver,
   Bcba,
-  BcbaCrudResolver,
+  // BcbaCrudResolver,
   BcbaRelationsResolver,
   Billing,
-  BillingCrudResolver,
-  BillingObjectCrudResolver,
+  // BillingCrudResolver,
+  // BillingObjectCrudResolver,
   BillingRelationsResolver,
   Client,
-  ClientCrudResolver,
+  // ClientCrudResolver,
   // BillingObjectRelationsResolver,
   ClientRelationsResolver,
   Employee,
-  EmployeeCrudResolver,
+  // EmployeeCrudResolver,
   EmployeeRelationsResolver,
   Login,
-  LoginCrudResolver,
+  // LoginCrudResolver,
   LoginRelationsResolver,
   PersonalInfo,
-  PersonalInfoCrudResolver,
+  // PersonalInfoCrudResolver,
   Plan,
-  PlanCrudResolver,
+  // PlanCrudResolver,
   // PersonalInfoRelationsResolver,
   PlanRelationsResolver,
   Program,
-  ProgramCrudResolver,
+  // ProgramCrudResolver,
   ProgramRelationsResolver,
   Provider,
-  ProviderCrudResolver,
+  // ProviderCrudResolver,
   ProviderRelationsResolver,
   Rbt,
-  RbtCrudResolver,
+  // RbtCrudResolver,
   RbtRelationsResolver,
   Record,
-  RecordCrudResolver,
+  // RecordCrudResolver,
   RecordRelationsResolver,
   Session,
-  SessionCrudResolver,
-  // SessionRelationsResolver,
+  // SessionCrudResolver,
+  ClientSessionRelationsResolver,
   TreatmentPlan,
-  TreatmentPlanCrudResolver,
+  // TreatmentPlanCrudResolver,
   TreatmentPlanRelationsResolver,
   TreatmentPlan_to_Program,
-  TreatmentPlan_to_ProgramCrudResolver,
+  // TreatmentPlan_to_ProgramCrudResolver,
   TreatmentPlan_to_ProgramRelationsResolver
 } from '@generated/type-graphql'
-import { CreateEmployeeResolver } from './graphql/resolvers'
+import { CreateEmployeeResolver, EmployeeLoginResolver } from './graphql/resolvers'
 import { buildSchema } from 'type-graphql'
 
 export const schema = await buildSchema({
@@ -62,22 +59,7 @@ export const schema = await buildSchema({
      *                        G e n e r a t e d
      */
     // crud
-    AdministrationCrudResolver,
-    BcbaCrudResolver,
-    BillingCrudResolver,
-    BillingObjectCrudResolver,
-    ClientCrudResolver,
-    EmployeeCrudResolver,
-    LoginCrudResolver,
-    PersonalInfoCrudResolver,
-    PlanCrudResolver,
-    ProgramCrudResolver,
-    ProviderCrudResolver,
-    RbtCrudResolver,
-    RecordCrudResolver,
-    SessionCrudResolver,
-    TreatmentPlanCrudResolver,
-    TreatmentPlan_to_ProgramCrudResolver,
+    // AdministrationCrudResolver,BcbaCrudResolver,BillingCrudResolver,BillingObjectCrudResolver,ClientCrudResolver,EmployeeCrudResolver,LoginCrudResolver,PersonalInfoCrudResolver,PlanCrudResolver,ProgramCrudResolver,ProviderCrudResolver,RbtCrudResolver,RecordCrudResolver,SessionCrudResolver, TreatmentPlanCrudResolver, TreatmentPlan_to_ProgramCrudResolver,
     // relations
     AdministrationRelationsResolver,
     BcbaRelationsResolver,
@@ -90,7 +72,7 @@ export const schema = await buildSchema({
     ProviderRelationsResolver,
     RbtRelationsResolver,
     RecordRelationsResolver,
-    // SessionRelationsResolver,
+    ClientSessionRelationsResolver,
     TreatmentPlanRelationsResolver,
     TreatmentPlan_to_ProgramRelationsResolver,
     // types
@@ -112,6 +94,7 @@ export const schema = await buildSchema({
     /**
      *                          C u s t o m
      */
-    CreateEmployeeResolver
+    CreateEmployeeResolver,
+    EmployeeLoginResolver
   ]
 })

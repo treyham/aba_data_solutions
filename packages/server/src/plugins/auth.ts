@@ -1,16 +1,22 @@
 import { config } from '@app/config'
-import { FastifyInstance } from 'fastify'
+import session from '@mgcrea/fastify-session'
+import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import cookie from 'fastify-cookie'
 import fp from 'fastify-plugin'
-import session from '@fastify/session'
-import { PluginOpts } from '../pluginConfig'
 
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
-export default fp(async (fastify: FastifyInstance, opts: PluginOpts) => {
+export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) => {
   config.isProd && fastify.log.info
-  return fastify.register(cookie).register(session, {
-    cookieName: opts.authOpts.session.cookieName,
-    secret: opts.authOpts.session.secret,
-    cookie: { secure: opts.authOpts.session.cookie.secure }
-  })
+  return await fastify
+    .register(cookie)
+    // types store.set are incompatable
+    .register(session, { ...fastify.config.authOpts.session })
+    .addHook('preHandler', (request, reply, done) => {
+      const sess = request.session
+      console.log('preHandler', {sess})
+      done()
+    })
+ },
+{
+  name: 'auth'
 })

@@ -5,10 +5,8 @@
       "rootDir": "./src",
       "outDir": "./dist",
       "declaration": true,
-      "declarationDir": "types",
       "typeRoots": [
         "./node_modules/@types",
-        "packages/server/types"
       ]
     },
     "include": [ "src/*.ts", "src/**/*.ts" ],

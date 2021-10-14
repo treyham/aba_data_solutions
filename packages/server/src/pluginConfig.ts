@@ -1,40 +1,41 @@
-import { schema, prisma, Context } from '@app/api'
+import { BuildContext, Context, prisma, schema } from '@app/api'
 import { config } from '@app/config'
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
-import AutoLoad, { AutoloadPluginOptions } from 'fastify-autoload'
-import { AuthOpts, BuildContext, DbOpts } from './interfaces'
+import { FastifyInstance, FastifyPluginOptions, FastifyReply, FastifyRequest } from 'fastify'
+import AutoLoad from 'fastify-autoload'
+import fp from 'fastify-plugin'
+import { PluginOpts } from './interfaces'
 
 const buildContext: BuildContext = async (
   req: FastifyRequest,
   _reply: FastifyReply
 ): Promise<Context> => {
+
+  try {
+    
+  } catch (err) {
+    console.warn('Auth Failed')
+  }
+  console.log('inserting session into context')
   return {
     req,
     reply: _reply,
-    prisma
+    prisma,
+    session: req.session
   }
 }
 
-type PromiseType<T> = T extends PromiseLike<infer U> ? U : T
-
-declare module 'mercurius' {
-  interface MercuriusContext
-    extends PromiseType<ReturnType<typeof buildContext>> {}
-}
-
-export type PluginOpts = {
-  // Place your custom options for app below here.
-  authOpts: AuthOpts
-  dbOpts: DbOpts
-} & Partial<AutoloadPluginOptions>
-
-export const pluginOpts: PluginOpts = {
+export const opts: PluginOpts = {
   authOpts: {
-    cookie: {},
     session: {
-      cookieName: config.myCookie.name,
+      cookieName: config.session.cookie.name,
       secret: config.env.sessionSecret,
-      cookie: { secure: config.isProd }
+      cookie: {
+        httpOnly: config.session.cookie.httpOnly,
+        secure: config.isProd,
+        expires: config.session.cookie.expires
+      },
+      saveUninitialized: config.session.saveUninitialized,
+      // store
     }
   },
   dbOpts: {
@@ -53,24 +54,27 @@ export const pluginOpts: PluginOpts = {
   }
 }
 
-export const root = async (fastify: FastifyInstance, opts: PluginOpts) => {
-  // Place here your custom code!
-  fastify.decorate<AuthOpts>('auth', opts.authOpts)
-  fastify.decorate<DbOpts>('db', opts.dbOpts)
-/**
- * Do not touch the following lines
- * This loads all plugins defined in plugins
- * those should be support plugins that are reused
- * through your application
- */
-  void fastify.register(AutoLoad, {
-    dir: config.path.server.plugins,
-    options: opts
-  })
-  // This loads all plugins defined in routes
-  // define your routes in one of these
-  void fastify.register(AutoLoad, {
-    dir: config.path.server.routes,
-    options: opts
-  })
-}
+
+const plugin = fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions):Promise<void> => {
+  // Place here your custom code!\
+  // fastify.decorate('config', config)
+  // load plugins 
+  return await fastify
+    // .decorate('config', config)
+    .register(AutoLoad, {
+      dir: config.path.server.plugins,
+      // options: fastify.config,
+
+    })
+    // load route plugins
+    .register(AutoLoad, {
+      dir: config.path.server.routes,
+      // options: fastify.config
+    })
+},
+{
+  name: 'main'
+})
+
+export default plugin
+export { plugin }
