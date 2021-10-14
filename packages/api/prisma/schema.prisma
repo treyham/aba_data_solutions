@@ -5,12 +5,10 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  // output = "../node_modules/"
 }
 
 generator typegraphql {
   provider = "typegraphql-prisma"
-  // output = "../src/graphql/generated"
 }
 
 model PersonalInfo {
