@@ -3,7 +3,6 @@ import { FastifyCookieOptions } from 'fastify-cookie';
 import { SessionConfiguration } from '@mgcrea/fastify-session/lib/session'
 import { FastPrismaStore } from 'packages/api/src/store';
   
-// TODO AuthPluginOptions interface
 interface MySession {
   store: FastPrismaStore
   cookie: FastifyCookieOptions
