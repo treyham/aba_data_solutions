@@ -23,7 +23,7 @@ export class CreateEmployeeResolver {
   async me(
     @Ctx() ctx: Context
   ):Promise<Employee | null> {
-    console.log('session: ', ctx.req.session.get('key'))
+    console.log('(api/resolvers/employee) session: ', ctx.req.session.get('key'))
     return await ctx.prisma.employee.findFirst({
       
     })
