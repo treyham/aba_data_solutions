@@ -1,5 +1,4 @@
 import 'reflect-metadata'
-// generated
 import {
   Administration,
   // AdministrationCrudResolver,
@@ -52,8 +51,8 @@ import {
 import { CreateEmployeeResolver, EmployeeLoginResolver } from './graphql/resolvers'
 import { buildSchema } from 'type-graphql'
 
+// build TypeGraphQL executable schema
 export const schema = await buildSchema({
-  // build TypeGraphQL executable schema
   resolvers: [
     /**
      *                        G e n e r a t e d
@@ -96,5 +95,9 @@ export const schema = await buildSchema({
      */
     CreateEmployeeResolver,
     EmployeeLoginResolver
-  ]
+  ],
+  authChecker: ({ context: {req} }) => {
+
+    return true
+  }
 })

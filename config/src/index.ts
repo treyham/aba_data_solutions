@@ -34,14 +34,12 @@ export interface Config {
   env: Env
   isProd: boolean
   path: Path
-  session: {
-    cookie: {
-      name: string
-      httpOnly: boolean
-      expires: Date
-    }
-    saveUninitialized: boolean
+  cookie: {
+    name: string
+    httpOnly: boolean
+    expires: Date
   }
+  saveUninitialized: boolean
 }
 
 export const config: Config = {
@@ -54,153 +52,11 @@ export const config: Config = {
   },
   isProd: NODE_ENV === 'production',
   path,
-  session: {
-    cookie: {
+  // TODO FIX: this is the cookie the server has (kind of)
+  cookie: {
       name: 'treyscookie',
       httpOnly: true,
       expires: new Date(Date.now() + 3600000 * 8), // set cookie to expire in 8 hours
     },
     saveUninitialized: false
-  }
 }
-
-/**   auth.ts (plugin)
- * 
- * 
- * No overload matches this call.
-  Overload 1 of 3, 
-  '(plugin: FastifyPluginCallback<FastifySessionOptions, Server>, opts?: FastifyRegisterOptions<FastifySessionOptions> | undefined): FastifyInstance<...> & PromiseLike<...>', gave the following error.
-    Argument of type 
-    '{
-      cookieName: string; 
-      secret: string; 
-      cookie: { 
-        httpOnly: boolean; 
-        secure: boolean; 
-        expires: Date; 
-      };
-      saveUninitialized: boolean;
-      store: PrismaSessionStore<"session">; }' 
-    is not assignable to parameter of type 'FastifyRegisterOptions<FastifySessionOptions> | undefined'.
-      Type 
-        '{
-          cookieName: string;
-          secret: string; 
-          cookie: 
-          { httpOnly: boolean;
-            secure: boolean;
-            expires: Date;
-          }; 
-          saveUninitialized: boolean;
-          store: PrismaSessionStore<"session">; 
-        }' 
-      is not assignable to type 'RegisterOptions & FastifySessionOptions'.
-        Type '{ cookieName: string;
-          secret: string;
-          cookie: {
-            httpOnly: boolean;
-            secure: boolean;
-            expires: Date;
-          };
-          saveUninitialized: boolean;
-          store: PrismaSessionStore<"session">;
-        }' 
-        is not assignable to type 'FastifySessionOptions'.
-          The types of 'store.set' are incompatible between these types.
-            Type 
-              '(
-                sid: string, 
-                session: any, 
-                callback?: ((err?: unknown) => void) | undefined) => Promise<void>' 
-            is not assignable to 
-            type 
-            '(
-                sid: string,
-                session: SessionData,
-                expiry?: number | null | undefined
-              ) => Promise<void>
-            '.
-              Types of parameters 'callback' and 'expiry' are incompatible.
-                Type 'number | null | undefined' is not assignable to type '((err?: unknown) => void) | undefined'.
-                  Type 'null' is not assignable to type '((err?: unknown) => void) | undefined'.
-
-  Overload 2 of 3, 
-  '(plugin: FastifyPluginAsync<FastifySessionOptions, Server>, opts?: FastifyRegisterOptions<FastifySessionOptions> | undefined): FastifyInstance<...> & PromiseLike<...>', gave the following error.
-    Argument of type 
-    '{ cookieName: string;
-      secret: string;
-      cookie: {
-        httpOnly: boolean;
-        secure: boolean;
-        expires: Date; };
-        saveUninitialized: boolean;
-        store: PrismaSessionStore<"session">; }'
-     is not assignable to parameter of type 'FastifyRegisterOptions<FastifySessionOptions> | undefined'.
-      Type 
-        '{
-          cookieName: string;
-          secret: string;
-          cookie: { 
-            httpOnly: boolean;
-            secure: boolean;
-            expires: Date;
-          }; 
-          saveUninitialized: boolean;
-          store: PrismaSessionStore<"session">; }' 
-      is not assignable to type 'RegisterOptions & FastifySessionOptions'.
-        Type 
-        '{ 
-          cookieName: string;
-          secret: string;
-          cookie: {
-            httpOnly:
-            boolean;
-            secure: boolean;
-            expires: Date;
-          }; 
-          saveUninitialized: boolean;
-          store: PrismaSessionStore<"session">; }' is not assignable to type 'FastifySessionOptions'.
-        Types of property 'store' are incompatible.
-            Type 'PrismaSessionStore<"session">' is not assignable to type 'SessionStore'.
-
-  Overload 3 of 3, 
-  '(plugin: FastifyPluginAsync<FastifySessionOptions, Server> | FastifyPluginCallback<FastifySessionOptions, Server> | Promise<...> | Promise<...>, opts?: FastifyRegisterOptions<...> | undefined): FastifyInstance<...> & PromiseLike<...>', gave the following error.
-    Argument of type 
-    '{ 
-      cookieName: string;
-      secret: string;
-      cookie: { 
-        httpOnly: boolean;
-        secure: boolean;
-        expires: Date;
-      }; 
-      saveUninitialized: boolean;
-      store: PrismaSessionStore<"session">; }' 
-    is not assignable to parameter of type 'FastifyRegisterOptions<FastifySessionOptions> | undefined'.
-      Type 
-      '{ 
-        cookieName: string;
-        secret: string;
-        cookie: { 
-          httpOnly: boolean; 
-          secure: boolean; 
-          expires: Date;
-        }; 
-        saveUninitialized: boolean; 
-        store: PrismaSessionStore<"session">; }' 
-      is not assignable to type 'RegisterOptions & FastifySessionOptions'.
-        Type 
-        '{ 
-          cookieName: string;
-          secret: string;
-          cookie: {
-            httpOnly: boolean;
-            secure: boolean;
-            expires: Date;
-          }; 
-          saveUninitialized: boolean; 
-          store: PrismaSessionStore<"session">; }'
-        is not assignable to type 'FastifySessionOptions'.
-          Types of property 'store' are incompatible.
-            Type 'PrismaSessionStore<"session">' is not assignable to type 'SessionStore'.ts(2769)
- */

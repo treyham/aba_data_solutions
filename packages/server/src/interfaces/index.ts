@@ -1,6 +1,6 @@
 import { AutoloadPluginOptions } from 'fastify-autoload'
 import { prisma } from '@app/api'
-import { AuthPlugOpts, AuthPropOpts } from './Auth'
+import { AuthPlugOpts } from './Auth'
 import { DbPlugOpts, DbPropOpts } from './Db'
 
 // using declaration merging, add your plugin props to the appropriate fastify interfaces
@@ -11,14 +11,14 @@ declare module 'fastify' {
   }
 
   interface FastifyRequest {
-    PluginProp: PluginOpts
-    AuthProp: AuthPropOpts
-    DbProp: DbPropOpts
+    // PluginProp: PluginOpts
+    // AuthProp: AuthPropOpts
+    // DbProp: DbPropOpts
   }
   interface FastifyReply {
-    PluginProp: PluginOpts
-    AuthProp: AuthPropOpts
-    DbProp: DbPropOpts
+    // PluginProp: PluginOpts
+    // AuthProp: AuthPropOpts
+    // DbProp: DbPropOpts
   } 
 }
 

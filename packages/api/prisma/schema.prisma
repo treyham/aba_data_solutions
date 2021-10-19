@@ -5,12 +5,10 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  // output = "../node_modules/"
 }
 
 generator typegraphql {
   provider = "typegraphql-prisma"
-  // output = "../src/graphql/generated"
 }
 
 // table for prisma session store
@@ -218,7 +216,7 @@ model ClientSession {
   records    Record[]
   // @@index([bcbaId, rbtId, clientId], name: "bcbaId")
 
-  @@map("session")
+  @@map("clientSession")
 }
 
 model Program {

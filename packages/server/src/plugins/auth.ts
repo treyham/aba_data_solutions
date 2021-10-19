@@ -4,15 +4,23 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 import cookie from 'fastify-cookie'
 import fp from 'fastify-plugin'
 
+
 // The use of fastify-plugin is required to be able to export the decorators to the outer scope
 export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) => {
   config.isProd && fastify.log.info
   return await fastify
     .register(cookie)
     // types store.set are incompatable
-    .register(session, { ...fastify.config.authOpts.session })
+    .register(session, {
+      // TODO FIX: this is the cookie saved in the browser
+      key: config.env.sessionSecret,
+      store: fastify.config.authOpts.sessionOpts.store,
+      cookie: fastify.config.authOpts.sessionOpts.cookieOptions,
+      cookieName: 'session-test'
+    })
     .addHook('preHandler', (request, reply, done) => {
       const sess = request.session
+      
       console.log('preHandler', {sess})
       done()
     })
@@ -20,3 +28,8 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
 {
   name: 'auth'
 })
+
+/**
+ * 
+
+ */

@@ -23,8 +23,7 @@
     "@app/config": "1.0.0"
   },
   "devDependencies": {
-    "@mgcrea/fastify-session": "^0.14.1",
-    "@mgcrea/fastify-session-redis-store": "^0.9.1",
+    "@mgcrea/fastify-session": "^0.14.2",
     "@sinclair/typebox": "^0.20.5",
     "@types/node": "^15.0.0",
     "@types/tap": "^15.0.0",
@@ -38,6 +37,7 @@
     "fastify-cookie": "^5.3.1",
     "fastify-graceful-shutdown": "^3.1.0",
     "fastify-plugin": "^3.0.0",
+    "fastify-secure-session": "^2.3.1",
     "fastify-sensible": "^3.1.0",
     "fastify-tsconfig": "^1.0.1",
     "graphql": "^15.6.0",

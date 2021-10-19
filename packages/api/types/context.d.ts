@@ -1,5 +1,2 @@
 import { PrismaClient } from '.prisma/client';
-export interface Context {
-    prisma: PrismaClient;
-}
-export declare const context: Context;
+export declare const prisma: PrismaClient<import(".prisma/client").Prisma.PrismaClientOptions, never, import(".prisma/client").Prisma.RejectOnNotFound | import(".prisma/client").Prisma.RejectPerOperation | undefined>;

@@ -20,7 +20,9 @@ import { Context } from '../../interfaces'
 export class CreateEmployeeResolver {
 // TODO return current logged in employee
   @Query(() => Employee)
-  async me(@Ctx() ctx: Context):Promise<Employee | null> {
+  async me(
+    @Ctx() ctx: Context
+  ):Promise<Employee | null> {
     console.log('session: ', ctx.req.session.get('key'))
     return await ctx.prisma.employee.findFirst({
       
