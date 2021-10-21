@@ -34,7 +34,7 @@ export class FastPrismaStore<T extends SessionData = SessionData> extends EventE
   ): Promise<void> { 
     console.warn('session: destroy; sid: ', sid)
     // remove session(s) from loggedIn
-    const res = this.prisma.loggedIn.delete({where: { id: sid }, select: { loginId: true } })
+    const res = this.prisma.loggedIn.delete({where: { sid: sid }, select: { loginId: true } })
     console.log("session destroyed in db: ", !!res)
     return
   }
@@ -44,7 +44,7 @@ export class FastPrismaStore<T extends SessionData = SessionData> extends EventE
   ): Promise<[SessionData, number | null] | null> {
     console.warn('session: get')
     // get session with id
-    const loggedIn = await this.prisma.loggedIn.findUnique({where: { id: this.getKey(sid) }, select: { id: true, employeeId: true }})
+    const loggedIn = await this.prisma.loggedIn.findUnique({where: { sid: this.getKey(sid) }, select: { id: true, employeeId: true }})
     
     const session: SessionData = {
       ['id']: loggedIn?.id,
@@ -59,14 +59,7 @@ export class FastPrismaStore<T extends SessionData = SessionData> extends EventE
     data: SessionData, 
     expiry?: number | null
   ): Promise<void> {
-    console.warn( 'session: set' )
-    // console.log( 'data: ', JSON.stringify(data) )
-    // if (JSON.stringify(data) && expiry && expiry <= Date.now()) {
-
-    // }
-    // this.prisma.loggedIn.upsert({
-    //   create
-    // })
+    
     return
   }
 
