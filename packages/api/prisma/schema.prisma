@@ -97,7 +97,8 @@ model Login {
 }
 
 model LoggedIn {
-  id         String   @default(uuid()) @unique
+  id         String   @default(uuid())
+  sid        String   @unique
   employeeId String   @unique
   loginId    String
   login      Login    @relation(fields: [loginId, employeeId], references: [id, employeeId])
