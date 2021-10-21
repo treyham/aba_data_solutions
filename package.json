@@ -9,7 +9,7 @@
     "build:web": "vite build packages/vueApp",
     "start:web": "vite packages/vueApp",
     "preview": "vite serve packages/vueApp",
-    "generate": "cd packages/api && npx prisma generate",
+    "gen": "cd packages/api && npx prisma generate",
     "prettify": "prettier --config .prettierrc '**/src/**/*.ts' --write",
     "prettify:debug": "prettier --config .prettierrc '**/src/**/*.ts' --write --loglevel debug",
     "prettify:check": "prettier --config .prettierrc '**/src/**/*.ts' --check",
