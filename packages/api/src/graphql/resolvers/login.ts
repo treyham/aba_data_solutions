@@ -41,9 +41,7 @@ export class EmployeeLoginResolver {
         displayName: empDispName,
       }
     })
-    // TODO this is why its the same id everytime
-    ctx.req.session.set('employeeId', emp?.id)
-    ctx.req.session.set('id', emp?.id)
+    ctx.req.session.set('eid', emp?.id)
     console.log(`login Resolver: session = `, ctx.req.session)
     return await argon2.verify(emp ? emp.password : '', empPass)
       ? this.createLogin(ctx, emp!.id)
@@ -70,16 +68,19 @@ export class EmployeeLoginResolver {
     select: { id: true, loggedIn: true }
   })
   // loggedIn table
-  const { id, loginId } = await ctx.prisma.loggedIn.create({
+  const { id } = await ctx.prisma.loggedIn.create({
     data: {
+      sid: ctx.session.id,
       login: {
-        connect: { id: login.id }
+        connect: {
+          id: login.id
+        }
       }
     },
-    select: { id: true, loginId: true }
+    select: { id: true,  }
   })
+  ctx.req.session.set('id', id)
   console.log(`createLogin Resolver: session = `, ctx.req.session)
-  ctx.req.session.set(id, ctx.req.session.data)
   return id
   }
 // logout

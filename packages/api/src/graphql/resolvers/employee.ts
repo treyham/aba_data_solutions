@@ -24,9 +24,12 @@ export class CreateEmployeeResolver {
     @Ctx() ctx: Context
   ):Promise<Employee | null> {
     console.log('(api/resolvers/employee) session: ', ctx.req.session)
-    return await ctx.prisma.employee.findFirst({
-      
-    })
+    const eid = ctx.session.get('eid')?.toString()
+    return eid
+      ? await ctx.prisma.employee.findUnique({
+        where: { id: ctx.session.get('eid')?.toString() }
+        })
+      : null
   }
 // administration
   @Mutation(() => String)
