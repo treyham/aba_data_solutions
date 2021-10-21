@@ -1,6 +1,7 @@
 import { PrismaClient } from '.prisma/client';
 import { SessionStore, SessionData } from '@mgcrea/fastify-session'
 import { EventEmitter } from 'events'
+import { stringify } from 'querystring';
 
 export const DEFAULT_PREFIX = 'sess:'
 export const ONE_DAY_MS = 86400 * 1000
@@ -44,14 +45,21 @@ export class FastPrismaStore<T extends SessionData = SessionData> extends EventE
   ): Promise<[SessionData, number | null] | null> {
     console.warn('session: get')
     // get session with id
-    const loggedIn = await this.prisma.loggedIn.findUnique({where: { sid: this.getKey(sid) }, select: { id: true, employeeId: true }})
-    
+    const loggedIn = await this.prisma.loggedIn.findUnique({
+      where: { sid }, select: { id: true, employeeId: true }
+    })
+    console.log({ loggedIn })
+    if (!loggedIn) return null
     const session: SessionData = {
-      ['id']: loggedIn?.id,
+      ['lid']: loggedIn?.id,
       ['eid']: loggedIn?.employeeId
     }
-    const expirary = 0
-    return [session, expirary]
+    // const ttl = this.ttl
+    // console.log({ ttl })
+    // const expirary = this.getTTL(this.ttl)
+    const expiry = JSON.stringify(this.get('kExpiry'))
+    console.log({ expiry })
+    return [session, parseInt(expiry)]
   }
 
   async set (
@@ -59,6 +67,7 @@ export class FastPrismaStore<T extends SessionData = SessionData> extends EventE
     data: SessionData, 
     expiry?: number | null
   ): Promise<void> {
+
     
     return
   }

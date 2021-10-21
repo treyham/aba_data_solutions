@@ -25,6 +25,7 @@ export class CreateEmployeeResolver {
   ):Promise<Employee | null> {
     console.log('(api/resolvers/employee) session: ', ctx.req.session)
     const eid = ctx.session.get('eid')?.toString()
+    console.log({ eid })
     return eid
       ? await ctx.prisma.employee.findUnique({
         where: { id: ctx.session.get('eid')?.toString() }

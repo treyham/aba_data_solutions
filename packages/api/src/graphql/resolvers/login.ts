@@ -42,7 +42,7 @@ export class EmployeeLoginResolver {
       }
     })
     ctx.req.session.set('eid', emp?.id)
-    console.log(`login Resolver: session = `, ctx.req.session)
+    // console.log(`login Resolver: session = `, ctx.req.session)
     return await argon2.verify(emp ? emp.password : '', empPass)
       ? this.createLogin(ctx, emp!.id)
       : undefined
@@ -79,8 +79,8 @@ export class EmployeeLoginResolver {
     },
     select: { id: true,  }
   })
-  ctx.req.session.set('id', id)
-  console.log(`createLogin Resolver: session = `, ctx.req.session)
+  ctx.req.session.set('lid', id)
+  console.log(`Login Resolver: \nsession = `, ctx.req.session)
   return id
   }
 // logout
