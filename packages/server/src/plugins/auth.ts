@@ -12,18 +12,19 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
     .register(cookie)
     // types store.set are incompatable
     .register(session, {
-      // TODO FIX: this is the cookie saved in the browser
+      // TODO clean up
       key: config.env.sessionSecret,
       store: fastify.config.authOpts.sessionOpts.store,
       cookie: fastify.config.authOpts.sessionOpts.cookieOptions,
-      cookieName: 'session-test'
+      cookieName: config.cookie.name,
+      saveUninitialized: config.saveUninitialized
     })
-    .addHook('preHandler', (request, reply, done) => {
-      const sess = request.session
+    // .addHook('preHandler', (request, reply, done) => {
+    //   const sess = request.session
       
-      console.log('preHandler', {sess})
-      done()
-    })
+    //   console.log('preHandler', {sess})
+    //   done()
+    // })
  },
 {
   name: 'auth'

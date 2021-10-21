@@ -66,7 +66,7 @@ model Plan {
 }
 
 model Employee {
-  id             String          @id @default(uuid())
+  id             String          @id @default(uuid()) @unique
   fullName       String          @db.VarChar(255)
   displayName    String          @unique @db.VarChar(255)
   email          String?         @unique @db.VarChar(255)
@@ -85,24 +85,24 @@ model Employee {
 }
 
 model Login {
-  id         String    @id @default(uuid())
+  id         String    @id @default(uuid()) @unique
   loginTime  DateTime  @default(now())
   logoutTime DateTime? 
   employee   Employee  @relation(fields: [employeeId], references: [id])
   employeeId String
   loggedIn   LoggedIn?
   
-  @@unique([id, employeeId])
+  @@index([id, employeeId])
   @@map("login")
 }
 
 model LoggedIn {
-  id         String   @default(uuid())
+  id         String   @default(uuid()) @unique
   employeeId String   @unique
   loginId    String
   login      Login    @relation(fields: [loginId, employeeId], references: [id, employeeId])
   
-  @@index([employeeId, loginId], name: "id")
+  @@index([id, employeeId, loginId], name: "id")
   @@map("loggedIn")
 }
 

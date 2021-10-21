@@ -3,16 +3,17 @@ import { SessionStore, SessionData } from '@mgcrea/fastify-session'
 import { EventEmitter } from 'events'
 
 export const DEFAULT_PREFIX = 'sess:'
-export const DEFAULT_TTL = 86400
+export const ONE_DAY_MS = 86400 * 1000
 
 export class FastPrismaStore<T extends SessionData = SessionData> extends EventEmitter implements SessionStore {
   private readonly prisma: PrismaClient
   private readonly ttl: number
   private readonly prefix: string
+
   constructor(
     prisma: PrismaClient,
     prefix = DEFAULT_PREFIX,
-    ttl = DEFAULT_TTL,
+    ttl = ONE_DAY_MS,
   ) {
     super()
     this.prisma = prisma
@@ -28,27 +29,47 @@ export class FastPrismaStore<T extends SessionData = SessionData> extends EventE
     return expiry ? Math.min(Math.floor((expiry - Date.now()) / 1000), this.ttl) : this.ttl;
   }
 
-  public readonly destroy = async (
-    sid: string | string[]
-  ) => {
-    console.warn('session: destroy')
-    // remove employee from loggedIn
-    
-    // change login status to 'logged out'
+  async destroy (
+    sid: string,
+  ): Promise<void> { 
+    console.warn('session: destroy; sid: ', sid)
+    // remove session(s) from loggedIn
+    const res = this.prisma.loggedIn.delete({where: { id: sid }, select: { loginId: true } })
+    console.log("session destroyed in db: ", !!res)
+    return
   }
 
-  public readonly get = async (
-    sid: string | string[]
-  ): Promise<[SessionData, number | null] | null> => {
+  async get (
+    sid: string
+  ): Promise<[SessionData, number | null] | null> {
     console.warn('session: get')
     // get session with id
-    const session = {} as SessionData
-    return [session, 1]
+    const loggedIn = await this.prisma.loggedIn.findUnique({where: { id: this.getKey(sid) }, select: { id: true, employeeId: true }})
+    
+    const session: SessionData = {
+      ['id']: loggedIn?.id,
+      ['eid']: loggedIn?.employeeId
+    }
+    const expirary = 0
+    return [session, expirary]
   }
 
-  public readonly set = async (
+  async set (
+    sid: string, 
+    data: SessionData, 
+    expiry?: number | null
+  ): Promise<void> {
+    console.warn( 'session: set' )
+    // console.log( 'data: ', JSON.stringify(data) )
+    // if (JSON.stringify(data) && expiry && expiry <= Date.now()) {
 
-  ) => {
-    console.warn('session: set')
+    // }
+    // this.prisma.loggedIn.upsert({
+    //   create
+    // })
+    return
   }
+
+
+
 }

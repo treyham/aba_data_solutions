@@ -15,7 +15,7 @@ export interface BuildContext {
 // configure fastify context
 export type Context = {
   // add properties to fastify request
-  req: FastifyRequest & {session: Session<SessionData>}
+  req: FastifyRequest
     // add properties to fastify response
   reply: FastifyReply
 // add properties to fastify context

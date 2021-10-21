@@ -10,13 +10,14 @@ export const opts: PluginOpts & FastifyPluginOptions = { authOpts, dbOpts }
 
 const plugin = fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions):Promise<void> => {
   // Place here your custom code!\
+  
 
   // load plugins 
   return await fastify
     // .decorate('config', config)
     .register(AutoLoad, {
       dir: config.path.server.plugins,
-      // options: fastify.config,
+      // options: opts,
 
     })
     // load route plugins

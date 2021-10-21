@@ -41,7 +41,10 @@ export class EmployeeLoginResolver {
         displayName: empDispName,
       }
     })
+    // TODO this is why its the same id everytime
     ctx.req.session.set('employeeId', emp?.id)
+    ctx.req.session.set('id', emp?.id)
+    console.log(`login Resolver: session = `, ctx.req.session)
     return await argon2.verify(emp ? emp.password : '', empPass)
       ? this.createLogin(ctx, emp!.id)
       : undefined
@@ -56,7 +59,7 @@ export class EmployeeLoginResolver {
       return undefined
   }
   // login table
-  const { id } = await ctx.prisma.login.create({
+  const login = await ctx.prisma.login.create({
     data: {
       employee: {
         connect: {
@@ -64,19 +67,20 @@ export class EmployeeLoginResolver {
         }
       }
     },
-    select: { id: true }
+    select: { id: true, loggedIn: true }
   })
   // loggedIn table
-  const { loginId } = await ctx.prisma.loggedIn.create({
+  const { id, loginId } = await ctx.prisma.loggedIn.create({
     data: {
       login: {
-        connect: { id }
+        connect: { id: login.id }
       }
     },
-    select: { loginId: true }
+    select: { id: true, loginId: true }
   })
-  // ctx.req.session.
-  return loginId
+  console.log(`createLogin Resolver: session = `, ctx.req.session)
+  ctx.req.session.set(id, ctx.req.session.data)
+  return id
   }
 // logout
   @Mutation(() => String)
@@ -89,10 +93,16 @@ export class EmployeeLoginResolver {
     where: { employeeId },
     select: { loginId: true }
   })
+  // get loginId from loggedIn table
+  // const lid = await ctx.prisma.loggedIn.findUnique({
+    // where: { employeeId },
+    // select: { loginId: true }
+  // })
   // update logged out time on login table
   const { loginTime, logoutTime } = await ctx.prisma.login.update({
     where: {
       id: loginId
+      // id: lid.loginId?
     },
     data: {
       logoutTime: new Date()

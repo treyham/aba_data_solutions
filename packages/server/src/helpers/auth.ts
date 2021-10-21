@@ -17,6 +17,12 @@ export const authOpts: AuthPlugOpts = {
     secretKeys: [Buffer.from(config.env.sessionSecret, 'base64')],
     store: new FastPrismaStore(prisma),
     cookieOptions: config.cookie
+  },
+  session: {
+    key: config.env.sessionSecret,
+    store: new FastPrismaStore(prisma),
+    cookie: { ...config.cookie },
+    cookieName: config.cookie.name
   }
 }
 

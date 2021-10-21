@@ -54,9 +54,10 @@ export const config: Config = {
   path,
   // TODO FIX: this is the cookie the server has (kind of)
   cookie: {
-      name: 'treyscookie',
+      name: 'qidXD',
       httpOnly: true,
       expires: new Date(Date.now() + 3600000 * 8), // set cookie to expire in 8 hours
+      
     },
     saveUninitialized: false
 }

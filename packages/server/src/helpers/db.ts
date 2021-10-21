@@ -10,7 +10,7 @@ const buildContext: BuildContext = async (
   } catch (err) {
     console.warn('Auth Failed')
   }
-  console.log('in buildContext: inserting session into context')
+  // console.log('in buildContext: inserting session into context')
   return {
     req,
     reply: _reply,
