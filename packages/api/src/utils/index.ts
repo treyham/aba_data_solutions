@@ -1,8 +1,1 @@
-
-
-class Utils {
-  
-}
-
-
-export default Utils
+export * from './time'
