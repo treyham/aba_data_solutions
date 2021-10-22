@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import argon2 from 'argon2'
+import { config } from '@app/config/'
 import { Context } from '../../interfaces'
 import {
   Resolver,
@@ -14,6 +15,18 @@ import {
   Field,
   Int
 } from 'type-graphql'
+
+/**
+ * With the PromiseReturnType that is exposed by Prisma namespace, 
+ * you can solve this more elegantly:
+ * 
+ * import { Prisma } from '@prisma/client'
+ * type UsersWithPosts = Prisma.PromiseReturnType<typeof getUsersWithPosts>
+ * 
+ * https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety/operating-against-partial-structures-of-model-types#solution-1
+
+
+ */
 
   // TODO sort out returns
 @Resolver()
@@ -71,6 +84,7 @@ export class EmployeeLoginResolver {
   const { id } = await ctx.prisma.loggedIn.create({
     data: {
       sid: ctx.session.id,
+      ttl: config.twelveHrsInSecs,
       login: {
         connect: {
           id: login.id
@@ -94,11 +108,6 @@ export class EmployeeLoginResolver {
     where: { employeeId },
     select: { loginId: true }
   })
-  // get loginId from loggedIn table
-  // const lid = await ctx.prisma.loggedIn.findUnique({
-    // where: { employeeId },
-    // select: { loginId: true }
-  // })
   // update logged out time on login table
   const { loginTime, logoutTime } = await ctx.prisma.login.update({
     where: {

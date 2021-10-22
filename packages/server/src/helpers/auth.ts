@@ -15,7 +15,7 @@ export const getLoggedIn = (
 export const authOpts: AuthPlugOpts = {
   sessionOpts: {
     secretKeys: [Buffer.from(config.env.sessionSecret, 'base64')],
-    store: new FastPrismaStore(prisma),
+    store: new FastPrismaStore(prisma, "session:"),
     cookieOptions: config.cookie
   },
   session: {
