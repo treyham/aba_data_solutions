@@ -15,6 +15,7 @@ export interface Path {
 
 export interface Constant {
   path: Path
+  twelveHoursInSecs: number
 }
 
 const apiPath = '/api'
@@ -36,5 +37,6 @@ export const path: Path = {
 
 export const constant: Constant = {
   path,
+  twelveHoursInSecs: 43200
 }
 // TODO organize this

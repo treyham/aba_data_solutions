@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import { assert } from 'console'
-import { path, Path } from './constants'
+import * as consts from './constants'
 
 dotenv.config()
 
@@ -33,7 +33,8 @@ export interface Env {
 export interface Config {
   env: Env
   isProd: boolean
-  path: Path
+  path: consts.Path
+  twelveHrsInSecs: number
   cookie: {
     name: string
     httpOnly: boolean
@@ -51,7 +52,8 @@ export const config: Config = {
     sessionSecret: SESSION_SECRET as string
   },
   isProd: NODE_ENV === 'production',
-  path,
+  path: consts.path,
+  twelveHrsInSecs: consts.constant.twelveHoursInSecs,
   // TODO FIX: this is the cookie the server has (kind of)
   cookie: {
       name: 'qidXD',
