@@ -10,7 +10,6 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
   config.isProd && fastify.log.info
   return await fastify
     .register(cookie)
-    // types store.set are incompatable
     .register(session, {
       // TODO clean up
       key: config.env.sessionSecret,
@@ -21,7 +20,6 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
     })
     // .addHook('preHandler', (request, reply, done) => {
     //   const sess = request.session
-      
     //   console.log('preHandler', {sess})
     //   done()
     // })
@@ -29,8 +27,3 @@ export default fp(async (fastify: FastifyInstance, opts: FastifyPluginOptions) =
 {
   name: 'auth'
 })
-
-/**
- * 
-
- */
