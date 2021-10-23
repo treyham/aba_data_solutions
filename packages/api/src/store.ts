@@ -28,6 +28,7 @@ export class FastPrismaStore<T extends SessionData = SessionData> extends EventE
   }
 
   private readonly getTTL = (expiry?: number | null): number => {
+    console.log('TTL', { expiry })
     return expiry ? Math.min(Math.floor((expiry - Date.now()) / 1000), this.ttl) : this.ttl
   }
 
@@ -46,7 +47,7 @@ export class FastPrismaStore<T extends SessionData = SessionData> extends EventE
   destroy = async (sid: string): Promise<void> => { 
     this.prisma.loggedIn.delete({ where: { sid: sid }, select: { loginId: true } })
     const key = this.getKey(sid)
-    const ttl = this.ttl
+    const ttl = this.getTTL(this.ttl)
     console.log({ key, ttl })
   }
 
@@ -66,14 +67,15 @@ export class FastPrismaStore<T extends SessionData = SessionData> extends EventE
         }
       }
     })
-    const expiry = loggedIn?.login.loginTime!
+    const loginTime = loggedIn?.login.loginTime!
+    const expiry = new Date(loginTime.getTime() + ( this.ttl * 1000 ))
     const key = this.getKey(sid)
-    const ttl = this.ttl 
+    const ttl = this.getTTL(loggedIn?.ttl) 
     console.log({ key, ttl, expiry })
     console.log('data: \n\t', loggedIn?.data)
     const session: SessionData = JSON.parse(loggedIn?.data ?? '') 
 
-    return [ session, 0 ]
+    return [ session, expiry.getTime() ]
   }
 
   set = async (sid: string, data: T, expiry?: number | null): Promise<void> => {
