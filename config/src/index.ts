@@ -58,7 +58,7 @@ export const config: Config = {
   cookie: {
       name: 'qidXD',
       httpOnly: true,
-      expires: new Date(Date.now() + 3600000 * 8), // set cookie to expire in 8 hours
+      expires: new Date(Date.now() + 3600000 * 12), // set cookie to expire in 12 hours
       
     },
     saveUninitialized: false
