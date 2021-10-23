@@ -24,8 +24,6 @@ import {
  * type UsersWithPosts = Prisma.PromiseReturnType<typeof getUsersWithPosts>
  * 
  * https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety/operating-against-partial-structures-of-model-types#solution-1
-
-
  */
 
   // TODO sort out returns
@@ -84,7 +82,8 @@ export class EmployeeLoginResolver {
   const { id } = await ctx.prisma.loggedIn.create({
     data: {
       sid: ctx.session.id,
-      ttl: config.twelveHrsInSecs,
+      // TODO change to expiry
+      ttl: new Date(config.twelveHrsInSecs).getTime(),
       login: {
         connect: {
           id: login.id
