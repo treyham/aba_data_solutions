@@ -16,3 +16,9 @@ export const timeDiff = (now: Date, later: Date) =>  {
     } 
   }
 }
+
+// return now + x hrs
+export const addHours = (hrs: number) => {
+  const time = new Date()
+  return time.setTime(time.getTime() + ( hrs * 60**2 * 1000 ))
+} 
